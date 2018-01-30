@@ -1,9 +1,7 @@
-
-
 nfl<-read.csv("~/RIPPEN/NFL-Play-by-Play-2009-16.csv")
 
 temp <- subset(nfl,Passer=="T.Brady",select= c("Passer","PassOutcome","AirYards","YardsAfterCatch","InterceptionThrown","Fumble"))
-
+kicker <- subset(nfl, PlayType=="Field Goal", select= c("FieldGoalDistance", "FieldGoalResult"))
 
 ###################################################
 #Create a drive simulator
@@ -23,7 +21,7 @@ drivesim <- function(qbdata){
 	  if (pass == 0){
 			# Was the pass intercepted, only sampling from incomplete passes
 			int <- sample(qbdata$InterceptionThrown[qbdata$PassOutcome=="Incomplete Pass"],1)
-			if (int == 1){return(0)}
+			if (int == 1){return(0);}
 	    driveState$down <- driveState$down + 1
 	  }
 		# Else get results of completed pass
@@ -39,14 +37,13 @@ drivesim <- function(qbdata){
 	    }
 			# Subtract yards left to score and check for TD
 	    driveState$togoTD <- driveState$togoTD - yards
-			if(driveState$togoTD <= 0){ return (7) }
+			if(driveState$togoTD <= 0){return (7);}
     }
 	}
-	#If down is 4 check to see if within field goal range
-	if(driveState$togoTD < 30){
-		# TODO: More accurate way to calculate field goal for greater range
-		return(3)
-	}
-	else{return(0)}
+	#If down reaches 4 for field goal
+	fieldGoal <- sample(kicker$FieldGoalResult[kicker$FieldGoalDistance==driveState$togoTD],1)
+  if(fieldGoal == "Good"){return(3);}
+	#Return 0 if play also does not result in a field goal
+	return(0);
 }
 drivesim(qbdata)
