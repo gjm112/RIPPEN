@@ -1,18 +1,26 @@
-nfl<-read.csv("~/RIPPEN/NFL-Play-by-Play-2009-16.csv")
+nfl<-read.csv("~/Dropbox/RIPPEN/NFL by Play 2009-2016 (v2).csv")
 
-temp <- subset(nfl,Passer=="T.Brady",select= c("Passer","PassOutcome","AirYards","YardsAfterCatch","InterceptionThrown","Fumble"))
+temp <- subset(nfl,Passer=="J.Cutler",select= c("Passer","PassOutcome","AirYards","YardsAfterCatch","InterceptionThrown","Fumble"))
 kicker <- subset(nfl, PlayType=="Field Goal", select= c("FieldGoalDistance", "FieldGoalResult"))
+kicker$Good <- (kicker$FieldGoalResult=="Good") + 0
+kicker <- kicker[!is.na(kicker$Good),]
+
+boot <- glm(Good ~ FieldGoalDistance, data = kicker, family = "binomial")
+kickCoef <- boot$coefficients
+
 
 ###################################################
 #Create a drive simulator
 ###################################################
 qbdata<-temp
-drivesim <- function(qbdata){
+drivesim <- function(qbdata, kickCoef){
 	driveState <- list()
 	driveState$down <- 1
 	driveState$togo <- 10
 	driveState$togoTD <- 80 #between 100 and 0
 
+	qbdata$TotalYards <- qbdata$AirYards + qbdata$YardsAfterCatch
+	
 	#Add a while loop to make sure that down is always less than 4.
 	while(driveState$down < 4){
 	  #Returns 1 if complete and 0 if incomplete
@@ -26,7 +34,7 @@ drivesim <- function(qbdata){
 	  }
 		# Else get results of completed pass
 		else {
-	    yards <- sample(qbdata$AirYards[qbdata$PassOutcome=="Complete"],1)
+		  yards <- sample(qbdata$TotalYards[qbdata$PassOutcome=="Complete"],1)
 			# Check for first down
 	    if (driveState$togo-yards <= 0){
 				driveState$down <- 1
@@ -41,9 +49,14 @@ drivesim <- function(qbdata){
     }
 	}
 	#If down reaches 4 for field goal
-	fieldGoal <- sample(kicker$FieldGoalResult[kicker$FieldGoalDistance==driveState$togoTD],1)
-  if(fieldGoal == "Good"){return(3);}
+	#17 yards is 10 for endzone and 7 for where the holder holds the ball.
+	xb <- kickCoef%*%c(1,driveState$togoTD+17)
+	pfg <- exp(xb)/(1+exp(xb))
+	fieldGoal <- rbinom(1,1,pfg)
+  if(fieldGoal == 1){return(3);}
 	#Return 0 if play also does not result in a field goal
 	return(0);
 }
-drivesim(qbdata)
+drivesim(qbdata,kickCoef)
+
+test2<-replicate(1000,drivesim(qbdata,kickCoef))
