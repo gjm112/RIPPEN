@@ -1,18 +1,8 @@
-nfl<-read.csv("~/Dropbox/RIPPEN/NFL by Play 2009-2016 (v2).csv")
-
-temp <- subset(nfl,Passer=="J.Cutler",select= c("Passer","PassOutcome","AirYards","YardsAfterCatch","InterceptionThrown","Fumble"))
-kicker <- subset(nfl, PlayType=="Field Goal", select= c("FieldGoalDistance", "FieldGoalResult"))
-kicker$Good <- (kicker$FieldGoalResult=="Good") + 0
-kicker <- kicker[!is.na(kicker$Good),]
-
-boot <- glm(Good ~ FieldGoalDistance, data = kicker, family = "binomial")
-kickCoef <- boot$coefficients
-
+nfl<-read.csv("~/RIPPEN/NFL-Play-by-Play-2009-16.csv")
 
 ###################################################
 #Create a drive simulator
 ###################################################
-qbdata<-temp
 drivesim <- function(qbdata, kickCoef){
 	driveState <- list()
 	driveState$down <- 1
@@ -20,7 +10,7 @@ drivesim <- function(qbdata, kickCoef){
 	driveState$togoTD <- 80 #between 100 and 0
 
 	qbdata$TotalYards <- qbdata$AirYards + qbdata$YardsAfterCatch
-	
+
 	#Add a while loop to make sure that down is always less than 4.
 	while(driveState$down < 4){
 	  #Returns 1 if complete and 0 if incomplete
@@ -36,7 +26,7 @@ drivesim <- function(qbdata, kickCoef){
 		else {
 		  yards <- sample(qbdata$TotalYards[qbdata$PassOutcome=="Complete"],1)
 			# Check for first down
-	    if (driveState$togo-yards <= 0){
+	    if (driveState$togo < yards){
 				driveState$down <- 1
 	      driveState$togo <- 10
 	    } else {
@@ -57,6 +47,27 @@ drivesim <- function(qbdata, kickCoef){
 	#Return 0 if play also does not result in a field goal
 	return(0);
 }
-drivesim(qbdata,kickCoef)
 
-test2<-replicate(1000,drivesim(qbdata,kickCoef))
+#Run drive simulations for a given passer
+runSim <- function(passer){
+  qbdata <- subset(passPlays, Passer==passer)
+  results <- replicate(1000,drivesim(qbdata,kickCoef))
+  results <- list(name=passer, results=results)
+  return(results)
+}
+
+#Collect QB Data
+passPlays <- subset(nfl,select= c("Passer","PassOutcome","AirYards","YardsAfterCatch","InterceptionThrown","Fumble"))
+passPlays <- passPlays[!is.na(passPlays$Passer),]
+qbList <- unique(passPlays$Passer)
+
+#Collect league kicker data
+kicker <- subset(nfl, PlayType=="Field Goal", select= c("FieldGoalDistance", "FieldGoalResult"))
+kicker$Good <- (kicker$FieldGoalResult=="Good") + 0
+kicker <- kicker[!is.na(kicker$Good),]
+boot <- glm(Good ~ FieldGoalDistance, data = kicker, family = "binomial")
+kickCoef <- boot$coefficients
+
+qbResults <- lapply(qbList, runSim)
+
+# table(qbResults[[1]][["results"]])
