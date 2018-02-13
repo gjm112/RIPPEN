@@ -52,7 +52,6 @@ drivesim <- function(qbdata, kickCoef){
 runSim <- function(passer){
   qbdata <- subset(passPlays, Passer==passer)
   results <- replicate(1000,drivesim(qbdata,kickCoef))
-  results <- list(name=passer, results=results)
   return(results)
 }
 
@@ -69,5 +68,6 @@ boot <- glm(Good ~ FieldGoalDistance, data = kicker, family = "binomial")
 kickCoef <- boot$coefficients
 
 qbResults <- lapply(qbList, runSim)
+names(qbResults) <- as.character(qbList)
 
-# table(qbResults[[1]][["results"]])
+meanResults <- data.frame(mean=unlist(lapply(qbResults, mean)))
