@@ -8,13 +8,19 @@ drivesim <- function(qbdata, kickCoef){
 	driveState$down <- 1
 	driveState$togo <- 10
 	driveState$togoTD <- 80 #between 100 and 0
-
+  
+	nCompleted <- sum(qbdata$PassOutcome=="Completed")
+	nPasses <- length(qbdata$passOutcome)
+	alpha <- 1
+	beta <- 1
 	qbdata$TotalYards <- qbdata$AirYards + qbdata$YardsAfterCatch
 
 	#Add a while loop to make sure that down is always less than 4.
 	while(driveState$down < 4){
 	  #Returns 1 if complete and 0 if incomplete
-	  pass <- (sample(qbdata$PassOutcome,1)=="Complete")+0
+	  pComp <- rbeta(1, alpha + nCompleted, beta + nPasses-nCompleted )
+	  pass <- rbinom(1, 1, pComp)
+	  #pass <- (sample(qbdata$PassOutcome,1)=="Complete")+0
 		# If incomplete check for interception or add down
 	  if (pass == 0){
 			# Was the pass intercepted, only sampling from incomplete passes
@@ -51,7 +57,12 @@ drivesim <- function(qbdata, kickCoef){
 #Run drive simulations for a given passer
 runSim <- function(passer){
   qbdata <- subset(passPlays, Passer==passer)
-  results <- replicate(1000,drivesim(qbdata,kickCoef))
+  #TODO Remove QBs with 0 incomplete passes and 0 complete passes
+  if(!any(qbdata$PassOutcome=="Complete") | !any(qbdata$PassOutcome=="Incomplete")){
+    print(qbdata$Passer[1])
+    return(0)
+  }
+  results <- replicate(100,drivesim(qbdata,kickCoef))
   return(results)
 }
 
