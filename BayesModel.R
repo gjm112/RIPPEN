@@ -16,6 +16,9 @@ S2o <- var(y)
 # 		S2n <- Vo*S2o + (nj-1)S2j + [(Ko*nj)/(Ko+nj)](Yj - Mo)^2
 # 		Mn <- (Ko/Ko+nj)*Mo + (nj/Ko+nj)*(Yj)
 # 		Kn <- Ko + nj
+nj <- ???
+Yj <- log(xQBdata + 1)
+DegreeFreedomN <- Vo + nj 
 #
 # # Confused on the equations written for this section
 # 3.	Draw S2i
