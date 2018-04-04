@@ -1,4 +1,5 @@
 nfl<-read.csv("~/RIPPEN/NFL-Play-by-Play-2009-16.csv")
+#nfl<-read.csv("~/Dropbox/RIPPEN/NFL-Play-by-Play-2009-16.csv")
 
 ###################################################
 #Create a drive simulator
@@ -70,6 +71,7 @@ drivesim <- function(qbdata, kickCoef){
 runSim <- function(passer){
   qbdata <- subset(passPlays, Passer==passer)
   #TODO Remove QBs with 0 incomplete passes and 0 complete passes
+  #todo pass priors & set defaults, rename
   if(!any(qbdata$PassOutcome=="Complete") | !any(qbdata$PassOutcome=="Incomplete")){
     print(qbdata$Passer[1])
     return(0)
@@ -80,7 +82,10 @@ runSim <- function(passer){
 
 #Collect QB Data
 passPlays <- subset(nfl,select= c("Passer","PassOutcome","AirYards","YardsAfterCatch","InterceptionThrown","Fumble"))
+passPlays$TotalYards<- passPlays$AirYards + passPlays$YardsAfterCatch
+passPlays$TotalYards[passPlays$TotalYards<0] <- 0
 passPlays <- passPlays[!is.na(passPlays$Passer),]
+
 qbList <- unique(passPlays$Passer)
 
 #Collect league kicker data
