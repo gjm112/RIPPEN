@@ -1,11 +1,61 @@
 nfl<-read.csv("~/RIPPEN/NFL-Play-by-Play-2009-16.csv")
 #nfl<-read.csv("~/Dropbox/RIPPEN/NFL-Play-by-Play-2009-16.csv")
+library(invgamma)
+
+###################################################
+#Create a pass simulator
+###################################################
+passSim <- function(qbdata, kappa_0, nu_0){
+
+	# 1. League Yardage / Completed Passes
+	#Yards for every complete catch
+	x <- passPlays$TotalYards[passPlays$PassOutcome=="Complete"]
+	# 		y <- log(x + 1)
+	#Transfromation to achieve approximate normality
+	y <- log(x+1)
+	# Prior data? (? significance of the vinculum over y)
+	mu_0 <-  mean(y)
+	# Weight of prior
+	#kappa_0 <- 1
+	# Degree of freedom (Why 3?)
+	#nu_0 <- 3
+	# Scale Parameter
+	sigma2_0 <- var(y)
+
+	# 2.	Vn <- Vo + nj
+	# 		S2n <- Vo*S2o + (nj-1)S2j + [(Ko*nj)/(Ko+nj)](Yj - Mo)^2
+	# 		Mn <- (Ko/Ko+nj)*Mo + (nj/Ko+nj)*(Yj)
+	# 		Kn <- Ko + nj
+	n_j <- length(qbdata$TotalYards[passPlays$PassOutcome=="Complete"])
+	ybar_j <- mean(log(qbdata$TotalYards[passPlays$PassOutcome=="Complete"] + 1))
+	S2_j <- var(log(qbdata$TotalYards[passPlays$PassOutcome=="Complete"] + 1))
+	nu_n <- nu_0 + n_j
+	sigma2_n <- (1/nu_n)*(nu_0*sigma2_0 + (n_j-1)*S2_j + (kappa_0*n_j)/(kappa_0+n_j)*(ybar_j - mu_0)^2)
+
+	mu_n <- kappa_0/(kappa_0+n_j)*mu_0 + n_j/(kappa_0 + n_j)*ybar_j
+	kappa_n <- kappa_0 + n_j
+
+	# 3.	Draw S2i
+	sigma2_star <- rinvchisq(1, nu_n, sigma2_n)
+
+	# 4.	Draw Mi
+	# 		Mi <- S2i * Yj * N(Mn, S2i/Kn)
+
+	mu_star <- rnorm(1, mu_n, sqrt(sigma2_star/kappa_n))
+
+	# 5.	Draw y
+	y_tilde <- rnorm(1, mu_star, sqrt(sigma2_star))
+
+	# 6.	yards <- exp(Yi - 1)
+	y <- exp(y_tilde) - 1
+	return(y)
+}
 
 ###################################################
 #Create a drive simulator
 ###################################################
-# TODO Export drive simulator to seperate file
-drivesim <- function(qbdata, kickCoef){
+
+drivesim <- function(qbdata, kickCoef, kappa_0, nu_0){
 	driveState <- list()
 	driveState$down <- 1
 	driveState$togo <- 10
@@ -28,7 +78,6 @@ drivesim <- function(qbdata, kickCoef){
 	  #Returns 1 if complete and 0 if incomplete
 	  pComp <- rbeta(1, alphaP + nCompleted, betaP + nPasses-nCompleted )
 	  pass <- rbinom(1, 1, pComp)
-	  #pass <- (sample(qbdata$PassOutcome,1)=="Complete")+0
 
 		# If incomplete check for interception or add down
 	  if (pass == 0){
@@ -42,8 +91,8 @@ drivesim <- function(qbdata, kickCoef){
 		# Else get results of completed pass
 		else {
 		  #TODO - Implement Bayes model
-
-		  yards <- sample(qbdata$TotalYards[qbdata$PassOutcome=="Complete"],1)
+			yards <- passSim(qbdata, kappa_0, nu_0)
+		  #yards <- sample(qbdata$TotalYards[qbdata$PassOutcome=="Complete"],1)
 			# Check for first down
 	    if (driveState$togo < yards){
 				driveState$down <- 1
@@ -68,15 +117,15 @@ drivesim <- function(qbdata, kickCoef){
 }
 
 #Run drive simulations for a given passer
-runSim <- function(passer){
+runSim <- function(passer, kappa_0=1, nu_0=3){
   qbdata <- subset(passPlays, Passer==passer)
-  #TODO Remove QBs with 0 incomplete passes and 0 complete passes
-  #todo pass priors & set defaults, rename
+
+    #todo pass priors & set defaults, rename
   if(!any(qbdata$PassOutcome=="Complete") | !any(qbdata$PassOutcome=="Incomplete")){
     print(qbdata$Passer[1])
     return(0)
   }
-  results <- replicate(100,drivesim(qbdata,kickCoef))
+  results <- replicate(100,drivesim(qbdata,kickCoef, kappa_0, nu_0))
   return(results)
 }
 
