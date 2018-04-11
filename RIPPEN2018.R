@@ -120,7 +120,6 @@ drivesim <- function(qbdata, kickCoef, kappa_0, nu_0){
 runSim <- function(passer, kappa_0=1, nu_0=3){
   qbdata <- subset(passPlays, Passer==passer)
 
-    #todo pass priors & set defaults, rename
   if(!any(qbdata$PassOutcome=="Complete") | !any(qbdata$PassOutcome=="Incomplete")){
     print(qbdata$Passer[1])
     return(0)
