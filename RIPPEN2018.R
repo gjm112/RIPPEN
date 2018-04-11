@@ -26,29 +26,35 @@ passSim <- function(qbdata, kappa_0, nu_0){
 	# 		S2n <- Vo*S2o + (nj-1)S2j + [(Ko*nj)/(Ko+nj)](Yj - Mo)^2
 	# 		Mn <- (Ko/Ko+nj)*Mo + (nj/Ko+nj)*(Yj)
 	# 		Kn <- Ko + nj
-	n_j <- length(qbdata$TotalYards[passPlays$PassOutcome=="Complete"])
-	ybar_j <- mean(log(qbdata$TotalYards[passPlays$PassOutcome=="Complete"] + 1))
-	S2_j <- var(log(qbdata$TotalYards[passPlays$PassOutcome=="Complete"] + 1))
+	n_j <- length(qbdata$TotalYards[qbdata$PassOutcome=="Complete"])
+	ybar_j <- mean(log(qbdata$TotalYards[qbdata$PassOutcome=="Complete"] + 1))
+	if (n_j > 1){
+	  S2_j <- var(log(qbdata$TotalYards[qbdata$PassOutcome=="Complete"] + 1))
+	} else {
+	  S2_j <- 0
+	}
 	nu_n <- nu_0 + n_j
+	 
 	sigma2_n <- (1/nu_n)*(nu_0*sigma2_0 + (n_j-1)*S2_j + (kappa_0*n_j)/(kappa_0+n_j)*(ybar_j - mu_0)^2)
 
-	mu_n <- kappa_0/(kappa_0+n_j)*mu_0 + n_j/(kappa_0 + n_j)*ybar_j
-	kappa_n <- kappa_0 + n_j
+	
+	#kappa_n <- kappa_0 + n_j
 
 	# 3.	Draw S2i
-	sigma2_star <- rinvchisq(1, nu_n, sigma2_n)
-
+	sigma2_star <- rinvgamma(1, shape = nu_n/2, rate = (nu_n/2)*sigma2_n)
+	#rinvchisq(1, nu_n, sigma2_n)
 	# 4.	Draw Mi
 	# 		Mi <- S2i * Yj * N(Mn, S2i/Kn)
-
-	mu_star <- rnorm(1, mu_n, sqrt(sigma2_star/kappa_n))
+	mu_n <- ((kappa_0/sigma2_star)*mu_0 + (n_j/sigma2_star)*ybar_j) / (kappa_0/sigma2_star + n_j/sigma2_star )
+	
+	mu_star <- rnorm(1, mu_n, sqrt(1 / (kappa_0/sigma2_star + n_j/sigma2_star)))
 
 	# 5.	Draw y
 	y_tilde <- rnorm(1, mu_star, sqrt(sigma2_star))
 
 	# 6.	yards <- exp(Yi - 1)
-	y <- exp(y_tilde) - 1
-	return(y)
+	yards <- exp(y_tilde) - 1
+	return(yards)
 }
 
 ###################################################
@@ -61,8 +67,8 @@ drivesim <- function(qbdata, kickCoef, kappa_0, nu_0){
 	driveState$togo <- 10
 	driveState$togoTD <- 80 #between 100 and 0
 
-	nCompleted <- sum(qbdata$PassOutcome=="Completed")
-	nPasses <- length(qbdata$passOutcome)
+	nCompleted <- sum(qbdata$PassOutcome=="Complete")
+	nPasses <- length(qbdata$PassOutcome)
 	alphaP <- 1
 	betaP <- 1
 
@@ -71,18 +77,17 @@ drivesim <- function(qbdata, kickCoef, kappa_0, nu_0){
 	alphaI <- 1
 	betaI <- 1
 
-	qbdata$TotalYards <- qbdata$AirYards + qbdata$YardsAfterCatch
 
 	#Add a while loop to make sure that down is always less than 4.
 	while(driveState$down < 4){
 	  #Returns 1 if complete and 0 if incomplete
-	  pComp <- rbeta(1, alphaP + nCompleted, betaP + nPasses-nCompleted )
+	  pComp <- rbeta(1, alphaP + nCompleted, betaP + nPasses-nCompleted)
 	  pass <- rbinom(1, 1, pComp)
 
 		# If incomplete check for interception or add down
 	  if (pass == 0){
 			# Was the pass intercepted, only sampling from incomplete passes
-	    pInt <- rbeta(1, alphaI + nInt, betaI + nIncomp-nInt )
+	    pInt <- rbeta(1, alphaI + nInt, betaI + nIncomp - nInt )
 	    int <- rbinom(1, 1, pInt)
 			# int <- sample(qbdata$InterceptionThrown[qbdata$PassOutcome=="Incomplete Pass"],1)
 			if (int == 1){return(0);}
@@ -117,15 +122,11 @@ drivesim <- function(qbdata, kickCoef, kappa_0, nu_0){
 }
 
 #Run drive simulations for a given passer
-runSim <- function(passer, kappa_0=1, nu_0=3){
+#Add year and game.  
+runSim <- function(passer, kappa_0=1, nu_0=3, nsim = 100){
+  print(passer)
   qbdata <- subset(passPlays, Passer==passer)
-
-    #todo pass priors & set defaults, rename
-  if(!any(qbdata$PassOutcome=="Complete") | !any(qbdata$PassOutcome=="Incomplete")){
-    print(qbdata$Passer[1])
-    return(0)
-  }
-  results <- replicate(100,drivesim(qbdata,kickCoef, kappa_0, nu_0))
+  results <- replicate(nsim,drivesim(qbdata,kickCoef, kappa_0, nu_0))
   return(results)
 }
 
@@ -135,7 +136,7 @@ passPlays$TotalYards<- passPlays$AirYards + passPlays$YardsAfterCatch
 passPlays$TotalYards[passPlays$TotalYards<0] <- 0
 passPlays <- passPlays[!is.na(passPlays$Passer),]
 
-qbList <- unique(passPlays$Passer)
+qbList <- as.character(unique(passPlays$Passer)[1:10])
 
 #Collect league kicker data
 kicker <- subset(nfl, PlayType=="Field Goal", select= c("FieldGoalDistance", "FieldGoalResult"))
