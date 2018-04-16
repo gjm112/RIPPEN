@@ -1,5 +1,18 @@
-driveSim <-
-function(qbdata, kickCoef, kappa_0, nu_0){
+#' @title driveSim
+#' 
+#' @description What does this do?  
+#' 
+#' @details Fill in the details
+#' 
+#' @param nu_0 prior degrees of freedom
+#' @param kappa_0 prior something
+#' 
+#' @return 
+#' 
+#' @export
+
+
+driveSim <- function(qbdata, kickCoef, kappa_0, nu_0){
   driveState <- list()
   driveState$down <- 1
   driveState$togo <- 10

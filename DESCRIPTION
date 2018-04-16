@@ -7,3 +7,4 @@ Author: Donald Stolz and Gregory J. Matthews
 Maintainer: Gregory J. Matthews <gjm112@gmail.com>
 Description: Rush Independent Passing Player Efficiency Number (RIPPEN) computes the number of points a team would score on 10 drives if the team only ran passing plays and results were based on a quarterbacks stats.  (FIX THIS DESCRIPTION).
 License: What license is it under?
+RoxygenNote: 6.0.1

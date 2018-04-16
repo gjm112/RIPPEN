@@ -1,3 +1,17 @@
+#' @title RIPPEN
+#' 
+#' @description What does this do?  
+#' 
+#' @details Fill in the details
+#' 
+#' @param nu_0 prior degrees of freedom
+#' @param kappa_0 prior something
+#' 
+#' @return 
+#' 
+#' @export
+
+
 .Random.seed <-
 c(403L, 386L, -1466774253L, 961685223L, -1901742776L, 1011064910L, 
 49374192L, 1475547189L, -1647362841L, 919902432L, 2099584685L, 

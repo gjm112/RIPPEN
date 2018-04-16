@@ -1,5 +1,18 @@
-passSim <-
-function(qbdata, kappa_0, nu_0){
+#' @title passSim
+#' 
+#' @description What does this do?  
+#' 
+#' @details Fill in the details
+#' 
+#' @param nu_0 prior degrees of freedom
+#' @param kappa_0 prior something
+#' 
+#' @return 
+#' 
+#' @export
+
+
+passSim <- function(qbdata, kappa_0, nu_0){
   
   # 1. League Yardage / Completed Passes
   #Yards for every complete catch

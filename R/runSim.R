@@ -1,3 +1,18 @@
+#' @title runSim
+#' 
+#' @description What does this do?  
+#' 
+#' @details Fill in the details
+#' 
+#' @param nu_0 prior degrees of freedom
+#' @param kappa_0 prior something
+#' 
+#' @return 
+#' 
+#' @export
+
+
+
 runSim <-
 function(passer, kappa_0=1, nu_0=3, nsim = 100){
   print(passer)
