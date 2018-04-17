@@ -26,9 +26,9 @@ passSim <- function(qbdata, kappa_0, nu_0){
 	# 		S2n <- Vo*S2o + (nj-1)S2j + [(Ko*nj)/(Ko+nj)](Yj - Mo)^2
 	# 		Mn <- (Ko/Ko+nj)*Mo + (nj/Ko+nj)*(Yj)
 	# 		Kn <- Ko + nj
-	n_j <- length(qbdata$TotalYards[passPlays$PassOutcome=="Complete"])
-	ybar_j <- mean(log(qbdata$TotalYards[passPlays$PassOutcome=="Complete"] + 1))
-	S2_j <- var(log(qbdata$TotalYards[passPlays$PassOutcome=="Complete"] + 1))
+	n_j <- length(qbdata$TotalYards[qbdata$PassOutcome=="Complete"])
+	ybar_j <- mean(log(qbdata$TotalYards[qbdata$PassOutcome=="Complete"] + 1))
+	S2_j <- var(log(qbdata$TotalYards[qbdata$PassOutcome=="Complete"] + 1))
 	nu_n <- nu_0 + n_j
 	sigma2_n <- (1/nu_n)*(nu_0*sigma2_0 + (n_j-1)*S2_j + (kappa_0*n_j)/(kappa_0+n_j)*(ybar_j - mu_0)^2)
 
@@ -55,14 +55,14 @@ passSim <- function(qbdata, kappa_0, nu_0){
 #Create a drive simulator
 ###################################################
 
-drivesim <- function(qbdata, kickCoef, kappa_0, nu_0){
+driveSim <- function(qbdata, kickCoef, kappa_0, nu_0){
 	driveState <- list()
 	driveState$down <- 1
 	driveState$togo <- 10
 	driveState$togoTD <- 80 #between 100 and 0
 
-	nCompleted <- sum(qbdata$PassOutcome=="Completed")
-	nPasses <- length(qbdata$passOutcome)
+	nCompleted <- sum(qbdata$PassOutcome=="Complete")
+	nPasses <- length(qbdata$PassOutcome)
 	alphaP <- 1
 	betaP <- 1
 
@@ -70,8 +70,6 @@ drivesim <- function(qbdata, kickCoef, kappa_0, nu_0){
 	nInt <- sum(qbdata$InterceptionThrown)
 	alphaI <- 1
 	betaI <- 1
-
-	qbdata$TotalYards <- qbdata$AirYards + qbdata$YardsAfterCatch
 
 	#Add a while loop to make sure that down is always less than 4.
 	while(driveState$down < 4){
@@ -116,7 +114,11 @@ drivesim <- function(qbdata, kickCoef, kappa_0, nu_0){
 	return(0);
 }
 
-#Run drive simulations for a given passer
+###################################################
+#Run simulator for a given passer. 
+#  Optional custom parameters
+###################################################
+# Note passer=passer name
 runSim <- function(passer, kappa_0=1, nu_0=3){
   qbdata <- subset(passPlays, Passer==passer)
 
@@ -131,6 +133,7 @@ runSim <- function(passer, kappa_0=1, nu_0=3){
 #Collect QB Data
 passPlays <- subset(nfl,select= c("Passer","PassOutcome","AirYards","YardsAfterCatch","InterceptionThrown","Fumble"))
 passPlays$TotalYards<- passPlays$AirYards + passPlays$YardsAfterCatch
+# Set negative yards to 0
 passPlays$TotalYards[passPlays$TotalYards<0] <- 0
 passPlays <- passPlays[!is.na(passPlays$Passer),]
 
