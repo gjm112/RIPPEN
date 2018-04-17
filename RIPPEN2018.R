@@ -1,11 +1,13 @@
 #nfl<-read.csv("~/RIPPEN/NFL-Play-by-Play-2009-16.csv")
 #nfl<-read.csv("~/Dropbox/RIPPEN/NFL-Play-by-Play-2009-16.csv")
+
 library(RIPPEN)
 data(nfl)
 
 #Collect QB Data
 passPlays <- subset(nfl,select= c("Passer","PassOutcome","AirYards","YardsAfterCatch","InterceptionThrown","Fumble"))
 passPlays$TotalYards<- passPlays$AirYards + passPlays$YardsAfterCatch
+# Set negative yards to 0
 passPlays$TotalYards[passPlays$TotalYards<0] <- 0
 passPlays <- passPlays[!is.na(passPlays$Passer),]
 
