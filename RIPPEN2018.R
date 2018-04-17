@@ -23,4 +23,10 @@ kickCoef <- boot$coefficients
 qbResults <- lapply(qbList, runSim)
 names(qbResults) <- as.character(qbList)
 
-meanResults <- data.frame(mean=unlist(lapply(qbResults, mean)))
+meanResults <- data.frame(qb = names(qbResults), mean=unlist(lapply(qbResults, mean)))
+meanResults[order(meanResults$mean),]
+#save(meanResults, file = "/Users/gregorymatthews/Dropbox/RIPPENgit/data/meanResults.rda")
+
+qbbig <- names(sort(table(passPlays$Passer)))[sort(table(passPlays$Passer)) > 500]
+meanResultsSub <- meanResults[meanResults$qb %in% qbbig,]
+meanResultsSub[order(meanResultsSub$mean),]

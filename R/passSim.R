@@ -34,7 +34,15 @@ passSim <- function(qbdata, kappa_0, nu_0){
   # 		Mn <- (Ko/Ko+nj)*Mo + (nj/Ko+nj)*(Yj)
   # 		Kn <- Ko + nj
   n_j <- length(qbdata$TotalYards[qbdata$PassOutcome=="Complete"])
+  
+  if (n_j != 0){
   ybar_j <- mean(log(qbdata$TotalYards[qbdata$PassOutcome=="Complete"] + 1))
+  } else {
+    #Doesn't matter what this valeu is because the n_j is 0.  
+    #This is to prevent getting a NaN
+    ybar_j <- 0 
+  }
+  
   if (n_j > 1){
     S2_j <- var(log(qbdata$TotalYards[qbdata$PassOutcome=="Complete"] + 1))
   } else {
