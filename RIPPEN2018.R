@@ -20,8 +20,12 @@ kicker <- kicker[!is.na(kicker$Good),]
 boot <- glm(Good ~ FieldGoalDistance, data = kicker, family = "binomial")
 kickCoef <- boot$coefficients
 
-qbResults <- lapply(qbList, runSim)
-names(qbResults) <- as.character(qbList)
+qbbig <- names(sort(table(passPlays$Passer)))[sort(table(passPlays$Passer)) > 3200]
+
+#qbResults <- mclapply(qbbig, runSim, nsim=1000, mc.cores=3)
+qbResults <- lapply(qbbig, runSim, nsim=2000)
+
+names(qbResults) <- as.character(qbbig)
 
 meanResults <- data.frame(qb = names(qbResults), mean=unlist(lapply(qbResults, mean)))
 meanResults[order(meanResults$mean),]
