@@ -20,22 +20,31 @@ kicker <- kicker[!is.na(kicker$Good),]
 boot <- glm(Good ~ FieldGoalDistance, data = kicker, family = "binomial")
 kickCoef <- boot$coefficients
 
-qbbig <- names(sort(table(passPlays$Passer)))[sort(table(passPlays$Passer)) > 2000]
+qbbig <- names(sort(table(passPlays$Passer)))[sort(table(passPlays$Passer)) > 3000]
 
-qbResults <- lapply(qbbig, runSim, nsim = 1000)
-names(qbResults) <- as.character(qbList)
+qbResults <- lapply(qbbig, runSim, nsim = 2000)
+names(qbResults) <- as.character(qbbig)
 
 res <- data.frame(do.call(rbind,lapply(qbResults,table)), qb = names(qbResults))
 res <- res[res$qb %in% qbbig,]
-plot(res$X7/100, res$X3/100, pch=16, col= "white")
-text(res$X7/100, res$X3/100, res$qb)
-for (i in seq(0,5,0.25)){
-curve((i-7*x)/3,0,100, add = TRUE,col="black")
+png("/Users/gregorymatthews/Dropbox/RIPPEN/RIPPENplotForPoster.png",res = 300, units = "in", h = 10, w = 12)
+library(teamcolors)
+plot(res$X7/2000, res$X3/2000, pch=16, xlim = c(0.17, 0.27), ylim = c(0.16, 0.22),xlab = "TD Probability", ylab = "FG probability")
+for (i in seq(0,5,0.1)){
+  curve((i-7*x)/3,0,1, add = TRUE,col="grey", lty = 3)
 }
+pts <- curve((2-7*x)/3,0,1, add = TRUE,col="black",lwd=2)
+text(pts$x[21],pts$x[22], "RIPPEN = 2", srt = -70)
+text(res$X7[!res$qb%in%c("B.Roethlisberger","A.Dalton","E.Manning","P.Manning","T.Romo")]/2000, res$X3[!res$qb%in%c("B.Roethlisberger","A.Dalton","E.Manning","P.Manning","T.Romo")]/2000, res$qb[!res$qb%in%c("B.Roethlisberger","A.Dalton","E.Manning","P.Manning","T.Romo")],pos=1)
+text(res$X7[res$qb%in%c("B.Roethlisberger","A.Dalton","E.Manning")]/2000, res$X3[res$qb%in%c("B.Roethlisberger","A.Dalton","E.Manning")]/2000, res$qb[res$qb%in%c("B.Roethlisberger","A.Dalton","E.Manning")],pos=3)
+text(res$X7[res$qb%in%c("P.Manning")]/2000, res$X3[res$qb%in%c("P.Manning")]/2000, res$qb[res$qb%in%c("P.Manning")],pos=4)
+text(res$X7[res$qb%in%c("T.Romo")]/2000, res$X3[res$qb%in%c("T.Romo")]/2000, res$qb[res$qb%in%c("T.Romo")],pos=3)
+dev.off()
+
 
 meanResults <- data.frame(qb = names(qbResults), mean=unlist(lapply(qbResults, mean)))
 meanResults[order(meanResults$mean),]
-#save(meanResults, file = "/Users/gregorymatthews/Dropbox/RIPPENgit/data/meanResults.rda")
+save(meanResults, file = "/Users/gregorymatthews/Dropbox/RIPPENgit/data/meanResults2000simsSameAsPoster.rda")
 
 qbbig <- names(sort(table(passPlays$Passer)))[sort(table(passPlays$Passer)) > 500]
 meanResultsSub <- meanResults[meanResults$qb %in% qbbig,]
