@@ -30,7 +30,7 @@ res <- res[res$qb %in% qbbig,]
 plot(res$X7/100, res$X3/100, pch=16, col= "white")
 text(res$X7/100, res$X3/100, res$qb)
 for (i in seq(0,5,0.25)){
-curve((i-7*x)/3,0,100, add = TRUE,col="red")
+curve((i-7*x)/3,0,100, add = TRUE,col="black")
 }
 
 meanResults <- data.frame(qb = names(qbResults), mean=unlist(lapply(qbResults, mean)))

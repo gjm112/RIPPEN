@@ -11,9 +11,6 @@
 #'
 #' @export
 
-
-# NOTE: Consider changing to reflect season toatal nsim=176
-# - 16 games/season * 11 drives/game = 176 drives/season
 runSim <-
 function(passer, kappa_0=1, nu_0=3, nsim = 100){
   print(passer)
