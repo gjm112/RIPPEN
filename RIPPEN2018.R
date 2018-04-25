@@ -22,13 +22,14 @@ kickCoef <- boot$coefficients
 
 qbbig <- names(sort(table(passPlays$Passer)))[sort(table(passPlays$Passer)) > 3000]
 
-qbResults <- lapply(qbbig, runSim, nsim = 2000)
+#qbResults <- lapply(qbbig, runSim, nsim = 2000)
+qbResults <- mclapply(qbbig, runSim, nsim = 2000, mc.cores = 2)
 names(qbResults) <- as.character(qbbig)
 
 res <- data.frame(do.call(rbind,lapply(qbResults,table)), qb = names(qbResults))
 res <- res[res$qb %in% qbbig,]
-png("/Users/gregorymatthews/Dropbox/RIPPEN/RIPPENplotForPoster.png",res = 300, units = "in", h = 10, w = 12)
-library(teamcolors)
+png("~/Dropbox/RIPPEN/Poster.png",res = 300, units = "in", h = 10, w = 12)
+#library(teamcolors)
 plot(res$X7/2000, res$X3/2000, pch=16, xlim = c(0.17, 0.27), ylim = c(0.16, 0.22),xlab = "TD Probability", ylab = "FG probability")
 for (i in seq(0,5,0.1)){
   curve((i-7*x)/3,0,1, add = TRUE,col="grey", lty = 3)
