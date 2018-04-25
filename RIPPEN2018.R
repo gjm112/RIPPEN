@@ -23,7 +23,7 @@ kickCoef <- boot$coefficients
 qbbig <- names(sort(table(passPlays$Passer)))[sort(table(passPlays$Passer)) > 3000]
 
 #qbResults <- lapply(qbbig, runSim, nsim = 2000)
-qbResults <- mclapply(qbbig, runSim, nsim = 2000, mc.cores = 2)
+qbResults <- mclapply(qbbig, runSim, nsim = 3000, mc.cores = 2)
 names(qbResults) <- as.character(qbbig)
 
 res <- data.frame(do.call(rbind,lapply(qbResults,table)), qb = names(qbResults))
