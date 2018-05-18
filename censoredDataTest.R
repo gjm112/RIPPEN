@@ -13,7 +13,9 @@ tds <- log(passPlays$TotalYards[passPlays$Touchdown == 1] + 1)
 
 
 ll <- function(tds,nottds,prior){
-  function(x){(sum(dnorm(nottds,x[1],x[2],log = TRUE)) + sum(pnorm(tds,x[1],x[2],log = TRUE, lower.tail = FALSE))) + log(prior(x))}
+  function(x){(sum(dnorm(nottds,x[1],x[2],log = TRUE)) + 
+                 sum(pnorm(tds,x[1],x[2],log = TRUE, lower.tail = FALSE))) + 
+      log(prior(x))}
 }
 
 prior <- function(x){
