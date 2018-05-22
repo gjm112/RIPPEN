@@ -6,8 +6,9 @@ library(parallel)
 data(nfl)
 
 #Collect QB Data
-passPlays <- subset(nfl,select= c("Passer","PassOutcome","AirYards","YardsAfterCatch","InterceptionThrown","Fumble"))
+passPlays <- na.omit(subset(nfl,select= c("Passer","PassOutcome","AirYards","YardsAfterCatch","InterceptionThrown","Fumble", "Date", "HomeTeam", "AwayTeam", "Season")))
 passPlays$TotalYards<- passPlays$AirYards + passPlays$YardsAfterCatch
+
 # Set negative yards to 0
 passPlays$TotalYards[passPlays$TotalYards<0] <- 0
 passPlays <- passPlays[!is.na(passPlays$Passer),]
@@ -46,9 +47,13 @@ save(qbResults, file = "/Users/groot/RIPPEN/data/qbResults20000.rda")
 
 
 meanResults <- data.frame(qb = names(qbResults), mean=unlist(lapply(qbResults, mean)))
+gameMeanResults <- data.frame(qb = names(meanResults), mean=(meanResults$mean * 11))
+
 meanResults[order(meanResults$mean),]
 save(meanResults, file = "/Users/groot/RIPPEN/data/meanResults20000.rda")
 
 qbbig <- names(sort(table(passPlays$Passer)))[sort(table(passPlays$Passer)) > 500]
 meanResultsSub <- meanResults[meanResults$qb %in% qbbig,]
 meanResultsSub[order(meanResultsSub$mean),]
+
+
