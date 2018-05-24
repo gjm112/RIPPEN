@@ -6,6 +6,8 @@
 #'
 #' @param nu_0 prior degrees of freedom
 #' @param kappa_0 prior something
+#' @param date date of game YYYY-MM-DD
+#' @param season season 20XX (2009-2016)
 #'
 #' @return
 #'
@@ -14,17 +16,19 @@
 runSim <-
 function(passer, kappa_0=1, nu_0=3, nsim = 100, date=NULL, season=NULL){
   print(passer)
-  
     if(!is.null(date)){
+      print(date)
     # modify Passplays to contain only results from date
       gamePasses <- subset(passPlays, Date==date)
       qbdata <- subset(gamePasses, Passer==passer)
       
     } 
     else if(!is.null(season)){
+      print(season)
     # modify Passplays to contain only results from season
       seasonPasses <- subset(passPlays, Season==season)
       qbdata <- subset(seasonPasses, Passer==passer)
+      View(qbdata)
       
     }
     else{

@@ -22,10 +22,10 @@ kicker <- kicker[!is.na(kicker$Good),]
 boot <- glm(Good ~ FieldGoalDistance, data = kicker, family = "binomial")
 kickCoef <- boot$coefficients
 
-qbbig <- names(sort(table(passPlays$Passer)))[sort(table(passPlays$Passer)) > 2000]
+qbbig <- names(sort(table(passPlays$Passer)))[sort(table(passPlays$Passer)) > 3000]
 
-#qbResults <- lapply(qbbig, runSim, nsim = 2000)
-qbResults <- mclapply(qbbig, runSim, nsim = 20000, mc.cores = 4)
+#qbResults <- lapply(qbbig, runSim, nsim = 20, season=2009)
+qbResults <- mclapply(qbbig, runSim, nsim = 2000, season=2009, mc.cores = 2)
 names(qbResults) <- as.character(qbbig)
 save(qbResults, file = "/Users/groot/RIPPEN/data/qbResults20000.rda")
 
