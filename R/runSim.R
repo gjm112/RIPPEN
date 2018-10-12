@@ -15,6 +15,7 @@
 
 runSim <-
 function(passer, kappa_0=1, nu_0=3, nsim = 100, date=NULL, season=NULL){
+  # NOTE: We should setup an error check in case Date/Season does not exist
   print(passer)
     if(!is.null(date)){
       print(date)
@@ -28,8 +29,7 @@ function(passer, kappa_0=1, nu_0=3, nsim = 100, date=NULL, season=NULL){
     # modify Passplays to contain only results from season
       seasonPasses <- subset(passPlays, Season==season)
       qbdata <- subset(seasonPasses, Passer==passer)
-      View(qbdata)
-      
+
     }
     else{
       qbdata <- subset(passPlays, Passer==passer)
