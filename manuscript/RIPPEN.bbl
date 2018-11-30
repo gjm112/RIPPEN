@@ -1,0 +1,20 @@
+\begin{thebibliography}{1}
+% BibTex style file: imsart-nameyear.bst, 2013-01-28
+% Default style options (sort=1,type=nameyear).
+% Used options (sort=1,type=nameyear).
+
+\bibitem[\protect\citeauthoryear{James, Albert and
+  Stern}{1993}]{james1993answering}
+\begin{barticle}[author]
+\bauthor{\bsnm{James},~\bfnm{Bill}\binits{B.}},
+  \bauthor{\bsnm{Albert},~\bfnm{Jim}\binits{J.}} \AND
+  \bauthor{\bsnm{Stern},~\bfnm{Hal~S}\binits{H.~S.}}
+(\byear{1993}).
+\btitle{Answering questions about baseball using statistics}.
+\bjournal{Chance}
+\bvolume{6}
+\bpages{17--30}.
+\end{barticle}
+\endbibitem
+
+\end{thebibliography}

@@ -1,0 +1,247 @@
+\documentclass[aoas]{imsart}\usepackage[]{graphicx}\usepackage[]{color}
+%% maxwidth is the original width if it is less than linewidth
+%% otherwise use linewidth (to make sure the graphics do not exceed the margin)
+\makeatletter
+\def\maxwidth{ %
+  \ifdim\Gin@nat@width>\linewidth
+    \linewidth
+  \else
+    \Gin@nat@width
+  \fi
+}
+\makeatother
+
+\definecolor{fgcolor}{rgb}{0.345, 0.345, 0.345}
+\newcommand{\hlnum}[1]{\textcolor[rgb]{0.686,0.059,0.569}{#1}}%
+\newcommand{\hlstr}[1]{\textcolor[rgb]{0.192,0.494,0.8}{#1}}%
+\newcommand{\hlcom}[1]{\textcolor[rgb]{0.678,0.584,0.686}{\textit{#1}}}%
+\newcommand{\hlopt}[1]{\textcolor[rgb]{0,0,0}{#1}}%
+\newcommand{\hlstd}[1]{\textcolor[rgb]{0.345,0.345,0.345}{#1}}%
+\newcommand{\hlkwa}[1]{\textcolor[rgb]{0.161,0.373,0.58}{\textbf{#1}}}%
+\newcommand{\hlkwb}[1]{\textcolor[rgb]{0.69,0.353,0.396}{#1}}%
+\newcommand{\hlkwc}[1]{\textcolor[rgb]{0.333,0.667,0.333}{#1}}%
+\newcommand{\hlkwd}[1]{\textcolor[rgb]{0.737,0.353,0.396}{\textbf{#1}}}%
+\let\hlipl\hlkwb
+
+\usepackage{framed}
+\makeatletter
+\newenvironment{kframe}{%
+ \def\at@end@of@kframe{}%
+ \ifinner\ifhmode%
+  \def\at@end@of@kframe{\end{minipage}}%
+  \begin{minipage}{\columnwidth}%
+ \fi\fi%
+ \def\FrameCommand##1{\hskip\@totalleftmargin \hskip-\fboxsep
+ \colorbox{shadecolor}{##1}\hskip-\fboxsep
+     % There is no \\@totalrightmargin, so:
+     \hskip-\linewidth \hskip-\@totalleftmargin \hskip\columnwidth}%
+ \MakeFramed {\advance\hsize-\width
+   \@totalleftmargin\z@ \linewidth\hsize
+   \@setminipage}}%
+ {\par\unskip\endMakeFramed%
+ \at@end@of@kframe}
+\makeatother
+
+\definecolor{shadecolor}{rgb}{.97, .97, .97}
+\definecolor{messagecolor}{rgb}{0, 0, 0}
+\definecolor{warningcolor}{rgb}{1, 0, 1}
+\definecolor{errorcolor}{rgb}{1, 0, 0}
+\newenvironment{knitrout}{}{} % an empty environment to be redefined in TeX
+
+\usepackage{alltt}
+%\usepackage{setspace}
+
+\usepackage{dsfont}
+\usepackage{amsthm,amsmath,amssymb,natbib}
+\RequirePackage[colorlinks,citecolor=blue,urlcolor=blue]{hyperref}
+\usepackage{xspace,soul}
+\usepackage{graphicx}
+
+\usepackage[margin=1.45in]{geometry}
+
+\startlocaldefs
+\newcommand{\blind}{Three anonymous authors}
+
+\newcommand{\Ex}{\mathbb{E}}
+\newcommand{\Var}{\text{Var}}
+\newcommand{\bp}{\mathbf{p}}
+
+\newcommand{\R}{\textsf{R}\xspace}
+\newcommand{\pkg}[1]{\texttt{#1}\xspace}
+
+\newcommand{\greg}[1]{\sethlcolor{yellow}\hl{[GM]: #1}}
+\newcommand{\ben}[1]{\sethlcolor{green}\hl{[BB]: #1}}
+\newcommand{\mike}[1]{\sethlcolor{cyan}\hl{[ML]: #1}}
+
+\def\balpha{\pmb{\alpha}}
+\def\btheta{\pmb{\theta}}
+\def\bgamma{\pmb{\gamma}}
+\def\btheta{\pmb{\theta}}
+\def\bphi{\pmb{\phi}}
+\def\bpsi{\pmb{\psi}}
+\def\bB{\pmb{B}}
+\def\bD{\pmb{D}}
+\def\bH{\pmb{H}}
+\def\bS{\pmb{S}}
+\def\bX{\pmb{X}}
+
+\endlocaldefs
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\begin{document}
+
+\begin{frontmatter}
+
+\title{Rush Independent Passing Player Efficiency Number (RIPPEN)}
+\runtitle{RIPPEN}
+
+
+
+\author{\fnms{Gregory J.} \snm{Matthews}\corref{}\ead[label=e1]{gmatthews1@luc.edu}}
+\address{\printead{e1}}
+\affiliation{Skidmore College}
+
+\and
+\author{\fnms{Russell} \snm{Cain}\ead[label=e2]{rcain@luc.edu}}
+\address{\printead{e2}}
+\affiliation{Loyola University Chicago}
+
+\and
+\author{\fnms{Donald} \snm{Stolz}\ead[label=e3]{dstolz@luc.edu}}
+\address{\printead{e3}}
+\affiliation{Smith College}
+
+
+\runauthor{Lopez, Matthews, Baumer}
+
+\begin{abstract}
+RIPPEN, Rush Independent Passing Player Efficiency Number, is a new measurement of passer performance. In a simulated world, how would a passer perform starting from their twenty yard line and only performing pass plays? The aspects of each play are simulated using a Bayesian model. This allows rookies and backups with minimal data to be fairly evaluated. Drives would end in a touchdown, field goal or turnover. A player’s RIPPEN is the average number of points they would be expected to score per drive. Our metric improves on existing passer rating systems because it is updated to current NFL data, does not weight passing touchdowns, and it is able to be more intuitively understood.
+
+\end{abstract}
+
+\begin{keyword}
+\kwd{sports analytics}
+\kwd{Bayesian modeling}
+\kwd{competitive balance}
+\kwd{MCMC}
+\end{keyword}
+
+\end{frontmatter}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%\input{intro}
+
+
+\section{Introduction}
+Passer rating is bad.  RIPPEN is better.  
+The NCAA and NFL formulas are different. Mention this.  
+
+Tim Tebow example of why QBR is bad: 
+%http://bleacherreport.com/articles/889199-big-flaws-in-espns-total-qbr-exposed-after-tim-tebow-rates-above-aaron-rodgers#
+
+Read more about this.  Might be interesting:  
+%https://412sportsanalytics.wordpress.com/2016/10/05/pareto-frontier-and-non-dominated-quarterbacks/
+- Would we add something like this to our results
+
+DYAR and DVOA: %https://www.footballoutsiders.com/stats/qb
+
+CITE Passer Rating
+CITE QBR
+
+\section{Methods}
+Describe what we did.  
+
+\subsection{Theoretcal Results}
+Do we have any? 
+
+\subsection{Preliminary Results \& Notes}
+
+This will house all of amusing musings from the past few weeks while we wait for the overall paper to take form. First thing's first, we need to know what if left to be done:
+
+\subsubsection{TO DO:}
+\begin{itemize}
+	\item Type up Markov Chain
+	\item Implement %\href{http://mcmc-jags.sourceforge.net/}{JAGS?}
+	\item Censored Data
+\end{itemize}
+
+\subsubsection{Markov Chain Notion: }
+\begin{center}
+	\begin{tabular}{|c |c c c c|} 
+		\hline
+		-Markov- & Down 1 & Down 2 & Down 3 & Down 4 \\ \hline
+		Down 1 & a & b & 0 & 0 \\ 
+		\hline
+		Down 2 & c & 0 & d & 0 \\
+		\hline
+		Down 3 & e & 0 & 0 & f\\
+		\hline
+		Down 4 & 0 & 0 & 0 & 1 \\
+		\hline
+	\end{tabular}
+	\begin{align*}
+	a &= Pr(y_{d,1} > 10)\\
+	b &= 1-a\\
+	c &= Pr(y_{d,2} > 10 - y_{d,1})\\
+	d &= 1 - c\\
+	e &= Pr(y_{d,3} > 10 - y_{d,2} - y_{d,1})\\
+	f &= 1 - e
+	\end{align*}
+\end{center}
+
+\subsubsection{Closed Form? Here is all of the Notation:}
+Our notation becomes rather hairy around here, so bear with me. I will just go ahead and write down the equations we made up and try to tell which of the 14 different i's imply what: 
+
+% \begin{enumerate}[(a)]
+% 	\item $y_{d,i}$: The $i^{th}$ pass of the $d^{th}$ down series. Therefore, $i \in {1,2,3,4}$ and $d$ is loosely less than 8. 
+% 	\item G: The result of the drive/simulation. Either 7 for TD, 3 for FG or 0 for interception or missed FG.
+% 	\item I(...): Indicator function: ... 
+% 	\item $C_{d,i}$ ... 
+% 	\item $I_{d,i}$: E[ I(D = 4) ] = P(D = 4)
+% 	\item $C_{d,i}$: $t'_{1} \cdot M$ = $t'_{2}$ = [$a$  $b$  0  0]
+% 	\item .... : $t'_{2} \cdot M$ = $t'_{3}$ = [$a^{2}+bc$  $ab$  $bd$  0]
+% 	\item $$Pr(G_{j} = 3) = Pr(FG \cap (\sum_{i=1}^{n-1} I(D_{n} = 4) = 0 ) \cap (\sum_{i=1}^{n-1} y_{i} < 80 | Q = \sum_{i=1}^{n-1} y_{i})) \cdot P(Q = q)$$ \\... Pr(FG $\cap$ Q = q) ?
+% 	\item $$Pr(G=7) = \sum_{n=1}^{\infty} Pr(\sum_{i = 1}^{n}y_{i} > 80 | \sum_{i=1}^{n}I(D_{i} = 4) = 0) \cdot P("...")$$
+% 	
+% 	
+% \end{enumerate}
+
+
+
+\section{Results}
+\subsection{Bayesian Posterior Distributions Stuff}
+What do the posterior parameters look like? 
+
+\subsection{Rodgers vs Tebow Example. }
+
+\subsection{Distribtuion of RIPPEN}
+
+\subsection{Best Games/Seasons}
+
+\section{Conclusion and Future Work}
+RIPPEN is good.  We will do more eventually.  
+
+Adding a defensive adjustment.  
+
+
+Do we even want to add these things?  
+How do we deal with pass interference.  
+Defensive Holding? 
+Sacks? Add another layer.  
+Fumbles? Could treat similar to interceptions? 
+Should interceptions ever result in negative numbers?  
+How do we assign the negative numbers for interceptions?  
+
+
+
+
+
+
+
+
+\bibliographystyle{imsart-nameyear}
+\bibliography{refs}
+
+
+
+
+\end{document}
