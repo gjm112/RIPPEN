@@ -12,7 +12,7 @@
 #' @export
 
 
-passSim <- function(qbdata, kappa_0, nu_0){
+passSim <- function(qbdata, kappa_0, nu_0, n = 1){
 
   # 1. League Yardage / Completed Passes
   #Yards for every complete catch

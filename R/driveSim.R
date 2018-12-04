@@ -12,29 +12,28 @@
 #' @export
 
 
-driveSim <- function(qbdata, kickCoef, kappa_0, nu_0){
+driveSim <- function(qbdata, kickCoef, kappa_0, nu_0, z){
   driveState <- list()
   driveState$down <- 1
   driveState$togo <- 10
   driveState$togoTD <- 80 #between 100 and 0
-
+  
   nCompleted <- sum(qbdata$PassOutcome=="Complete")
   nPasses <- length(qbdata$PassOutcome)
   alphaP <- 1
   betaP <- 1
-
+  
   nIncomp <- nPasses - nCompleted
   nInt <- sum(qbdata$InterceptionThrown)
   alphaI <- 1
   betaI <- 1
-
-
+  
   #Add a while loop to make sure that down is always less than 4.
   while(driveState$down < 4){
     #Returns 1 if complete and 0 if incomplete
     pComp <- rbeta(1, alphaP + nCompleted, betaP + nPasses-nCompleted)
     pass <- rbinom(1, 1, pComp)
-
+    
     # If incomplete check for interception or add down
     if (pass == 0){
       # Was the pass intercepted, only sampling from incomplete passes
@@ -46,7 +45,8 @@ driveSim <- function(qbdata, kickCoef, kappa_0, nu_0){
     }
     # Else get results of completed pass
     else {
-      yards <- passSim(qbdata, kappa_0, nu_0)
+      #yards <- passSim(qbdata, kappa_0, nu_0)
+      yards <- getYardsSim(z)
       #yards <- sample(qbdata$TotalYards[qbdata$PassOutcome=="Complete"],1)
       # Check for first down
       if (driveState$togo < yards){
