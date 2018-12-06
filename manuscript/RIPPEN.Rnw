@@ -82,8 +82,35 @@ RIPPEN, Rush Independent Passing Player Efficiency Number, is a new measurement 
 
 %\input{intro}
 
-
+%Censoring in rjags
 \section{Introduction}
+
+
+
+
+The current passer rating measure has been around since 1973.  
+
+NFL's Quarterback Rating: 
+
+Using the notation from \cite{vanDohlen2011}:
+$$
+QBR = \left(\frac{\frac{C}{A}-0.3}{0.2} + \frac{\frac{Y}{A}-3}{4} + \frac{\frac{T}{A}}{0.05} + \frac{0.095-\frac{I}{A}}{0.04}\right)\left(\frac{100}{6}\right)
+$$
+where 
+$C$ = Number of Completions\\
+$Y$ = Number of Yards\\
+$A$ = Number of Attempts\\
+$T$ = Number of Touchdowns\\
+$I$ = Number of Interceptions\\
+
+Each of these four components has a maximum of 2.375, so a ``perfect" passer rating in the NFL is $\frac{(2.375)(4)(100)}{6} = 158.3$.  
+
+The NCAA passer rating is: 
+$\frac{8.4Y + 330T + 100C - 200I}{A}$
+
+This number ranged from -731.6 to 1261.6.  Ridiculous.  
+
+
 Passer rating is bad.  RIPPEN is better.  
 The NCAA and NFL formulas are different. Mention this.  
 
@@ -117,11 +144,53 @@ Kevin P. Braig, Journal of Quantitative Analysis in Sports
 CITE Passer Rating
 CITE QBR
 
+Don Steinberg: How I Learned to Stop Worrying and Love the Bomb
+http://www.donsteinberg.com/qbrating.htm
+
+Quarterback Rating: 
+http://www.nfl.com/help/quarterbackratingformula
+
+NFL Passer rating: 
+https://www.profootballhof.com/news/nfl-s-passer-rating/
+
+College Passer efficiency: 
+http://football.stassen.com/pass-eff/
+
+Defending Passer rating: Kerry Byrne
+https://www.si.com/more-sports/2011/08/03/defending-qb-rating
+
+PRO FOOTBALL; The N.F.L.'s Passer Rating, Arcane and Misunderstood
+https://www.nytimes.com/2004/01/14/sports/pro-football-the-nfl-s-passer-rating-arcane-and-misunderstood.html
+
+\cite{Stimel2009}
+Looking for structural breaks in QBR.  
+
+\cite{vanDohlen2011}
+
+\subsection{Criticism of QBR}
+Arbitrary scale (0 to 158.3??)
+Hard to interpret (What does 121.6 mean?)
+QBR overly credits QBs for scoring TDs.  
+
+
+
+
+
 \section{Methods}
+We propose Rush Independent Passing Player Efficiency Number (RIPPEN).  
 Describe what we did.  
+
+RIPPEN uses the exact same inputs as QBR: 
+Completions, Yards, Interceptions, and Touchdowns.  
+
+ 
 
 \subsection{Theoretcal Results}
 Do we have any? 
+
+
+\subsection{Correlation between RIPPEN and winning}
+Compare RIPPEN and winning to QBR and winning.  
 
 \subsection{Preliminary Results \& Notes}
 
