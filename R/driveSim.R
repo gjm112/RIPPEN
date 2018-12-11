@@ -1,4 +1,4 @@
-#' @title driveSim
+ #' @title driveSim
 #'
 #' @description This function simulates a single drive for RIPPEN
 #'

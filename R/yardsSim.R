@@ -37,13 +37,13 @@ yardsSim <- function(qbdata){
   }"
 
   
-  setwd("/Users/gregorymatthews/Dropbox/RIPPENgit/")
-  write(model.str,"rippen.bug")
+  #setwd("/Users/gregorymatthews/Dropbox/RIPPENgit/")
+  #write(model.str,"rippen.bug")
   library(rjags)
   
   n.chains<-1
   n.adapt<-100
-  jags <- jags.model('/Users/gregorymatthews/Dropbox/RIPPENgit/rippen.bug',
+  jags <- jags.model(textConnection(model.str),
                      data = list('y' = y, 'isCensored' = isCensored,  'n' = n, 'cens_y' = cens_y), 
                      n.chains = 1, n.adapt = 100)
   
