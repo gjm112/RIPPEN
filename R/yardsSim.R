@@ -14,14 +14,14 @@
 #' @export
 
 yardsSim <- function(qbdata){
-  dat <- qbdata[,c("TotalYards","Touchdown")]
+  dat <- qbdata[,c("TotalYards","touchdown")]
   dat$y <- log(dat$TotalYards+1)
   
   y <- dat$y
-  y[dat$Touchdown == 1] <- NA
+  y[dat$touchdown == 1] <- NA
   
   cens_y <- dat$y
-  isCensored <- dat$Touchdown
+  isCensored <- dat$touchdown
   
   n <- nrow(dat) 
   

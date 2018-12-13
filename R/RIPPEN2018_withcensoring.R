@@ -1,8 +1,32 @@
-nfl <- nfl2018 <- read.csv("/Users/gregorymatthews/Dropbox/RIPPENgit/data/reg_pbp_2018.csv")
+#nfl <- nfl2018 <- read.csv("/Users/gregorymatthews/Dropbox/RIPPENgit/data/reg_pbp_2018.csv")
+library(RIPPEN)
+library(invgamma)
+
+nfl <- nfl2018 <- read.csv("reg_pbp_2018.csv")
 
 
 #nfl<-read.csv("~/Dropbox/RIPPEN/NFL-Play-by-Play-2009-16.csv")
 #data(nfl)
+
+##################################### Variable Changes #######################################
+#"Passer" ----> "passer_player_name"
+#"PassOutcome" ----> done away with -- replaced with complete_pass, incomplete_pass, interception indicators
+#"AirYards" ----> "air_yards"
+#"YardsAfterCatch"  ----> "yards_after_catch"
+#"InterceptionThrown"  ----> "interception"
+#"Fumble" ----> "fumble"
+#"Date"  ----> "game_date"
+#"HomeTeam" ----> "home_team"
+#"AwayTeam"  ----> "away_team"
+#"Season"  ----> done away with - we will just initialize this (as 'season') on our own.
+nfl$season <- 2018
+#"Field Goal" ----> "field_goal"   ((This is variable for play_type))
+#"FieldGoalDistance" ----> (nfl$field_goal_distance <- nfl$yardline_100 + 17) where play_type = "field_goal"
+nfl$field_goal_distance <- nfl$yardline_100 + 17
+#"FieldGoalResult" ----> "field_goal_result" -- either "made", "missed", or "blocked"
+#"PlayType" ----> "playtype"
+##################################### Variable Changes #######################################
+
 
 nfl$field_goal_distance <- nfl$yardline_100 + 17
 #Collect league kicker data
@@ -14,16 +38,17 @@ boot <- glm(Good ~ field_goal_distance, data = kicker, family = "binomial")
 kickCoef <- boot$coefficients
 
 #Collect QB Data
-passPlays <- na.omit(subset(nfl,select= c("Passer","PassOutcome","AirYards","YardsAfterCatch","InterceptionThrown","Fumble", "Date", "HomeTeam", "AwayTeam", "Season","Touchdown")))
-passPlays$TotalYards<- passPlays$AirYards + passPlays$YardsAfterCatch
+passPlays <- (subset(nfl,play_type == "pass", select= c("passer_player_name","air_yards","yards_after_catch","interception","fumble", "game_date", "home_team", "away_team", "season", "complete_pass", "incomplete_pass")))
+
+passPlays$TotalYards<- passPlays$air_yards + passPlays$yards_after_catch
 
 # Set negative yards to 0
 passPlays$TotalYards[passPlays$TotalYards<0] <- 0
-passPlays <- passPlays[!is.na(passPlays$Passer),]
+passPlays <- passPlays[!is.na(passPlays$passer_player_name),]
 
-qbList <- as.character(unique(passPlays$Passer))
+qbList <- as.character(unique(passPlays$passer_player_name))
 
-qbbig <- names(sort(table(passPlays$Passer)))[sort(table(passPlays$Passer)) > 3000]
+qbbig <- names(sort(table(passPlays$passer_player_name)))#[sort(table(passPlays$passer_player_name)) > 3000]
 
 
 sim <- function(i){
@@ -35,9 +60,9 @@ library(parallel)
 results <- list()
 for (q in qbbig){print(q)
   results[[q]] <- list()
-  for (s in 2009:2016){print(s)
+  for (s in 2018:2018){print(s)
 #This is the input to the function.  
-qbdata <- subset(passPlays, Passer == q & Season ==  s)
+qbdata <- subset(passPlays, passer_player_name == q & season ==  s)
 
 z <- yardsSim(qbdata)
 #save(z, file = "/Users/gregorymatthews/Dropbox/")
