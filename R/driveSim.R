@@ -18,13 +18,13 @@ driveSim <- function(qbdata, kickCoef, kappa_0, nu_0, z){
   driveState$togo <- 10
   driveState$togoTD <- 80 #between 100 and 0
   
-  nCompleted <- sum(qbdata$PassOutcome=="Complete")
-  nPasses <- length(qbdata$PassOutcome)
+  nCompleted <- sum(qbdata$complete_pass==1)
+  nPasses <- length(qbdata$complete_pass)
   alphaP <- 1
   betaP <- 1
   
   nIncomp <- nPasses - nCompleted
-  nInt <- sum(qbdata$InterceptionThrown)
+  nInt <- sum(qbdata$interception)
   alphaI <- 1
   betaI <- 1
   
