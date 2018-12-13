@@ -38,7 +38,7 @@ boot <- glm(Good ~ field_goal_distance, data = kicker, family = "binomial")
 kickCoef <- boot$coefficients
 
 #Collect QB Data
-passPlays <- (subset(nfl,play_type == "pass", select= c("passer_player_name","air_yards","yards_after_catch","interception","fumble", "game_date", "home_team", "away_team", "season", "complete_pass", "incomplete_pass")))
+passPlays <- (subset(nfl,play_type == "pass", select= c("passer_player_name","air_yards","yards_after_catch","interception","fumble", "game_date", "home_team", "away_team", "season", "complete_pass", "incomplete_pass","touchdown")))
 
 passPlays$TotalYards<- passPlays$air_yards + passPlays$yards_after_catch
 
