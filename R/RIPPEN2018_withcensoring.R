@@ -38,7 +38,7 @@ boot <- glm(Good ~ field_goal_distance, data = kicker, family = "binomial")
 kickCoef <- boot$coefficients
 
 #Collect QB Data
-passPlays <- (subset(nfl,play_type == "pass", select= c("passer_player_name","air_yards","yards_after_catch","interception","fumble", "game_date", "home_team", "away_team", "season", "complete_pass", "incomplete_pass","touchdown")))
+passPlays <- (subset(nfl,play_type == "pass", select= c("passer_player_name","air_yards","yards_after_catch","complete_pass", "incomplete_pass","interception","touchdown","fumble", "game_date", "home_team", "away_team", "season")))
 
 passPlays$TotalYards<- passPlays$air_yards + passPlays$yards_after_catch
 
@@ -48,7 +48,7 @@ passPlays <- passPlays[!is.na(passPlays$passer_player_name),]
 
 qbList <- as.character(unique(passPlays$passer_player_name))
 
-qbbig <- names(sort(table(passPlays$passer_player_name)))#[sort(table(passPlays$passer_player_name)) > 3000]
+qbbig <- names(sort(table(passPlays$passer_player_name)))#[sort(table(passPlays$passer_player_name)) > 100]
 
 
 sim <- function(i){
@@ -64,6 +64,10 @@ for (q in qbbig){print(q)
 #This is the input to the function.  
 qbdata <- subset(passPlays, passer_player_name == q & season ==  s)
 
+if(is.na(qbdata$TotalYards)){
+  qbdata$TotalYards <- 0
+}
+
 z <- yardsSim(qbdata)
 #save(z, file = "/Users/gregorymatthews/Dropbox/")
 
@@ -72,7 +76,7 @@ results[[q]][[as.character(s)]]<-unlist(mclapply(c(1:50000),sim))
   }
 
 
-output <- data.frame(RIPPEN= 10*unlist(lapply(results,function(x){lapply(x,mean)})), passer = rep(qbbig, each = 8), year = rep(2009:2016,17))
+output <- data.frame(RIPPEN= 10*unlist(lapply(results,function(x){lapply(x,mean)})), passer = rep(qbbig, each = 8), year = 2018)
 
 library(ggplot2)
 library(plotly)
