@@ -107,32 +107,36 @@ GeneralSim <- function(qbs, years){
   for (q in qbs){
     print(q)
     results[[q]] <- list()
+    print(results)
     
     for (s in years){
       print(s) #This is the input to the function.  
       qbdata <- subset(passPlays, passer_player_name == q & season ==  s)
-      
+      print(head(qbdata))
       ### I don't think we want to set Incomplete to 0 (as that's a valid catch possibility)
       ### Even more, it is currently incorrectly carried out so let's fix that. (My fault)
-      if(is.na(qbdata$TotalYards)){
-        qbdata$TotalYards <- 0
-      }
+      # Here is the old one:
+      #if(is.na(qbdata$TotalYards)){
+        #qbdata$TotalYards <- 0
+      #}
+      qbdata[is.na(qbdata$TotalYards),]$TotalYards <- 0
       
       z <- yardsSim(qbdata)
       
       #save(z, file = "/Users/gregorymatthews/Dropbox/")
       
-      results[[q]][[as.character(s)]]<-unlist(mclapply(c(1:500),sim))
+      results[[q]][[as.character(s)]] <- unlist(mclapply(c(1:50000),sim))
     }
   }
-  #output <- data.frame(RIPPEN = 10 * unlist(lapply(results,function(x){lapply(x,mean)})), passer = rep(qbs, each = 8), year = years)
-  #return(output)
-  return(results)
+  output <- data.frame(RIPPEN = 10 * unlist(lapply(results,function(x){lapply(x,mean)})), passer = rep(qbs, each = 1), year = years) #Why are we repeating 8 times?
+  return(output)
+  #return(results)
 }
 
-results <- GeneralSim("T.Brady", 2018)
+output <- GeneralSim("T.Brady", 2018) # 2018: 8.9586 ... yikes
+output <- GeneralSim(c("T.Brady", "D.Brees"), 2018)
 
-g <- ggplot(data = output, aes(x = year, y = RIPPEN, colour = passer)) + geom_line()
+g <- ggplot(data = output, aes(x = year, y = RIPPEN, colour = passer)) + geom_point() #This doesn't make sense for just our 2018 data. Let's try it with big boy data.
 
 greg <- ggplotly(g) #interactive plot
 
@@ -142,6 +146,7 @@ t <- "New England Patriots"
 
 #qb <- "P.Manning"
 #t <- "Denver Broncos"
+
 
 plot(output$year[output$passer == qb], 
      output$RIPPEN[output$passer == qb], 
