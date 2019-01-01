@@ -1,6 +1,10 @@
 #nfl <- nfl2018 <- read.csv("/Users/gregorymatthews/Dropbox/RIPPENgit/data/reg_pbp_2018.csv")
-library(RIPPEN)
+#library(RIPPEN)
 library(invgamma)
+library(parallel)
+library(ggplot2)
+library(plotly)
+library(teamcolors)
 
 nfl <- nfl2018 <- read.csv("reg_pbp_2018.csv")
 
@@ -55,8 +59,12 @@ sim <- function(i){
   out <- driveSim(qbdata, kickCoef, 1, 1, z = z)
   return(out)
 }
+######################## This is where we are "crashing" #####################
+# It is processing the first 18 quarterbacks and then on B.Hoyer:
+  # Error in update.jags(jags, 5000) : Error in node y[1]
+  # Failure to calculate log density 
 
-library(parallel)
+####################### Investigation time               ####################
 results <- list()
 for (q in qbbig){print(q)
   results[[q]] <- list()
@@ -78,12 +86,11 @@ results[[q]][[as.character(s)]]<-unlist(mclapply(c(1:50000),sim))
 
 output <- data.frame(RIPPEN= 10*unlist(lapply(results,function(x){lapply(x,mean)})), passer = rep(qbbig, each = 8), year = 2018)
 
-library(ggplot2)
-library(plotly)
+
 g <- ggplot(data = output, aes(x = year, y = RIPPEN, colour = passer)) + geom_line()
 greg <- ggplotly(g)
 
-library(teamcolors)
+
 qb <- "T.Brady"
 t <- "New England Patriots"
 plot(output$year[output$passer == qb], output$RIPPEN[output$passer == qb], type = "l",col = teamcolors$primary[teamcolors$name==t], lwd = 6, xlab = "Season", ylab = "RIPPEN", ylim = c(15,35))
