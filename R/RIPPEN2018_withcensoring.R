@@ -6,11 +6,48 @@ library(ggplot2)
 library(plotly)
 library(teamcolors)
 
-nfl <- nfl2018 <- read.csv("reg_pbp_2018.csv")
+#nfl2018 <- read.csv("https://raw.githubusercontent.com/ryurko/nflscrapR-data/master/play_by_play_data/regular_season/reg_pbp_2018.csv")
+
+#nfl2017 <- read.csv("https://raw.githubusercontent.com/ryurko/nflscrapR-data/master/play_by_play_data/regular_season/reg_pbp_2017.csv")
+
+#nfl2018$season <- 2018
+#nfl2017$season <- 2017
+#nfl <- rbind(nfl2017, nfl2018)
+
+##### PROCESS FOR TOTAL DATA GATHERING:
 
 
-#nfl<-read.csv("~/Dropbox/RIPPEN/NFL-Play-by-Play-2009-16.csv")
-#data(nfl)
+first_time <- FALSE
+if(first_time == TRUE){
+  nfl <- read.csv("https://raw.githubusercontent.com/ryurko/nflscrapR-data/master/play_by_play_data/regular_season/reg_pbp_2018.csv")
+  nfl <- subset(nfl, play_type == "pass" | play_type == "field_goal", select = c("passer_player_name","air_yards","yards_after_catch","complete_pass", "incomplete_pass","interception","touchdown","fumble", "game_date", "home_team", "away_team","yardline_100", "field_goal_result", "play_type"))
+  nfl$season <- 2018
+  for(year in 2009:2017){
+    print(sprintf("Processing %i:", year))
+    temp_data <- read.csv(sprintf("https://raw.githubusercontent.com/ryurko/nflscrapR-data/master/play_by_play_data/regular_season/reg_pbp_%i.csv", year))
+    #data$touchback <- NULL # Older datasets are similar except for touchback (which we don't need!)
+    temp_data <- subset(temp_data, play_type == "pass" | play_type == "field_goal", select = c("passer_player_name","air_yards","yards_after_catch","complete_pass", "incomplete_pass","interception","touchdown","fumble", "game_date", "home_team", "away_team","yardline_100", "field_goal_result", "play_type"))
+    temp_data$season <- year
+    nfl <- rbind(nfl, temp_data)
+  }
+  rm(data)
+  write.csv(nfl, "total09-18_pbp_data.csv", append = F, row.names = F)
+}
+#   season records
+# 1    2009   18921
+# 2    2010   19226
+# 3    2011   19507
+# 4    2012   19766
+# 5    2013   20294
+# 6    2014   19966
+# 7    2015   20411
+# 8    2016   20275
+# 9    2017   19599
+# 10   2018   19842
+
+if(first_time == FALSE){
+  nfl <- read.csv(file = "total09-18_pbp_data.csv", row.names = FALSE)
+}
 
 ##################################### Variable Changes #######################################
 #"Passer" ----> "passer_player_name"
@@ -23,7 +60,6 @@ nfl <- nfl2018 <- read.csv("reg_pbp_2018.csv")
 #"HomeTeam" ----> "home_team"
 #"AwayTeam"  ----> "away_team"
 #"Season"  ----> done away with - we will just initialize this (as 'season') on our own.
-nfl$season <- 2018
 #"Field Goal" ----> "field_goal"   ((This is variable for play_type))
 #"FieldGoalDistance" ----> (nfl$field_goal_distance <- nfl$yardline_100 + 17) where play_type = "field_goal"
 nfl$field_goal_distance <- nfl$yardline_100 + 17
@@ -31,8 +67,6 @@ nfl$field_goal_distance <- nfl$yardline_100 + 17
 #"PlayType" ----> "playtype"
 ##################################### Variable Changes #######################################
 
-
-nfl$field_goal_distance <- nfl$yardline_100 + 17
 # Collect league kicker data
 
 kicker <- subset(nfl, 
@@ -132,9 +166,10 @@ GeneralSim <- function(qbs, years){
   return(output)
   #return(results)
 }
+output <- GeneralSim(qbbig, unique(nfl$season))
 
-output <- GeneralSim("T.Brady", 2018) # 2018: 8.9586 ... yikes
-output <- GeneralSim(c("T.Brady", "D.Brees"), 2018)
+output <- GeneralSim("T.Brady", unique(nfl$season)) # 2018: 8.9586 ... yikes
+output <- GeneralSim(c("T.Brady", "D.Brees"), unique(nfl$season))
 
 g <- ggplot(data = output, aes(x = year, y = RIPPEN, colour = passer)) + geom_point() #This doesn't make sense for just our 2018 data. Let's try it with big boy data.
 
