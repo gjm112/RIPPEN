@@ -16,7 +16,7 @@ passSim <- function(qbdata, kappa_0, nu_0, n = 1){
 
   # 1. League Yardage / Completed Passes
   #Yards for every complete catch
-  x <- passPlays$TotalYards[passPlays$PassOutcome=="Complete"]
+  x <- passPlays$TotalYards[passPlays$complete_pass==1]
   # 		y <- log(x + 1)
   #Transfromation to achieve approximate normality
   y <- log(x+1)
@@ -33,10 +33,10 @@ passSim <- function(qbdata, kappa_0, nu_0, n = 1){
   # 		S2n <- Vo*S2o + (nj-1)S2j + [(Ko*nj)/(Ko+nj)](Yj - Mo)^2
   # 		Mn <- (Ko/Ko+nj)*Mo + (nj/Ko+nj)*(Yj)
   # 		Kn <- Ko + nj
-  n_j <- length(qbdata$TotalYards[qbdata$PassOutcome=="Complete"])
+  n_j <- length(qbdata$TotalYards[qbdata$complete_pass==1])
   
   if (n_j != 0){
-  ybar_j <- mean(log(qbdata$TotalYards[qbdata$PassOutcome=="Complete"] + 1))
+  ybar_j <- mean(log(qbdata$TotalYards[qbdata$complete_pass==1] + 1))
   } else {
     #Doesn't matter what this valeu is because the n_j is 0.  
     #This is to prevent getting a NaN
@@ -44,7 +44,7 @@ passSim <- function(qbdata, kappa_0, nu_0, n = 1){
   }
   
   if (n_j > 1){
-    S2_j <- var(log(qbdata$TotalYards[qbdata$PassOutcome=="Complete"] + 1))
+    S2_j <- var(log(qbdata$TotalYards[qbdata$complete_pass==1] + 1))
   } else {
     S2_j <- 0
   }

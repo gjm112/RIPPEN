@@ -13,15 +13,16 @@
 #'
 #' @export
 
+#library(rjags) #This can just be done in RIPPEN?
 yardsSim <- function(qbdata){
-  dat <- qbdata[,c("TotalYards","Touchdown")]
+  dat <- qbdata[,c("TotalYards","touchdown")]
   dat$y <- log(dat$TotalYards+1)
   
   y <- dat$y
-  y[dat$Touchdown == 1] <- NA
+  y[dat$touchdown == 1] <- NA
   
   cens_y <- dat$y
-  isCensored <- dat$Touchdown
+  isCensored <- dat$touchdown
   
   n <- nrow(dat) 
   
@@ -39,10 +40,10 @@ yardsSim <- function(qbdata){
   
   #setwd("/Users/gregorymatthews/Dropbox/RIPPENgit/")
   #write(model.str,"rippen.bug")
-  library(rjags)
   
-  n.chains<-1
-  n.adapt<-100
+  
+  n.chains <- 1
+  n.adapt <- 100
   jags <- jags.model(textConnection(model.str),
                      data = list('y' = y, 'isCensored' = isCensored,  'n' = n, 'cens_y' = cens_y), 
                      n.chains = 1, n.adapt = 100)
@@ -55,7 +56,7 @@ yardsSim <- function(qbdata){
 }
 
 
-
+### We aren't using this, just yet. Where do we want these yards to go again?
 getYardsSim <- function(z){
   i_star <- sample(1:2000,1)
   mu_star <- z$mu[,i_star,1]
