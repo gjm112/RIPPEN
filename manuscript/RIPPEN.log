@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.5.22)  30 NOV 2018 16:39
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.5.22)  11 DEC 2018 16:59
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -468,53 +468,87 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 Missing character: There is no â in font cmr9!
 Missing character: There is no € in font cmr9!
 Missing character: There is no ™ in font cmr9!
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 162.
+
+Underfull \hbox (badness 10000) in paragraph at lines 146--153
+
+ []
+
+[1{/usr/local/texlive/2016/texmf-var/fonts/map/pdftex/updmap/pdftex.map}
+
+]
+Overfull \hbox (146.75827pt too wide) in paragraph at lines 178--179
+[]\OT1/cmr/m/n/10.95 JQAS: https://www.degruyter.com/view/j/jqas.2011.7.3/jqas.
+2011.7.3.1359/jqas.2011.7.3.1359.xml?format=INT 
+ []
 
 
-(/usr/local/texlive/2016/texmf-dist/tex/latex/base/omscmr.fd
+Overfull \hbox (140.73447pt too wide) in paragraph at lines 195--197
+[]\OT1/cmr/m/n/10.95 Don Stein-berg: How I Learned to Stop Wor-ry-ing and Love 
+the Bomb http://www.donsteinberg.com/qbrating.htm 
+ []
+
+
+Overfull \hbox (58.79312pt too wide) in paragraph at lines 207--209
+[]\OT1/cmr/m/n/10.95 Defending Passer rat-ing: Kerry Byrne https://www.si.com/m
+ore-sports/2011/08/03/defending-
+ []
+
+
+Overfull \hbox (208.10753pt too wide) in paragraph at lines 210--212
+[]\OT1/cmr/m/n/10.95 PRO FOOT-BALL; The N.F.L.'s Passer Rat-ing, Ar-cane and Mi
+s-un-der-stood https://www.nytimes.com/2004/01/14/sports/pro-
+ []
+
+[2]
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 249.
+
+ (/usr/local/texlive/2016/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10.95> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 162.
- [1{/usr/local/texlive/2016/texmf-var/fonts/map/pdftex/updmap/pdftex.map}
-
-] (./RIPPEN.bbl)
-[2]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 247.
- [3]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 247.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 249.
+ (./RIPPEN.bbl [3]
+Missing character: There is no â in font cmr9!
+Missing character: There is no € in font cmr9!
+Missing character: There is no ™ in font cmr9!
+)
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 336.
+ [4]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 336.
  (./RIPPEN.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 247.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 247.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 336.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 336.
 Package rerunfilecheck Info: File `RIPPEN.out' has not changed.
-(rerunfilecheck)             Checksum: 22DF1516970C4381BB95104D0FFC8A10;989.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 247.
+(rerunfilecheck)             Checksum: 6C8ABC7DB0EFBE6F57EE769EBAB1AD8B;1143.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 336.
  ) 
 Here is how much of TeX's memory you used:
- 7833 strings out of 493014
- 110455 string characters out of 6133351
- 208544 words of memory out of 5000000
- 11241 multiletter control sequences out of 15000+600000
+ 7842 strings out of 493014
+ 110570 string characters out of 6133351
+ 208566 words of memory out of 5000000
+ 11246 multiletter control sequences out of 15000+600000
  13517 words of font info for 51 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 30i,8n,35p,720b,380s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 30i,8n,35p,720b,412s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
 ></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb><
 /usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb><
-/usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></
-usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></us
-r/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/
-local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/loc
-al/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/
-texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/t
-exlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/te
-xlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmti7.pfb></usr/local/texl
-ive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmti9.pfb></usr/local/texliv
-e/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt9.pfb>
-Output written on RIPPEN.pdf (3 pages, 172321 bytes).
+/usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></
+usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></u
+sr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr
+/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/l
+ocal/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/loca
+l/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/t
+exlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/te
+xlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texl
+ive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texli
+ve/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmti7.pfb></usr/local/texlive
+/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmti9.pfb></usr/local/texlive/2
+016/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt9.pfb>
+Output written on RIPPEN.pdf (4 pages, 201327 bytes).
 PDF statistics:
- 145 PDF objects out of 1000 (max. 8388607)
- 125 compressed objects within 2 object streams
- 21 named destinations out of 1000 (max. 500000)
- 121 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 173 PDF objects out of 1000 (max. 8388607)
+ 150 compressed objects within 2 object streams
+ 25 named destinations out of 1000 (max. 500000)
+ 137 words of extra memory for PDF output out of 10000 (max. 10000000)
 
