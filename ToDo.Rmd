@@ -1,0 +1,11 @@
+---
+title: "RIPPEN To Do"
+output: pdf_document
+---
+
+
+## To - Do List \hfill \today 
+
+- [X] Rekindle our friendship
+
+- [ ] Flush out rest of this To-Do List
