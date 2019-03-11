@@ -16,6 +16,8 @@
 library(rjags) #This can just be done in RIPPEN?
 yardsSim <- function(qbdata){
   dat <- subset(qbdata, complete_pass == 1, select = c("TotalYards","touchdown"))
+  #Remove records with missing yards
+  dat <- dat[!is.na(dat$TotalYards),]
   #dat <- qbdata[,c("TotalYards","touchdown")]
   dat$y <- log(dat$TotalYards+1)
   
