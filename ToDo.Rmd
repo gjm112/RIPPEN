@@ -6,6 +6,37 @@ output: pdf_document
 
 ## To - Do List \hfill \today 
 
+#### Important: 
 - [X] Rekindle our friendship
 
-- [ ] Flush out rest of this To-Do List
+- [X] Flush out rest of this To-Do List
+
+- [ ] Rusty *tackles* Methods section
+
+- [ ] GJM works on simulations
+
+- [ ] GJM works on Literature Review
+
+#### Also Important, I guess:
+
+- [ ] Make a fake season
+  
+  - [ ] Alter things to figure out weighted importance of variables.
+
+- [ ] Season simulations for 2009-2019
+
+- [ ] Game-level simulations for 2009-2019
+
+- [ ] Over this time, who was the best QB?
+
+- [ ] Best RIPPEN game ever, worst, etc.
+
+- [ ] Pick subset of games/seasons to work on
+
+- [ ] All players of 2018 season (boostrapping)
+
+- [ ] Certain number of passes for RIPPEN Champion
+
+
+
+# Paper Due Date: Midsummer's Nightmare
