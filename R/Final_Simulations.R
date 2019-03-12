@@ -105,13 +105,13 @@ passPlays$passer_player_name <- as.character(passPlays$passer_player_name)
 qbList <- as.character(unique(passPlays$passer_player_name))
 
 qbbig <- names(sort(table(passPlays$passer_player_name)))
-qbbig <- names(sort(table(passPlays$passer_player_name)))[sort(table(passPlays$passer_player_name)) > 100]
+#qbbig <- names(sort(table(passPlays$passer_player_name)))[sort(table(passPlays$passer_player_name)) > 100]
 qbbig <- sort(qbbig)
 
 library(dplyr)
-fret <- subset(passPlays, season == 2018) %>% group_by(passer_player_name) %>% summarise(att = n()) 
-qbbig <- fret$passer_player_name[fret$att >=100]
-qbbig
+##fret <- subset(passPlays, season == 2018) %>% group_by(passer_player_name) %>% summarise(att = n()) 
+#qbbig <- fret$passer_player_name[fret$att >=100]
+#qbbig
 
 
 
@@ -126,28 +126,18 @@ sim <- function(i){
 # Failure to calculate log density 
 
 ####################### Investigation time               ####################
-source("./R/yardsSim.R")
-source("./R/driveSim.R")
-feeling_it = F
-if(feeling_it == T){
+source("/Users/gregorymatthews/Dropbox/RIPPENgit/R/yardsSim.R")
+source("/Users/gregorymatthews/Dropbox/RIPPENgit/R/driveSim.R")
   results <- list()
   for (q in qbbig){
     print(q)
     results[[q]] <- list()
     
-    for (s in 2017:2017){
+    for (s in 2012){
       print(s) #This is the input to the function.  
       qbdata <- subset(passPlays, passer_player_name == q & season ==  s)
       
       if (nrow(qbdata)>0){
-        
-        #RUSTY! NO!
-        #if(is.na(qbdata$TotalYards)){
-        #  qbdata$TotalYards <- 0
-        #}
-        #Setting all the NA's to 0?  Is that a good idea?  
-        #qbdata$TotalYards[is.na(qbdata$TotalYards)] <- 0
-        
         z <- yardsSim(qbdata)
         #save(z, file = "/Users/gregorymatthews/Dropbox/")
         
@@ -156,15 +146,15 @@ if(feeling_it == T){
       }
     }
   }
-}
 
-save(results, file = "/Users/gregorymatthews/Dropbox/RIPPENgit/results_season_2017.RData")
-mn <- unlist(lapply(results[["2017"]],mean))
-var <- unlist(lapply(results[["2017"]],var))
-rippen <- data.frame(name = names(mn),rippen = mn, sd = sd,var = var)
-rippen <- subset(rippen,name %in% qbbig)
-rippen2017_season <- rippen[order(-rippen$rippen),]
-save(rippen2017_season, file = "/Users/gregorymatthews/Dropbox/RIPPENgit/RIPPEN_2017_season_df.RData")
+
+save(results, file = "/Users/gregorymatthews/Dropbox/RIPPENgit/results_season_2012.RData")
+mn <- unlist(lapply(results[["2012"]],mean))
+var <- unlist(lapply(results[["2012"]],var))
+rippen <- data.frame(name = names(mn),rippen = mn,var = var)
+#rippen <- subset(rippen,name %in% qbbig)
+rippen2012_season <- rippen[order(-rippen$rippen),]
+save(rippen2012_season, file = "/Users/gregorymatthews/Dropbox/RIPPENgit/RIPPEN_2012_season_df.RData")
 
 
 plot(rippen$rippen,rippen$sd)
