@@ -40,6 +40,7 @@
 
 
 \begin{document}
+\SweaveOpts{concordance=TRUE}
 
 \begin{frontmatter}
 
@@ -180,30 +181,22 @@ QBR overly credits QBs for scoring TDs.
 We propose Rush Independent Passing Player Efficiency Number (RIPPEN).  
 Describe what we did.  
 
+\textbf{Loose Outline}
+
+\subsection{Data - Open Source}
 RIPPEN uses the exact same inputs as QBR: 
 Completions, Yards, Interceptions, and Touchdowns.  
+  
+    \subsubsection{nflscrapr}
+  
+    \subsubsection{our package (check it out!!!)}
 
- 
 
-\subsection{Theoretcal Results}
-Do we have any? 
-
-
-\subsection{Correlation between RIPPEN and winning}
-Compare RIPPEN and winning to QBR and winning.  
-
-\subsection{Preliminary Results \& Notes}
-
-This will house all of amusing musings from the past few weeks while we wait for the overall paper to take form. First thing's first, we need to know what if left to be done:
-
-\subsubsection{TO DO:}
-\begin{itemize}
-	\item Type up Markov Chain
-	\item Implement %\href{http://mcmc-jags.sourceforge.net/}{JAGS?}
-	\item Censored Data
-\end{itemize}
-
-\subsubsection{Markov Chain Notion: }
+\subsection{How we use our data}
+  
+    \subsubsection{Simulation! Bayseian?}
+    
+    \subsubsection{Markov Chain Notion:}
 \begin{center}
 	\begin{tabular}{|c |c c c c|} 
 		\hline
@@ -226,10 +219,28 @@ This will house all of amusing musings from the past few weeks while we wait for
 	f &= 1 - e
 	\end{align*}
 \end{center}
+  
+    \subsubsection{Variable description! (More i's than Mississippi)}
+
+
+\subsection{How we visualize, parse our analyses?}
+
+
+ 
+
+\subsection{Theoretcal Results}
+Do we have any? 
+
+
+\subsection{Correlation between RIPPEN and winning}
+Compare RIPPEN and winning to QBR and winning.  
+
+\subsection{Preliminary Results \& Notes}
 
 \subsubsection{Closed Form? Here is all of the Notation:}
 Our notation becomes rather hairy around here, so bear with me. I will just go ahead and write down the equations we made up and try to tell which of the 14 different i's imply what: 
 
+\textbf{Will be handled in the Methods section}
 
 %Something in here is not compiling.
 % \begin{enumerate}[(a)]
@@ -265,7 +276,7 @@ Adding a defensive adjustment.
 
 
 Do we even want to add these things?  
-How do we deal with pass interference.  
+How do we deal with pass interference?  
 Defensive Holding? 
 Sacks? Add another layer.  
 Fumbles? Could treat similar to interceptions? 
