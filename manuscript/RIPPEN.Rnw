@@ -175,22 +175,41 @@ QBR overly credits QBs for scoring TDs -- discuss whether or not this is entirel
 We propose Rush Independent Passing Player Efficiency Number (RIPPEN).  
 Describe what we did.  
 
-\textbf{Loose Outline}
-
 \subsection{Data - Open Source}
-RIPPEN uses the exact same inputs as QBR: 
-Completions, Yards, Interceptions, and Touchdowns.  
+
+In this pursuit of an understandable and intuitive passer ranking system, it makes sense to use the simplest statistics which surround a quarterback's time on the field. Further, as this strives to remain an open source project, the variables pulled in must remain easily accessible and, likewise, public. For this reason, the data pulled in for each quarterback when all was said and done were completions, yards, interceptions and touchdowns, for each time they were snapped the ball and opted to throw. 
+
+A pleasant duality of this data decision lies within how closely it mirrors the NFL's passer rating formula described above. In so much as this newly improved metric looks to build upon and redefine the NFL's method, it is not an attempt at reinventing the wheel. 
   
     \subsubsection{nflscrapr}
-    
-    Link in Rob Yurko - maybe describe process of gathering the data? Probably a good chance to introduce the few variables we actually look for and build with.
-  
-    \subsubsection{our package (check it out!!!)}
 
-  Exactly! Great time to discuss the variables we use. 
+The data used and simulated upon within RIPPEN is scraped from and publically available in another open-source R package, \href{https://github.com/maksimhorowitz/nflscrapR}{\textit{nflscrapr}}. This project, created and maintained by Rob Yurko, pulls, parses, and groups data from the NFL API for easy use. Although many of the added capabilities were not used for this paper, the building block data for our simulations was. Before diving into talk of simulations, the variables gathered should be ironed out and explained. Below is an example of 4 successive rows in our table, from a game between the Steelers and the Colts.
+
+This table houses the name of the quartback, binary variables for whether the pass was complete or imcomplete, intercepted or not, fumbled or not, and an integer value of yards obtained on the play. An interesting subdivision which \textit{nflscrapr} has to offer is the breakdown of TotalYards into "air yards" and "yards after reception". Although future versions of RIPPEN might factor in these variables separately, it was deemed wisest to aggregate them for TotalYards as a good quarterback can be recognized by his ability to pick a receiver in the most advantageous receiving position.
+\newpage
+\begin{table}
+\begin{tabular}{ |c|c|c|c|c|c|  }
+ \hline
+ \multicolumn{5}{|c|}{Sample Data} \\
+ \hline
+Passer & PassOutcome & InterceptionThrown & Fumble & TotalYards\\
+ \hline
+B.Roethlisberger & 1 & 0 & 0 & 5\\
+  \hline
+B.Roethlisberger & 0 & 1 & 0 & 0\\
+  \hline
+K.Collins & 1 & 0 & 0 & 4 \\
+  \hline
+B.Roethlisberger & 1 & 0 & 0 & 30\\
+  \hline
+ \end{tabular}
+ \end{table}
+
+Additionally, solely tracking air yards would hurt the rating of quarterbacks who are effective in deploying a short pitch play to a receiver now open to run 20 yards. Altogether, as RIPPEN looks to capture the effect the throwing quarterback had on the team's state at that moment in the game, these are the variables chosen, simple as they may be. 
 
 \subsection{How we use our data}
   
+  Taking this data, broken down by player over seasons we looked to implement a sampling notion, allowing us to build upon our finite examples and imagine a world in which each team put their quarterbacks on the field to throw thier hearts out. The only downside to generating this data is that we lose context. Therefore, we needed to structure a proxy measure of whether or not a scoring drive (now just a series of yards gained or imcomplete/intercepted passes) led to a touchdown or a favorable position on the field for a fieldgoal.
     \subsubsection{Simulation! Bayseian?}
     
     I think we have a prior, look at probability within, run it millions of times.. something like this.
@@ -198,7 +217,7 @@ Completions, Yards, Interceptions, and Touchdowns.
     \subsubsection{Markov Chain Notion:}
     
     I know what this is! Describe overall concept and explain how it applies to what we are doing -- borderline survival analysis. 
-    
+ 
 \begin{center}
 	\begin{tabular}{|c |c c c c|} 
 		\hline
