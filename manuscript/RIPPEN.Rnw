@@ -64,7 +64,8 @@
 \affiliation{Smith College}
 
 
-\runauthor{Lopez, Matthews, Baumer}
+\runauthor{Stolz, Matthews, Cain
+}
 
 \begin{abstract}
 RIPPEN, Rush Independent Passing Player Efficiency Number, is a new measurement of passer performance. In a simulated world, how would a passer perform starting from their twenty yard line and only performing pass plays? The aspects of each play are simulated using a Bayesian model. This allows rookies and backups with minimal data to be fairly evaluated. Drives would end in a touchdown, field goal or turnover. A player’s RIPPEN is the average number of points they would be expected to score per drive. Our metric improves on existing passer rating systems because it is updated to current NFL data, does not weight passing touchdowns, and it is able to be more intuitively understood.
@@ -183,10 +184,10 @@ A pleasant duality of this data decision lies within how closely it mirrors the 
   
     \subsubsection{nflscrapr}
 
-The data used and simulated upon within RIPPEN is scraped from and publically available in another open-source R package, \href{https://github.com/maksimhorowitz/nflscrapR}{\textit{nflscrapr}}. This project, created and maintained by Rob Yurko, pulls, parses, and groups data from the NFL API for easy use. Although many of the added capabilities were not used for this paper, the building block data for our simulations was. Before diving into talk of simulations, the variables gathered should be ironed out and explained. Below is an example of 4 successive rows in our table, from a game between the Steelers and the Colts.
+The data used and simulated upon within RIPPEN is scraped from and publically available in another open-source R package, \href{https://github.com/maksimhorowitz/nflscrapR}{\textit{nflscrapr}}. This project, created and maintained by Rob Yurko, pulls, parses, and groups data from the NFL API for easy use. Although many of the added capabilities were not used for this paper, the building block data for our simulations was. Before diving into talk of simulations, the variables gathered should be ironed out and explained. Below is an example of 4 successive rows in our table, from a game between the Steelers and the Colts, one which had "Big Ben" throwing quite well until an interception gave Collins a chance to toss around the old pigskin.
 
-This table houses the name of the quartback, binary variables for whether the pass was complete or imcomplete, intercepted or not, fumbled or not, and an integer value of yards obtained on the play. An interesting subdivision which \textit{nflscrapr} has to offer is the breakdown of TotalYards into "air yards" and "yards after reception". Although future versions of RIPPEN might factor in these variables separately, it was deemed wisest to aggregate them for TotalYards as a good quarterback can be recognized by his ability to pick a receiver in the most advantageous receiving position.
-\newpage
+This table houses the name of the quartback, binary variables for whether the pass was complete or imcomplete, intercepted or not, fumbled or not, and an integer value of yards obtained on the play. An interesting subdivision which \textit{nflscrapr} has to offer is the breakdown of TotalYards into "air yards" and "yards after reception". \newpage Although future versions of RIPPEN might factor in these variables separately, it was deemed wisest to aggregate them for TotalYards as a good quarterback can be recognized by his ability to pick a receiver in the most advantageous receiving position.
+
 \begin{table}
 \begin{tabular}{ |c|c|c|c|c|c|  }
  \hline
@@ -196,11 +197,12 @@ Passer & PassOutcome & InterceptionThrown & Fumble & TotalYards\\
  \hline
 B.Roethlisberger & 1 & 0 & 0 & 5\\
   \hline
+B.Roethlisberger & 1 & 0 & 0 & 30\\
+  \hline
 B.Roethlisberger & 0 & 1 & 0 & 0\\
   \hline
 K.Collins & 1 & 0 & 0 & 4 \\
-  \hline
-B.Roethlisberger & 1 & 0 & 0 & 30\\
+
   \hline
  \end{tabular}
  \end{table}
@@ -209,26 +211,31 @@ Additionally, solely tracking air yards would hurt the rating of quarterbacks wh
 
 \subsection{How we use our data}
   
-  Taking this data, broken down by player over seasons we looked to implement a sampling notion, allowing us to build upon our finite examples and imagine a world in which each team put their quarterbacks on the field to throw thier hearts out. The only downside to generating this data is that we lose context. Therefore, we needed to structure a proxy measure of whether or not a scoring drive (now just a series of yards gained or imcomplete/intercepted passes) led to a touchdown or a favorable position on the field for a fieldgoal.
+  Taking this data, broken down by player over seasons we looked to implement a sampling notion, allowing us to build upon our finite examples and imagine a world in which each team put their quarterbacks on the field to throw their hearts out. The only downside to generating this data is that we lose context. Therefore, we needed to structure a proxy measure of whether or not a scoring drive (now just a series of yards gained or imcomplete/intercepted passes) led to a touchdown or a favorable position on the field for a fieldgoal. As such, we need to try to crunch and fit a simulated array of data into a football framework; imposing conditions on successive substrings which, on the field, translate to a continued drive. \\
+  
+  Looking at our aforementioned data example, let's try to picture what the game looked like assuming there were no rushing plays betwixt our rows. The game starts, more or less on the Steelers' twenty yard line with Roethlisberger's first play resulting in a five yard gain. Therefore, we are at "second and five", with the drive continuing on. Were they not to make ten yards within this "down series", successive first, second, third, and fourth downs, then the drive is over, either resulting in a punt or a field goal attempt. As Ben's next throw is a moderate bomb of thirty yards he does not need to worry about a third down just yet, as the Steelers are back to first down in a brand new down series for the same drive. Great! So now the Steelers are over half-field and looking to put some points on the board, until Ben goes and throws an interception. Regardless of where the current drive and down series state, an interception is an automatic end to the drive, resulting in a returned value of zero points for the quarterback and the team. Hopefully, even if football is a foreign sport to you, this colorful description helped you identify a few criterion a passed array of play results must meet for a drive to stay alive and to identify the drive's down series at any step along the way. 
+  
+  
     \subsubsection{Simulation! Bayseian?}
     
-    I think we have a prior, look at probability within, run it millions of times.. something like this.
+    With this ability to map decontextualized data into a football framework, RIPPEN is capable of utilizing simulated data; deepening the pool of observations upon which to gauge a quarterback's efficacy. To generate these sampled observations, \textbf{PLEASE SAVE ME}. 
     
     \subsubsection{Markov Chain Notion:}
     
-    I know what this is! Describe overall concept and explain how it applies to what we are doing -- borderline survival analysis. 
- 
+    Formalizing our mapping from raw data into a drive and down series framework requires us to apply some notion of ordering and series-dependency into our array. A prominent way of reworking this into a generalized probability, is through Markov Chains. This matrix allows you to map out the probabilities of moving from one state to another, probabilities which will sum to one as everyone leaving a state must be on their way to another one. After you finish simmering over that metaphysical tidbit, you may recognize that the states are fully contained to any generic down series, with the states randing from first to fourth down. As a drive is mortal and can end with either a failed fouth-down attempt or an interception, we also need to include an absorbing state for a dead drive. For clean rendering, any non-zero or one values are encapsulated in variables which will be described beneath:
 \begin{center}
-	\begin{tabular}{|c |c c c c|} 
+	\begin{tabular}{|c |c c c c c|} 
 		\hline
-		-Markov- & Down 1 & Down 2 & Down 3 & Down 4 \\ \hline
-		Down 1 & a & b & 0 & 0 \\ 
+		-Markov- & Down 1 & Down 2 & Down 3 & Down 4 & Over\\ \hline
+		Down 1 & a & b & 0 & 0 & c \\ 
 		\hline
-		Down 2 & c & 0 & d & 0 \\
+		Down 2 & d & 0 & e & 0 & f \\
 		\hline
-		Down 3 & e & 0 & 0 & f\\
+		Down 3 & g & 0 & 0 & h & i\\
 		\hline
-		Down 4 & 0 & 0 & 0 & 1 \\
+		Down 4 & 0 & 0 & 0 & 1 & j\\
+		\hline
+		Over & 0 & 0 & 0 & 0 & 1\\
 		\hline
 	\end{tabular}
 	\begin{align*}
@@ -237,10 +244,15 @@ Additionally, solely tracking air yards would hurt the rating of quarterbacks wh
 	c &= Pr(y_{d,2} > 10 - y_{d,1})\\
 	d &= 1 - c\\
 	e &= Pr(y_{d,3} > 10 - y_{d,2} - y_{d,1})\\
-	f &= 1 - e
+	f &= 1 - e\\
+	g &= \\
+	h &= \textbf{Will fill these out in a minute}\\
+	i &= \\
+	j &= \\
 	\end{align*}
 \end{center}
   
+  To make sense of the variables above, we need to iron out some notation. As commonly used, \textit{Pr()} stands for the probability that the given value will occur. This makes sense as Markov Chains are our way of generalizing probabilities within any given state. More \textbf{arcane(@luc.edu)} is our notation for the drive state and down: $Pr(y_{d,n} > w)$. This notation captures the probability that the number of yards yielded from down series $d$ and down $n$ will be greater than $w$ yards. As this $y_{d,n}$ notation pervades, we should pin down constraints on $d$ and $n$. As our simulations start the drive on the offensive team's twenty yard line, $n$ is always contained in the set \{1,2,3,4\} 
     \subsubsection{Variable description! (More i's than Mississippi)}
 
   Dedicated to the variables noted in Markov Chain -- make sense of each one and explain significance.
