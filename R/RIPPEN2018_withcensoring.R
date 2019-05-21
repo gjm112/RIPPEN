@@ -46,7 +46,7 @@ if(first_time == TRUE){
 # 10   2018   19842
 
 if(first_time == FALSE){
-  nfl <- read.csv(file = "./data/total09-18_pbp_data.csv")
+  nfl <- read.csv(file = "/Users/gregorymatthews/Dropbox/RIPPENgit/data/total09-18_pbp_data.csv")
 }
 
 ##################################### Variable Changes #######################################
@@ -68,7 +68,6 @@ nfl$field_goal_distance <- nfl$yardline_100 + 17
 ##################################### Variable Changes #######################################
 
 # Collect league kicker data
-
 kicker <- subset(nfl, 
                  play_type=="field_goal", 
                  select= c("field_goal_distance", "field_goal_result"))
@@ -148,7 +147,7 @@ if(feeling_it == T){
       print(q)
       results[[q]] <- list()
       
-      for (s in 2018:2018){
+      for (s in 2017:2017){
         print(s) #This is the input to the function.  
         qbdata <- subset(passPlays, passer_player_name == q & season ==  s)
   
@@ -171,13 +170,13 @@ if(feeling_it == T){
   }
 }
 
-save(results, file = "/Users/gregorymatthews/Dropbox/RIPPENgit/results_season_2018.RData")
-mn <- unlist(lapply(results[["2018"]],mean))
-var <- unlist(lapply(results[["2018"]],var))
+save(results, file = "/Users/gregorymatthews/Dropbox/RIPPENgit/results_season_2017.RData")
+mn <- unlist(lapply(results[["2017"]],mean))
+var <- unlist(lapply(results[["2017"]],var))
 rippen <- data.frame(name = names(mn),rippen = mn, sd = sd,var = var)
 rippen <- subset(rippen,name %in% qbbig)
-rippen2018_season <- rippen[order(-rippen$rippen),]
-save(rippen2018_season, file = "/Users/gregorymatthews/Dropbox/RIPPENgit/RIPPEN_2018_season_df.RData")
+rippen2017_season <- rippen[order(-rippen$rippen),]
+save(rippen2017_season, file = "/Users/gregorymatthews/Dropbox/RIPPENgit/RIPPEN_2017_season_df.RData")
 
 
 plot(rippen$rippen,rippen$sd)

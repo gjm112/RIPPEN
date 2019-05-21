@@ -133,7 +133,7 @@ source("/Users/gregorymatthews/Dropbox/RIPPENgit/R/driveSim.R")
     print(q)
     results[[q]] <- list()
     
-    for (s in 2012){
+    for (s in 2009){
       print(s) #This is the input to the function.  
       qbdata <- subset(passPlays, passer_player_name == q & season ==  s)
       
@@ -148,13 +148,13 @@ source("/Users/gregorymatthews/Dropbox/RIPPENgit/R/driveSim.R")
   }
 
 
-save(results, file = "/Users/gregorymatthews/Dropbox/RIPPENgit/results_season_2012.RData")
-mn <- unlist(lapply(results[["2012"]],mean))
-var <- unlist(lapply(results[["2012"]],var))
+save(results, file = "/Users/gregorymatthews/Dropbox/RIPPENgit/results_season_2009.RData")
+mn <- unlist(lapply(results[["2009"]],mean))
+var <- unlist(lapply(results[["2009"]],var))
 rippen <- data.frame(name = names(mn),rippen = mn,var = var)
 #rippen <- subset(rippen,name %in% qbbig)
-rippen2012_season <- rippen[order(-rippen$rippen),]
-save(rippen2012_season, file = "/Users/gregorymatthews/Dropbox/RIPPENgit/RIPPEN_2012_season_df.RData")
+rippen2009_season <- rippen[order(-rippen$rippen),]
+save(rippen2009_season, file = "/Users/gregorymatthews/Dropbox/RIPPENgit/RIPPEN_2009_season_df.RData")
 
 
 plot(rippen$rippen,rippen$sd)

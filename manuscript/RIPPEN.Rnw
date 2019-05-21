@@ -180,6 +180,8 @@ QBR overly credits QBs for scoring TDs.
 We propose Rush Independent Passing Player Efficiency Number (RIPPEN).  
 Describe what we did.  
 
+Pseudo-code
+
 RIPPEN uses the exact same inputs as QBR: 
 Completions, Yards, Interceptions, and Touchdowns.  
 
