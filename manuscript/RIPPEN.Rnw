@@ -199,13 +199,16 @@ Arbitrary scale (0 to 158.3??)
 Hard to interpret (What does 121.6 mean?)
 QBR overly credits QBs for scoring TDs -- discuss whether or not this is entirely wrong. Something to be said for "getting er done", but they weight this a bit too much for a metric which assesses QB efficacy.
 
+
+
 \section{Methods}
-The idea of this method is to model the distribution of play outcomes from a certain quarterback.  Once we have a model for the ditribution of play outcomes, drives can be simulated based on this distribution.  One could then look at drive outcomes and rate quarterbacks based on the value of these simulated outcomes.  
+The idea of this method is to model the distribution of play outcomes from a certain quarterback.  Once we have a model for the ditribution of play outcomes, drives can be simulated based on this distribution.  One could then look at drive outcomes and rate quarterbacks based on a summary of these simulated outcomes.  We refer to this measure as Rush Independent Passing Player Efficiency Number, or RIPPEN, which is formally defined below.  
+
+Drives are simulated using the following rules: 
 
 \begin{itemize}
-\item Model the distribution of play outcomes from a quarterback and then simulate drives using that distribution.  
 \item Drive starts on 20 yard line at 1st and 10.  
-\item Simulate if the pass was an interception. 
+\item Simulate if the pass was an interception or not. 
 \begin{itemize}
 \item Yes: Drive ends.  Return 0. 
 \item No: Simulate pass.
@@ -225,6 +228,76 @@ The idea of this method is to model the distribution of play outcomes from a cer
 \item Reach 4th down: return 3 with probability a function of the yardage left, 0 otherwise.  
 \item Touchdown: return 7. 
 \end{itemize}
+\end{itemize}
+
+Let the random variables $D_j$ be the value of simulated drive $j$.  $D_j$ takes on values of either 0, 3, or 7, and $\bar{D} = \frac{\sum_j^{n_{s}}D_j}{n_{s}}$ where $n_s$ is the number of simulated drived.  We then define our measure as follows: 
+
+$$
+RIPPEN = 10 \bar{D}
+$$
+.
+
+This can then be interpreted as the average number of points a team would score in ten possessions if their play outcomes were entirely based upon the performance of the quarterback's passing plays.  
+
+\section{Model}
+\subsection{Completions}
+For a given quarterback over a given period of time, let $n_{comp}$ and $n_{att}$ be the number of completed passes and the number of attempted passes, respectively.  We then have the following Bayesian model for completion percentage: 
+
+$$
+n_{comp} \sim Binomial(n_{att}, p_{comp})
+$$
+with the following prior
+$$
+p_{comp} \sim \beta(\alpha_c,\beta_c)
+$$.
+
+This yields the following posterior distribution for $p_{comp}$: 
+$$
+p_{comp} |n_{comp}, n_{att} \sim Beta(\alpha_c + n_{comp}, \beta_c +n_{att}-n_{comp})
+$$.  
+
+\subsection{Interceptions}
+Similarly, for a given quarterback over a given period of time, let $n_{int}$ and $n_{inc}$ be the number of intercepted passes and the number of incomplete passes (interceptions are considered incomplete passes), respectively.  We then have the following Bayesian model for interception percentage given an incomplete pass: 
+
+$$
+n_{int} \sim Binomial(n_{inc}, p_{int})
+$$
+with the following prior
+$$
+p_{int} \sim Beta(\alpha_i,\beta_i)
+$$.
+This yields the following posterior distribution for $p_{int}$: 
+$$
+p_{int} |n_{int},n_{inc} \sim Beta(\alpha_i + n_{int}, \beta_i +n_{inc} - n_i)
+$$.  
+It is important to note that $p_{int}$ is estimating the probability of an interception given that the pass was incomplete, not the interception rate across all attempted passes.  
+
+In all simulations, we chose to use non-informative priors and set all hyperparameters of these models equal to 1.  Specifically, 
+
+$$
+\alpha_c = \beta_c = \alpha_i = \beta_i = 1
+$$.  
+
+
+ (Another possible idea here is to use empircal Bayes where these priors are based on league average completion and interception rates.)
+
+
+\subsection{Model for yardage given completion}
+Let $y_i$ be the yards gained on the $i$-th completed pass, $y_i^{\star} = log(y_i +1)$, and $TD_{i}$ is an indicator equal to 1 if the $i$-th completion is a touchdown and 0 otherwise.  Since we are trying to model yards given a completed pass, we consider touchdowns to be censoring events.  That is, if a player throws a 10 yard touchdown pass, we know that the play we at least ten yards.  This leads to the following likelihood function for modeling yards: 
+$$
+L(\mu, \sigma^2 | {\bf y}^{\star}) \propto \prod_{i=1}^n f(y_i^{\star}|\mu, \sigma^2)^{1-TD_i} S(y_i^{\star}|\mu, \sigma^2)^{TD_i}
+$$
+where $f$ is the pdf of a normal distribution and $S$ is the survival function of a normal distribution both with parameters $\mu$ and $\sigma^2$.  
+
+For priors on $\mu$ amd $\sigma^2$, we use: 
+
+$$
+\mu \sim Normal(0,10^{6})
+$$
+
+$$
+\sigma^2 \sim Uniform(0,100)
+$$.  
 
 
 
@@ -232,22 +305,13 @@ The idea of this method is to model the distribution of play outcomes from a cer
 
 
 
-We propose Rush Independent Passing Player Efficiency Number (RIPPEN).  
-Describe what we did.  
 
-<<<<<<< HEAD
-Pseudo-code
 
-RIPPEN uses the exact same inputs as QBR: 
-Completions, Yards, Interceptions, and Touchdowns.  
 
- 
 
-\subsection{Theoretcal Results}
-Do we have any? 
-=======
 \subsection{Data - Open Source}
->>>>>>> ff2523cd6ca412517e2be8ec5608d09b303e01e3
+\section{Data}
+We are using play-by-play data from nflscrapr [MORE DETAILS]
 
 In this pursuit of an understandable and intuitive passer ranking system, it makes sense to use the simplest statistics which surround a quarterback's time on the field. Further, as this strives to remain an open source project, the variables pulled in must remain easily accessible and, likewise, public. For this reason, the data pulled in for each quarterback when all was said and done were completions, yards, interceptions and touchdowns, for each time they were snapped the ball and opted to throw. 
 
@@ -255,28 +319,38 @@ A pleasant duality of this data decision lies within how closely it mirrors the 
   
     \subsubsection{nflscrapr}
 
-The data used and simulated upon within RIPPEN is scraped from and publically available in another open-source R package, \href{https://github.com/maksimhorowitz/nflscrapR}{\textit{nflscrapr}}. This project, created and maintained by Rob Yurko, pulls, parses, and groups data from the NFL API for easy use. Although many of the added capabilities were not used for this paper, the building block data for our simulations was. Before diving into talk of simulations, the variables gathered should be ironed out and explained. Below is an example of 4 successive rows in our table, from a game between the Steelers and the Colts, one which had "Big Ben" throwing quite well until an interception gave Collins a chance to toss around the old pigskin.
+The data used and simulated upon within RIPPEN is scraped from and publically available in another open-source R package, \href{https://github.com/maksimhorowitz/nflscrapR}{\textit{nflscrapr}}. This project pulls, parses, and groups data from the NFL API for easy use. Although many of the added capabilities were not used for this paper, the building block data for our simulations was. Before diving into talk of simulations, the variables gathered should be ironed out and explained. Below is an example of 4 successive rows in our table, from a game between the Steelers and the Colts, one which had "Big Ben" throwing quite well until an interception gave Collins a chance to toss around the old pigskin.
 
 This table houses the name of the quartback, binary variables for whether the pass was complete or imcomplete, intercepted or not, fumbled or not, and an integer value of yards obtained on the play. An interesting subdivision which \textit{nflscrapr} has to offer is the breakdown of TotalYards into "air yards" and "yards after reception". Although future versions of RIPPEN might factor in these variables separately, it was deemed wisest to aggregate them for TotalYards as a good quarterback can be recognized by his ability to pick a receiver in the most advantageous receiving position.
 
-\begin{center}
-\begin{tabular}{ |c|c|c|c|c|c|  }
- \hline
- \multicolumn{5}{|c|}{Sample Data} \\
- \hline
-Passer & PassOutcome & InterceptionThrown & Fumble & TotalYards\\
- \hline
-B.Roethlisberger & 1 & 0 & 0 & 5\\
-  \hline
-B.Roethlisberger & 1 & 0 & 0 & 30\\
-  \hline
-B.Roethlisberger & 0 & 1 & 0 & 0\\
-  \hline
-K.Collins & 1 & 0 & 0 & 4 \\
 
-  \hline
- \end{tabular}
- \end{center}
+
+%Let's do this table with knitr so we know where it came from.
+<<xtable, results="asis", echo = FALSE>>= 
+library(xtable)
+nfl <- read.csv(file = "/Users/gregorymatthews/Dropbox/RIPPENgit/data/total09-18_pbp_data.csv")
+nfl <- subset(nfl, passer_player_name == "M.Trubisky")
+tab <- xtable(nfl[1:4,c("passer_player_name","complete_pass","interception","fumble","air_yards","yards_after_catch")])
+print(tab,include.rownames=FALSE)
+@
+% \begin{center}
+% \begin{tabular}{ |c|c|c|c|c|c|  }
+%  \hline
+%  \multicolumn{5}{|c|}{Sample Data} \\
+%  \hline
+% Passer & PassOutcome & InterceptionThrown & Fumble & TotalYards\\
+%  \hline
+% B.Roethlisberger & 1 & 0 & 0 & 5\\
+%   \hline
+% B.Roethlisberger & 1 & 0 & 0 & 30\\
+%   \hline
+% B.Roethlisberger & 0 & 1 & 0 & 0\\
+%   \hline
+% K.Collins & 1 & 0 & 0 & 4 \\
+% 
+%   \hline
+%  \end{tabular}
+%  \end{center}
 
 Additionally, solely tracking air yards would hurt the rating of quarterbacks who are effective in deploying a short pitch play to a receiver now open to run 20 yards. Altogether, as RIPPEN looks to capture the effect the throwing quarterback had on the team's state at that moment in the game, these are the variables chosen, simple as they may be. 
 
@@ -358,6 +432,91 @@ Do we have any? I guess, in theory, we do?
 \textbf{****** end of Rusty's current contributions *****}
 \section{Results}
 
+
+
+
+<<echo = FALSE, results = "asis">>=
+load("~/Dropbox/RIPPENgit/RIPPEN_2018_season_df.RData")
+row.names(rippen2018_season) <- NULL 
+#D.Brees       P.Mahomes     R.Fitzpatrick P.Rivers      M.Ryan         J.Goff        T.Brady       D.Watson      R.Wilson      C.Wentz 
+rippen2018_season <- rippen2018_season[1:10,]
+rippen2018_season$passer_rating <- c(112.9, 112.2, 100.4,102.0, 108.1, 96.4, 95.5, 100.2,110.6, 102.2)
+rippen2018_season$TDs <- c(36,36, 17,35,35,33,31,27,36,21)
+tab <- xtable(rippen2018_season[1:10,], digits = c(1,NA,2,2,1,0))
+caption(tab) <- "Top 10 RIPPEN passers for 2018-19 season"
+print(tab, include.rownames = FALSE)
+@
+
+
+
+%These numbers need to be checked.  
+% We should also make this table mor ereproducible.  
+\begin{table}[]
+  \begin{tabular}{| c | c | c | c | c | c | c |}
+    \hline
+        & Comp \%. & Yds/Att & TD/Att & Int/Att & QBR & rippen\\
+        \hline
+        \hline
+     T. Brady & 65.8\% & 7.6 & 0.0509 & 0.0193 & 97.7 & 2.688\\
+      \hline
+     R. Wilson & 65.6\% & 8.1 & \textbf{0.0820} & 0.0164 & 110.9 & 2.583\\
+      \hline
+      \hline
+      J. Allen  & 52.8\% & 6.5 & 0.0313 & 0.037 & 67.9 & 1.445\\
+      \hline
+      J.Driskel & 59.7\% & 5.7 & 0.034 & \textbf{0.0114} & 82.2 & 1.406\\
+      \hline
+      \hline
+  \end{tabular}
+  \end{table}
+  
+  %These numbers need to be checked too. 
+  % I need passer rating numbers checked since they were manually entered.  
+  \begin{figure}
+  <<echo = FALSE, fig.align='center',fig.width = 6, fig.height= 6, message = FALSE>>=
+load("~/Dropbox/RIPPENgit/RIPPEN_2018_season_df.RData")
+row.names(rippen2018_season) <- NULL 
+ #D.Brees          P.Mahomes        R.Fitzpatrick    P.Rivers          M.Ryan           J.Goff           T.Brady          D.Watson        R.Wilson         C.Wentz          A.Luck           B.Roethlisberger N.Mullens        J.Winston        D.Carr           K.Cousins       N.Foles          B.Mayfield       A.Rodgers        C.Newton        M.Trubisky       D.Prescott       E.Manning        A.Dalton        M.Mariota        J.Garoppolo      A.Smith          M.Stafford       L.Jackson        J.Flacco         S.Darnold        R.Tannehill     C.Keenum         B.Osweiler       C.Beathard       B.Bortles       B.Gabbert        J.Allen          J.Driskel        J.Johnson       J.Rosen          C.Kessler        J.McCown 
+rippen2018_season$passer_rating <- c(115.7, 113.8, 100.4,105.5, 108.1, 101.1, 97.7, 103.1,110.9, 102.2,98.7 , 96.5, 90.8, 90.2, 93.9, 99.7, 96.0, 93.7, 97.6, 94.2, 95.4, 96.9, 92.4, 89.6, 92.3, 90.0, 85.7, 89.9,84.5 ,84.2 , 77.6, 92.7, 81.2, 86, 81.8, 79.8, 74.9, 67.9, 82.2, 69.4, 66.7, 77.4, 55.8)
+library(ggplot2)
+ggplot(aes(x = passer_rating, y = rippen), data = rippen2018_season)  + stat_smooth() + geom_point() + geom_text(aes(label = name),col = rgb(0,0,0,0.5),hjust = "right",data = subset(rippen2018_season, name %in% c("D.Brees","P.Mahomes","T.Brady","R.Fitzpatrick","S.Darnold","B.Gabbert","J.Allen","J.Winston"))) + geom_text(aes(label = name),col = rgb(0,0,0,0.5),hjust = "left",data = subset(rippen2018_season, name %in% c("R.Wilson","J.Driskel","J.McCown","C.Kessler", "R.Tannehill"))) 
+
+
+# plot(rippen2018_season$passer_rating,rippen2018_season$rippen, pch = 16, xlab = "Passer Rating", ylab = "rippen")
+# #text(rippen2018_season$passer_rating,rippen2018_season$rippen,rippen2018_season$name,pos = 3)
+# text(rippen2018_season$passer_rating[9],rippen2018_season$rippen[9],rippen2018_season$name[9],pos = 3)
+# text(rippen2018_season$passer_rating[7],rippen2018_season$rippen[7],rippen2018_season$name[7],pos = 2)
+# text(rippen2018_season$passer_rating[3],rippen2018_season$rippen[3],rippen2018_season$name[3],pos = 2)
+# text(rippen2018_season$passer_rating[1],rippen2018_season$rippen[1],rippen2018_season$name[1],pos = 2)
+# text(rippen2018_season$passer_rating[2],rippen2018_season$rippen[2],rippen2018_season$name[2],pos = 2)
+# text(rippen2018_season$passer_rating[43],rippen2018_season$rippen[43],rippen2018_season$name[43],pos = 4)
+# text(rippen2018_season$passer_rating[38],rippen2018_season$rippen[38],rippen2018_season$name[38],pos = 4)
+# 
+# text(rippen2018_season$passer_rating[39],rippen2018_season$rippen[39],rippen2018_season$name[39],pos = 4)
+# text(rippen2018_season$passer_rating[42],rippen2018_season$rippen[42],rippen2018_season$name[42],pos = 4)
+@
+\caption{Comparing passer rating and RIPPEN for the 2018 season}
+\end{figure}
+
+
+%We need to label come interesting points on here. 
+<<echo = FALSE, fig.width = 6, fig.height= 6, message = FALSE, warning=FALSE>>=
+library(plotly)
+library(ggplot2)
+load("~/Dropbox/RIPPENgit/results_season_2018.RData")
+dist <- data.frame(do.call(rbind,lapply(results[["2018"]],table)))
+dist$rippen <- 7*dist$X7/50000+3*dist$X3/50000
+dist$X0 <- dist$X0/50000 
+dist$X3 <- dist$X3/50000 
+dist$X7 <- dist$X7/50000 
+dist$name <- row.names(dist)
+
+gg <- ggplot(aes(x = X7, y = X3, label = name ,colour = rippen),data = dist) + geom_point() + geom_abline(slope = rep(-7/3,4), intercept = c(1/3,2/3,3/3,4/3)) + scale_colour_gradient(high = "#D44500",low = "darkblue") + xlab("Probability of Touchdown") + ylab("Probability of Field Goal") + geom_text(aes(label = ifelse(name %in% c("D.Brees","P.Mahomes","M.Glennon","M.Barkley","C.Henne","M.Schaub","M.Sanchez","A.Rodgers","C.Kessler","M.Ryan","C.McCoy","D.Kizer","J. Allen"),name,'')), hjust = 0, vjust = 0) + xlim(0, 0.55)
+gg
+
+#ggplotly(gg, tooltip = c("label","colour"))
+@
+
 \subsection{Correlation between RIPPEN and winning}
 Compare RIPPEN and winning to QBR and winning.  
 
@@ -385,6 +544,21 @@ Sacks? Add another layer.
 Fumbles? Could treat similar to interceptions? 
 Should interceptions ever result in negative numbers?  
 How do we assign the negative numbers for interceptions?  
+\section{Appendix}
+
+<<echo = FALSE, results = "asis">>=
+load("~/Dropbox/RIPPENgit/RIPPEN_2018_season_df.RData")
+row.names(rippen2018_season) <- NULL 
+#D.Brees       P.Mahomes     R.Fitzpatrick P.Rivers      M.Ryan         J.Goff        T.Brady       D.Watson      R.Wilson      C.Wentz 
+#rippen2018_season <- rippen2018_season
+#rippen2018_season$passer_rating <- c(112.9, 112.2, 100.4,102.0, 108.1, 96.4, 95.5, 100.2,110.6, 102.2)
+#rippen2018_season$TDs <- c(36,36, 17,35,35,33,31,27,36,21)
+tab <- xtable(rippen2018_season)
+caption(tab) <- "Top 10 RIPPEN passers for 2018-19 season"
+print(tab)
+@
+
+
 
 \bibliographystyle{imsart-nameyear}
 \bibliography{refs}
