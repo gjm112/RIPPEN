@@ -11,11 +11,15 @@ output: pdf_document
 
 - [X] Flush out rest of this To-Do List
 
-- [ ] Rusty *tackles* Methods section
+- [X] RC *tackles* Methods section (was too goofy)
 
-- [ ] GJM works on simulations
+- [X] GJM works on simulations
 
 - [ ] GJM works on Literature Review
+
+- [ ] DSTOLZ reviews intro pdf
+
+- [ ] RC validates GJM's result entries
 
 #### Also Important, I guess:
 
@@ -36,7 +40,3 @@ output: pdf_document
 - [ ] All players of 2018 season (boostrapping)
 
 - [ ] Certain number of passes for RIPPEN Champion
-
-
-
-# Paper Due Date: Midsummer's Nightmare
