@@ -61,7 +61,7 @@
 \and
 \author{\fnms{Donald} \snm{Stolz}\ead[label=e3]{dstolz@luc.edu}}
 \address{\printead{e3}}
-\affiliation{Smith College}
+\affiliation{Loyola University Chicago}
 
  
 \runauthor{Stolz, Matthews, Cain
