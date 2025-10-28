@@ -40,6 +40,7 @@
 
 
 \begin{document}
+\SweaveOpts{concordance=TRUE}
 
 
 \begin{frontmatter}
