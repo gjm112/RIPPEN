@@ -1,30 +1,21 @@
 # Import data and libraries
 library(RIPPEN)
 library(parallel)
-data(nfl)
 
 # Set working directory
 setwd(this.path::here())
 
+nfl <- gatherData()
 #Collect QB Data
-passPlays <- na.omit(subset(nfl,select= c("Passer","PassOutcome","AirYards","YardsAfterCatch","InterceptionThrown","Fumble", "Date", "HomeTeam", "AwayTeam", "Season")))
-passPlays$TotalYards<- passPlays$AirYards + passPlays$YardsAfterCatch
+passPlays <- gatherPassPlays(nfl)
 
-# Set negative yards to 0
-passPlays$TotalYards[passPlays$TotalYards<0] <- 0
-passPlays <- passPlays[!is.na(passPlays$Passer),]
-
-qbList <- as.character(unique(passPlays$Passer))
+qbList <- as.character(unique(passPlays$passer_player_name))
 
 #Collect league kicker data
-kicker <- subset(nfl, PlayType=="Field Goal", select= c("FieldGoalDistance", "FieldGoalResult"))
-kicker$Good <- (kicker$FieldGoalResult=="Good") + 0
-kicker <- kicker[!is.na(kicker$Good),]
-boot <- glm(Good ~ FieldGoalDistance, data = kicker, family = "binomial")
-kickCoef <- boot$coefficients
+kickCoef <- kickCoef(nfl)
 
 # Collect QB Data
-qbbig <- names(sort(table(passPlays$Passer)))[sort(table(passPlays$Passer)) > 3000]
+qbbig <- names(sort(table(passPlays$passer_player_name)))[sort(table(passPlays$passer_player_name)) > 3000]
 
 # Run simulations
 qbResults <- mclapply(qbbig, runSim, nsim = 20000, season=2009, mc.cores = 4)
