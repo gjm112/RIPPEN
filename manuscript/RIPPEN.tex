@@ -117,7 +117,7 @@
 }
 
 \begin{abstract}
-RIPPEN, Rush Independent Passing Player Efficiency Number, is a new measurement of passer performance. In a simulated world, how would a passer perform starting from their twenty yard line and only performing pass plays? The aspects of each play are simulated using a Bayesian model. This allows rookies and backups with minimal data to be fairly evaluated. Drives would end in a touchdown, field goal or turnover. A player’s RIPPEN is the average number of points they would be expected to score per game. Our metric improves on existing passer rating systems because it is updated to current NFL data, does not weight passing touchdowns, and it is able to be more intuitively understood.
+RIPPEN, Rush Independent Passing Player Efficiency Number, is a new measurement of passer performance. In a simulated world, how would a passer perform starting from their twenty yard line and only performing pass plays? The aspects of each play are simulated using a Bayesian model. This allows rookies and backups with minimal data to be fairly evaluated. Drives would end in a touchdown, field goal or turnover. A player’s RIPPEN is the average number of points they would be expected to score per game. Our metric improves on existing passer rating systems because it is updated to current NFL data, does not weight situational factors, and it is able to be more intuitively understood.
 
 \end{abstract}
 
@@ -134,15 +134,14 @@ RIPPEN, Rush Independent Passing Player Efficiency Number, is a new measurement 
 %\input{intro}
 
 %Censoring in rjags
-\section{Introduction}
-The NFL's current passer rating formula has officially been in place since the 1973 season.  This version of the rating was developed by Don Smith, Seymour Siwoff, and Don Weiss. (https://www.profootballhof.com/news/nfl-s-passer-rating/).  The basic idea was to look at four passing categories -- completion percentage, passing yards, touchdowns thrown, and interceptions -- and award a quarterback 1 point for an average performance, 2 points for an elite performance, and 0 for a poor performance(http://www.donsteinberg.com/qbrating.htm).  Their rating across these four components could then be averaged.  Using data from the 1970 NFL season, the average completion percentage, average yards per attempt, average touchdown percentage, and average interception percentage were approximately 50\%, 7, 5\%, and 5.5\%.  
+\section{Introduction to Current Passer Rating Systems}
+Quantifying the performance of a quarterback is one of the most persistent challenges in sports analytics. While numerous metrics exist, most rely on arbitrary weighting systems or proprietary formulas that lack transparency. In this section, we review the three most prominent passer rating systems—NFL Passer Rating, NCAA Passing Efficiency, and Total QBR—and discuss their limitations.
 
-Using these numbers, formulas were derived to map dismal average, and exceptional performaces to approximately 0, 1, and 2, respectively.  For instance, for completion percentage the formula is $\frac{\frac{C}{A}-0.3}{0.2}$, which equals 0, 1, and 2 for a completion percentages of 30\%, 50\%, and 70\%, respectively.  Formulas for the other three components are defined similarly.  Each of the four components are bounded below by 0 and capped at 2.375 and then added together to get number between 0 and 9.5.  Then, this sum is divided by 6 and multipled by 100.  The reason for this last adjustment was simply, as Don Steinberg explains it, to make the score ``more meaningful":   
+\subsection{NFL Passer Rating}
 
-\begin{quote}
-[Don] Smith thought it would be more meaningful if an excellent score came to around 100, just like in school. "I think our attitude was that 100 was an A," he recalls. "And anything above 100, that was an A-plus." So, in a move that made sense at the time and has had everyone else confused for three decades, he multiplied the raw total by 100 and divided by 6, turning a statistically average performance -- 1s across the board -- into 66.7. It also made the maximum rating a ridiculous 158.2.
-(http://www.donsteinberg.com/qbrating.htm)
-\end{quote}
+The National Football League (NFL) passer rating formula has been the official standard since the 1973 season. Developed by a committee headed by Don Smith and Seymour Siwoff, the metric was designed to compare passers against a fixed performance standard based on data from the 1960-1970 era.
+
+The formula relies on four components: completion percentage, yards per attempt, touchdown percentage, and interception percentage. Each component is calculated independently, bounded by a floor of zero and a cap of 2.375, and then combined using the following formula: 
 
 
 All of this leads to the NFL formula for passer rating (http://www.nfl.com/help/quarterbackratingformula).  Using the notation from \cite{vanDohlen2011}:
@@ -156,9 +155,12 @@ $A$ = Number of Attempts\\
 $T$ = Number of Touchdowns\\
 $I$ = Number of Interceptions\\
 
-Each of these four components has a maximum of 2.375, so a ``perfect" passer rating in the NFL is $\frac{(2.375)(4)(100)}{6} = 158.3$.  
+This calculation results in a rating between 0 and a maximum of 158.3.
 
-It should be noted that college football uses a different formula for passer rating.  The NCAA passer rating is [NEED A BETTER CITATION HERE]: 
+\subsection{NCAA Passer Rating}
+
+College football utilizes a similar but distinct formula known as NCAA Passing Efficiency. Like the NFL metric, it uses completions, yards, touchdowns, and interceptions. However, the NCAA formula does not cap individual components, allowing for a much wider variance in scores. The formula is calculated as:
+
 $$
 \frac{8.4Y + 330T + 100C - 200I}{A}
 $$
@@ -169,86 +171,32 @@ $A$ = Number of Attempts\\
 $T$ = Number of Touchdowns\\
 $I$ = Number of Interceptions\\
 
-In college football, thre are no caps on each of the components, which measn that the college football passer rating can vary from -731.6 to 1261.6. 
+Because there are no artificial upper limits on the inputs, the theoretical range of the NCAA rating is significantly wider than the NFL’s, ranging from -731.6 to 1,261.6.
 
-In this article, a new metric is proposed to replace passer rating.  The main goals of the proposed measure are to use similar simple inputs as passer rating using only open source data and open source code, provide results on a meaningful scale in meaningful units, and to provide variability estimates of the measure.  
+\subsection{Total QBR}
+In 2011, ESPN introduced the Total Quarterback Rating (Total QBR) to address the limitations of traditional box-score metrics. Unlike the NFL and NCAA ratings, Total QBR attempts to incorporate contextual elements by utilizing Expected Points Added (EPA). This approach evaluates the difference in expected points before and after a play, rewarding quarterbacks for plays that increase the team's probability of scoring. Total QBR also accounts for rushing contributions, sacks, fumbles, and penalties, and includes adjustments for opponent strength and "garbage time" scenarios.
 
-The rest of the article provides a literature review, then a description of the proposed measure, a presentation of results, and then concludes with ideas for future work.  
-
-Passer rating is bad.  RIPPEN is better.  
-
-\section{Passer Rating Alternatives}
-In 2011, ESPN introduced a metric, developed by their  stats and information group, called Total Quarterback Rating (Total QBR) (http://www.espn.com/blog/statsinfo/post/\_/id/123701/how-is-total-qbr-calculated-we-explain-our-quarterback-rating).  Total QBR differs from traditional passer rating in many ways, most notably though, the developers sought to include contextual elements into the calculation.  They did this by looking at expected points added (EPA).  The idea of EPA is to look at the difference in expected points before and after a play: if a play resulted in something good for the offense, EPA is positive; if a play was bad for the offense, EPA is negative.  Team-level EPA is computed for each play, and then the total value of EPA is divided among all the players on the field. Finally, there is also an adjustment made for plays that happen in ``garbage time" (as defined by win probability).  Originally, there was a also an adjustment made for plays made in ``clutch situations", but that has been removed from the original formulation.  Total QBR, as of 2016, is now adjusted for strength of opponent.  (https://www.footballoutsiders.com/stats/qb)
-
-Defense-adjusted value over average (DVOA) and Defense-adjusted Yards above replacement (DYAR)
-Football Outsiders (https://www.footballoutsiders.com) 
-https://www.footballoutsiders.com/stats/qb
+\subsection{DVOA and DYAR TODO:}
+Football Outsiders introduced two prominent advanced metrics: Defense-adjusted Value Over Average (DVOA) and Defense-adjusted Yards Above Replacement (DYAR). DVOA measures a quarterback's per-play efficiency by comparing each down and distance situation to a league baseline, subsequently adjusting for the strength of the opposing defense. While DVOA acts as a rate statistic expressed as a percentage above or below the league average, DYAR converts this efficiency into a cumulative volume metric, quantifying the total yards a quarterback contributes over a replacement-level alternative.
 
 
+\subsection{Criticism of Existing Passer Rating Systems}
+Despite their widespread use, existing metrics suffer from significant methodological flaws:
+\begin{itemize}
+\item Arbitrary Weighting and Caps: The NFL Passer Rating utilizes weights derived from 1970s defensive standards, which are increasingly irrelevant in the modern offensive era. Furthermore, the imposition of a 2.375 cap on component statistics is arbitrary; a quarterback who completes 77.5% of their passes receives the same component score as one who completes 90%.
+\item Lack of Interpretability: Both the NFL (0–158.3) and NCAA scales are difficult to interpret intuitively. A difference between a rating of 85 and 95 does not translate to a tangible unit of football value (e.g., points or yards).
+\item Lack of Transparency: While Total QBR and DVOA attempt to add context, they are largely "black box" metrics. The exact coefficients, replacement-level baselines, and opponent adjustment formulas for DVOA are proprietary. This lack of transparency makes it impossible for independent researchers to verify, reproduce, or fully audit the results.
+\item Contextual Blindness: Traditional passer ratings treat all yards equally. A 10-yard completion on 3rd-and-15 is treated identically to a 10-yard completion on 3rd-and-3, despite the vastly different utility of those outcomes.
+\item Complexity: Unlike simple arithmetic formulas, DVOA requires complex play-by-play data parsing and subjective baseline determinations, making it inaccessible for general calculation without specialized databases.
+\end{itemize}
 
+\subsection{RIPPEN: A New Measure of Efficiency}
 
-The work most closely related to this current work is that of \cite{vanDohlen2011}.
+To address these limitations, we propose a new metric: the Rush Independent Passing Player Efficiency Number (RIPPEN). Unlike traditional ratings that rely on linear weights, RIPPEN utilizes a Bayesian model to simulate the distribution of play outcomes for a specific quarterback.
 
+RIPPEN answers a fundamental question: In a simulated world where a team starts on their own 20-yard line and only performs pass plays, how many points would the quarterback be expected to score?
 
-
-\href{http://bleacherreport.com/articles/889199-big-flaws-in-espns-total-qbr-exposed-after-tim-tebow-rates-above-aaron-rodgers}{Tim Tebow example of why QBR is bad:}\\
-
-Read more about this \href{https://412sportsanalytics.wordpress.com/2016/10/05/pareto-frontier-and-non-dominated-quarterbacks/}{(pareto-frontier)}.  Might be interesting
-
-- Would we add something like this to our results\\
-
-\href{https://www.footballoutsiders.com/stats/qb}{DYAR and DVOA:}\\
-
-
-\href{http://www.nih.ticz.musclehedz.charlespoliquin.sportsci.org/2011/mep.htm}{nih: charles poliquin}\\
-
-
-\href{https://www.degruyter.com/view/j/jqas.2011.7.3/jqas.2011.7.3.1359/jqas.2011.7.3.1359.xml?format=INT}{JQAS}\\
-
-http://www.math.montana.edu/graduate/writing-projects/2017/Gomez17.pdf
-
-A Statistical Analysis of NFL Quarterback Rating Variables\\
-Derek Stimel, Journal of Quantitative Analysis in Sports\\
-\hfill\\
-The Quarterback Prediction Problem: Forecasting the Performance of College Quarterbacks Selected in the NFL Draft\\
-Julian Wolfson et al., Journal of Quantitative Analysis in Sports\\
-\hfill\\
-Analyzing dependence matrices to investigate relationships between national football 
-league combine event performances\\
-Brook T. Russell et al., Journal of Quantitative Analysis in Sports\\
-\hfill\\
-Isolating the Effect of Individual Linemen on the Passing Game in the National Football League\\
-Benjamin C Alamar et al., Journal of Quantitative Analysis in Sports\\
-\hfill\\
-Quantifying NFL Coaching: A Proof of New Growth Theory\\
-Kevin P. Braig, Journal of Quantitative Analysis in Sports\\
-
-CITE Passer Rating\\
-CITE QBR\\
-
-\href{http://www.donsteinberg.com/qbrating.htm}{Don Steinberg: How I Learned to Stop Worrying and Love the Bomb}\\
-
-\href{http://www.nfl.com/help/quarterbackratingformula}{Quarterback Rating:}\\
-
-\href{https://www.profootballhof.com/news/nfl-s-passer-rating/}{NFL Passer rating:}\\
-
-\href{http://football.stassen.com/pass-eff/}{College Passer efficiency:}\\
-
-\href{https://www.si.com/more-sports/2011/08/03/defending-qb-rating}{Defending Passer rating: Kerry Byrne}\\
-
-\href{https://www.nytimes.com/2004/01/14/sports/pro-football-the-nfl-s-passer-rating-arcane-and-misunderstood.html}{PRO FOOTBALL; The N.F.L.'s Passer Rating, Arcane and Misunderstood}\\
-
-\cite{Stimel2009}
-Looking for structural breaks in QBR.  
-
-\cite{vanDohlen2011}
-
-\subsection{Criticism of QBR}
-Arbitrary scale (0 to 158.3??)
-Hard to interpret (What does 121.6 mean?)
-QBR overly credits QBs for scoring TDs -- discuss whether or not this is entirely wrong. Something to be said for "getting er done", but they weight this a bit too much for a metric which assesses QB efficacy.
-
-
+By simulating drive outcomes (Touchdown, Field Goal, or Turnover) based on a quarterback’s specific posterior distributions for completion, yardage, and interception rates, we derive a metric that is both statistically robust and intuitively interpretable. RIPPEN represents the average number of points a player contributes per ten possessions. This metric improves upon existing systems because it is updated dynamically to current NFL data, relies entirely on open-source data and code, and provides a clear, unit-based measure of performance (points per game) rather than an arbitrary index.
 
 \section{Methods}
 The idea of this method is to model the distribution of play outcomes from a certain quarterback.  Once we have a model for the ditribution of play outcomes, drives can be simulated based on this distribution.  One could then look at drive outcomes and rate quarterbacks based on a summary of these simulated outcomes.  We refer to this measure as Rush Independent Passing Player Efficiency Number, or RIPPEN, which is formally defined below.  
@@ -626,4 +574,67 @@ How do we assign the negative numbers for interceptions?
 
 \bibliographystyle{imsart-nameyear}
 \bibliography{refs}
+
+\href{http://bleacherreport.com/articles/889199-big-flaws-in-espns-total-qbr-exposed-after-tim-tebow-rates-above-aaron-rodgers}{Tim Tebow example of why QBR is bad:}\\
+
+Read more about this \href{https://412sportsanalytics.wordpress.com/2016/10/05/pareto-frontier-and-non-dominated-quarterbacks/}{(pareto-frontier)}.  Might be interesting
+
+- Would we add something like this to our results\\
+
+\href{https://www.footballoutsiders.com/stats/qb}{DYAR and DVOA:}\\
+
+
+\href{http://www.nih.ticz.musclehedz.charlespoliquin.sportsci.org/2011/mep.htm}{nih: charles poliquin}\\
+
+
+\href{https://www.degruyter.com/view/j/jqas.2011.7.3/jqas.2011.7.3.1359/jqas.2011.7.3.1359.xml?format=INT}{JQAS}\\
+
+\href{https://www.profootballhof.com/news/nfl-s-passer-rating/}{NFL Passer rating:}\\
+
+\href{http://www.donsteinberg.com/qbrating.htm}{Don Steinberg: How I Learned to Stop Worrying and Love the Bomb}\\
+
+\href{http://www.espn.com/blog/statsinfo/post/\_/id/123701/how-is-total-qbr-calculated-we-explain-our-quarterback-rating}{Total QBR calculation:}\\
+
+http://www.math.montana.edu/graduate/writing-projects/2017/Gomez17.pdf
+
+A Statistical Analysis of NFL Quarterback Rating Variables\\
+Derek Stimel, Journal of Quantitative Analysis in Sports\\
+\hfill\\
+The Quarterback Prediction Problem: Forecasting the Performance of College Quarterbacks Selected in the NFL Draft\\
+Julian Wolfson et al., Journal of Quantitative Analysis in Sports\\
+\hfill\\
+Analyzing dependence matrices to investigate relationships between national football 
+league combine event performances\\
+Brook T. Russell et al., Journal of Quantitative Analysis in Sports\\
+\hfill\\
+Isolating the Effect of Individual Linemen on the Passing Game in the National Football League\\
+Benjamin C Alamar et al., Journal of Quantitative Analysis in Sports\\
+\hfill\\
+Quantifying NFL Coaching: A Proof of New Growth Theory\\
+Kevin P. Braig, Journal of Quantitative Analysis in Sports\\
+
+CITE Passer Rating\\
+CITE QBR\\
+
+\href{http://www.donsteinberg.com/qbrating.htm}{Don Steinberg: How I Learned to Stop Worrying and Love the Bomb}\\
+
+\href{http://www.nfl.com/help/quarterbackratingformula}{Quarterback Rating:}\\
+
+\href{https://www.profootballhof.com/news/nfl-s-passer-rating/}{NFL Passer rating:}\\
+
+\href{http://football.stassen.com/pass-eff/}{College Passer efficiency:}\\
+
+\href{https://www.si.com/more-sports/2011/08/03/defending-qb-rating}{Defending Passer rating: Kerry Byrne}\\
+
+\href{https://www.nytimes.com/2004/01/14/sports/pro-football-the-nfl-s-passer-rating-arcane-and-misunderstood.html}{PRO FOOTBALL; The N.F.L.'s Passer Rating, Arcane and Misunderstood}\\
+
+\subsubsection{Criticism of QBR}
+Arbitrary scale (0 to 158.3??)
+Hard to interpret (What does 121.6 mean?)
+QBR overly credits QBs for scoring TDs -- discuss whether or not this is entirely wrong. Something to be said for "getting er done", but they weight this a bit too much for a metric which assesses QB efficacy.
+\begin{quote}
+[Don] Smith thought it would be more meaningful if an excellent score came to around 100, just like in school. "I think our attitude was that 100 was an A," he recalls. "And anything above 100, that was an A-plus." So, in a move that made sense at the time and has had everyone else confused for three decades, he multiplied the raw total by 100 and divided by 6, turning a statistically average performance -- 1s across the board -- into 66.7. It also made the maximum rating a ridiculous 158.2.
+(http://www.donsteinberg.com/qbrating.htm)
+\end{quote}
+
 \end{document}

@@ -2,14 +2,14 @@
 ["bibtex RIPPEN"] 0 "RIPPEN.aux" "RIPPEN.bbl" "RIPPEN" 0 -1
   "./imsart-nameyear.bst" 1761147489.30357 41491 ebcbdba2d240cbc4064a39ec515e554e ""
   "./refs.bib" 1761147489.30357 24870 31e4395bd0ccc004d23c958353a8ca87 ""
-  "RIPPEN.aux" 1764103529.93787 4407 1fd45bf00b3ffe9c80edc924a9d7b6dd "pdflatex"
+  "RIPPEN.aux" 1764104069.08121 4564 b0d7cd243e9a8775b39e143ecbc16602 "pdflatex"
   (generated)
   "RIPPEN.bbl"
   "RIPPEN.blg"
   (rewritten before read)
-["pdflatex"] 1764103529.60469 "/home/don/Repositories/RIPPEN/manuscript/RIPPEN.tex" "RIPPEN.pdf" "RIPPEN" 1764103530.11924 2
+["pdflatex"] 1764104068.76889 "/home/don/Repositories/RIPPEN/manuscript/RIPPEN.tex" "RIPPEN.pdf" "RIPPEN" 1764104069.25508 2
   "/etc/texmf/web2c/texmf.cnf" 1763753664.43635 475 c0e671620eb5563b2130f56340a5fde8 ""
-  "/home/don/Repositories/RIPPEN/manuscript/RIPPEN.tex" 1764103529.32637 32060 3400c430241f4770aad60f7cab6469c0 ""
+  "/home/don/Repositories/RIPPEN/manuscript/RIPPEN.tex" 1764104068.15191 32126 e4a005d48a8acaed026f533ab414a600 ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/jknappen/ec/ectt1000.tfm" 1136768653 1536 06717a2b50de47d4087ac0e6cd759455 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/jknappen/ec/tcrm1095.tfm" 1136768653 1536 02c06700a42be0f5a28664c7273f82e7 ""
@@ -141,10 +141,10 @@
   "/usr/share/texmf/web2c/texmf.cnf" 1707919699 40399 f2c302f7d2af602abb742093540a5834 ""
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1763753680.17495 5472669 54eaf61a88b6b7896ebd0dac973cb29c ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1763753726 8214154 6800d4505a5f7a6b849d0db0a0c3e4eb ""
-  "RIPPEN.aux" 1764103529.93787 4407 1fd45bf00b3ffe9c80edc924a9d7b6dd "pdflatex"
+  "RIPPEN.aux" 1764104069.08121 4564 b0d7cd243e9a8775b39e143ecbc16602 "pdflatex"
   "RIPPEN.bbl" 1764103529.51495 0 d41d8cd98f00b204e9800998ecf8427e "bibtex RIPPEN"
-  "RIPPEN.out" 1764103529.93787 4498 8937a26b7d9f38fb60379bed4b3d641b "pdflatex"
-  "RIPPEN.tex" 1764103529.32637 32060 3400c430241f4770aad60f7cab6469c0 ""
+  "RIPPEN.out" 1764104069.08121 4827 1dedb104efe55e609f06031776207087 "pdflatex"
+  "RIPPEN.tex" 1764104068.15191 32126 e4a005d48a8acaed026f533ab414a600 ""
   "imsart-aoas.cnf" 0 -1 0 ""
   "imsart.cls" 1761147489.30357 5669 1be259565a85a1f70ef82b287b469aee ""
   "imsart.cnf" 0 -1 0 ""
