@@ -28,13 +28,15 @@ qbbig <- names(sort(table(passPlays$passer_player_name)))
 qbbig <- qbbig[sort(table(passPlays$passer_player_name)) >= 400]
 qbbig <- sort(qbbig)
 
-
-sim <- function(i) {
-    out <- driveSim(qbdata, kickCoef, 1, 1, z = z)
-    return(out)
-}
-
 ##### Investigation #####
-results <- list()
-
-output <- generalSim(qbbig, unique(nfl$season))
+# output <- generalSim(qbbig, unique(nfl$season))
+seasons <- 2024
+# Check if the file exists
+if (file.exists("data/RIPPEN_2024_season_df.RData")) {
+    load("data/RIPPEN_2024_season_df.RData")
+    print("RIPPEN_2024_season_df.RData loaded")
+} else {
+    print("RIPPEN_2024_season_df.RData not found")
+    output <- generalSim(qbbig, seasons)
+    save(output, file = "data/RIPPEN_2024_season_df.RData")
+}
