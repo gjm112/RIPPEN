@@ -215,12 +215,29 @@ Finally, the data is processed to identify "censored" events. Touchdown passes a
 
 The core metric is derived by simulating hypothetical offensive drives. In this framework, a quarterback is placed in a standardized context: starting at their own 20-yard line with a "1st and 10" situation. The drive proceeds solely through passing plays, with outcomes determined by the quarterback's specific posterior predictive distributions.
 
+\subsubsection{Simulation Algorithm}
+\begin{enumerate}
+	\item Initialize: Set state to the 20 yard line, set downs to 1st and 10.
+	\item Passing loop:
+	\begin{itemize}
+		\item Check for completion
+		\item On completion, simulate the yards gained
+		\item On incomplete pass, check for interception
+	\end{itemize}
+	\item End states:
+	\begin{itemize}
+		\item Touchdown: if field position is >= 100, return $D_j$ = 7
+		\item Field Goal: if 4th down is reached, simulate a field goal attempt and return $D_j$ = 3 if successful, 0 if not.
+		\item Turnover: if interception, return $D_j$ =0
+	\end{itemize}
+\end{enumerate}
+
 For each simulated drive $j$, the outcome $D_j$ is determined is recorded in points:
 
 \begin{itemize}
 	\item Touchdown: return 7. 
 	\item Field Goal: return 3.  
-	\item Turnover/Punt: return 0.  
+	\item Turnover: return 0.  
 \end{itemize}
 
 The final RIPPEN score is calculated as the average number of points scored per ten possessions:
@@ -285,8 +302,8 @@ $$
 $$
 \sigma^2 \sim Uniform(0,100)
 $$.  
-\subsection{Simulation Algorithm}
 
+\end{enumerate}
 
 \section{Results}
 
