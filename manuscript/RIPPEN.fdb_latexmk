@@ -1,15 +1,28 @@
 # Fdb version 4
+<<<<<<< HEAD
 ["bibtex RIPPEN"] 0 "RIPPEN.aux" "RIPPEN.bbl" "RIPPEN" 1766165540.46552 -1
   "./imsart-nameyear.bst" 1761147489.30357 41491 ebcbdba2d240cbc4064a39ec515e554e ""
   "./refs.bib" 1761147489.30357 24870 31e4395bd0ccc004d23c958353a8ca87 ""
   "RIPPEN.aux" 1766165540.31923 3817 d540878bf0a24fc69c68e407c2005443 "pdflatex"
+=======
+["bibtex RIPPEN"] 0 "RIPPEN.aux" "RIPPEN.bbl" "RIPPEN" 0 -1
+  "./imsart-nameyear.bst" 1761147489.30357 41491 ebcbdba2d240cbc4064a39ec515e554e ""
+  "./refs.bib" 1761147489.30357 24870 31e4395bd0ccc004d23c958353a8ca87 ""
+  "RIPPEN.aux" 1766425830.83674 3572 60a7d2f587eee3ce98b7d72336589ef8 "pdflatex"
+>>>>>>> 94f656a (task: Update manuscript (#2))
   (generated)
   "RIPPEN.bbl"
   "RIPPEN.blg"
   (rewritten before read)
+<<<<<<< HEAD
 ["pdflatex"] 1766165540.02739 "/home/don/Repositories/RIPPEN/manuscript/RIPPEN.tex" "RIPPEN.pdf" "RIPPEN" 1766165540.46562 2
   "/etc/texmf/web2c/texmf.cnf" 1763753664.43635 475 c0e671620eb5563b2130f56340a5fde8 ""
   "/home/don/Repositories/RIPPEN/manuscript/RIPPEN.tex" 1766165478.52807 20931 5ff402aa33cecc36957f1616e97cb623 ""
+=======
+["pdflatex"] 1766425830.53924 "/home/don/Repositories/RIPPEN/manuscript/RIPPEN.tex" "RIPPEN.pdf" "RIPPEN" 1766425831.00315 2
+  "/etc/texmf/web2c/texmf.cnf" 1763753664.43635 475 c0e671620eb5563b2130f56340a5fde8 ""
+  "/home/don/Repositories/RIPPEN/manuscript/RIPPEN.tex" 1766425829.86473 21477 9f52a64b9b28aecca17fed97bf6bc93f ""
+>>>>>>> 94f656a (task: Update manuscript (#2))
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/jknappen/ec/ectt1000.tfm" 1136768653 1536 06717a2b50de47d4087ac0e6cd759455 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/jknappen/ec/tcrm1095.tfm" 1136768653 1536 02c06700a42be0f5a28664c7273f82e7 ""
@@ -131,10 +144,17 @@
   "/usr/share/texmf/web2c/texmf.cnf" 1707919699 40399 f2c302f7d2af602abb742093540a5834 ""
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1763753680.17495 5472669 54eaf61a88b6b7896ebd0dac973cb29c ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1763753726 8214154 6800d4505a5f7a6b849d0db0a0c3e4eb ""
+<<<<<<< HEAD
   "RIPPEN.aux" 1766165540.31923 3817 d540878bf0a24fc69c68e407c2005443 "pdflatex"
   "RIPPEN.bbl" 1766084020.32485 0 d41d8cd98f00b204e9800998ecf8427e "bibtex RIPPEN"
   "RIPPEN.out" 1766165540.31923 4084 52f054e9611d364ebf2d36bf2b398c57 "pdflatex"
   "RIPPEN.tex" 1766165478.52807 20931 5ff402aa33cecc36957f1616e97cb623 ""
+=======
+  "RIPPEN.aux" 1766425830.83674 3572 60a7d2f587eee3ce98b7d72336589ef8 "pdflatex"
+  "RIPPEN.bbl" 1766425760.97072 0 d41d8cd98f00b204e9800998ecf8427e "bibtex RIPPEN"
+  "RIPPEN.out" 1766425830.83674 3804 929d967ee2a89bfb3f25fd1dda2564bb "pdflatex"
+  "RIPPEN.tex" 1766425829.86473 21477 9f52a64b9b28aecca17fed97bf6bc93f ""
+>>>>>>> 94f656a (task: Update manuscript (#2))
   "imsart-aoas.cnf" 0 -1 0 ""
   "imsart.cls" 1761147489.30357 5669 1be259565a85a1f70ef82b287b469aee ""
   "imsart.cnf" 0 -1 0 ""

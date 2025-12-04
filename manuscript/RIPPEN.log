@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2025.11.21)  19 DEC 2025 11:32
+=======
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2025.11.21)  22 DEC 2025 11:50
+>>>>>>> 94f656a (task: Update manuscript (#2))
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -360,8 +364,12 @@ Package: upquote 2012/04/19 v1.3 upright-quote and grave-accent glyphs in verbat
 File: l3backend-pdftex.def 2024-01-04 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count300
 \l__pdf_internal_box=\box56
+<<<<<<< HEAD
 )
 No file RIPPEN.aux.
+=======
+) (./RIPPEN.aux)
+>>>>>>> 94f656a (task: Update manuscript (#2))
 \openout1 = `RIPPEN.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 90.
@@ -382,7 +390,11 @@ LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 90.
 LaTeX Font Info:    ... okay on input line 90.
 LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 90.
 LaTeX Font Info:    ... okay on input line 90.
+<<<<<<< HEAD
 (/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
+=======
+ (/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
+>>>>>>> 94f656a (task: Update manuscript (#2))
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count301
 \scratchdimen=\dimen182
@@ -474,16 +486,32 @@ LaTeX Font Warning: Font shape `OT1/cmr/m/scit' undefined
 (Font)              using `OT1/cmr/m/it' instead on input line 113.
 
 
+<<<<<<< HEAD
 Package natbib Warning: Citation `vanDohlen2011' on page 1 undefined on input line 147.
+=======
+Overfull \hbox (4.23895pt too wide) in paragraph at lines 138--139
+\OT1/cmr/m/n/10.95 the cur-rent for-mula for NFL passer rat-ing. (https://www.profootballhof.com/news/nfl-
+ []
+
+[1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}
+
+]
+
+Package natbib Warning: Citation `vanDohlen2011' on page 2 undefined on input line 147.
+>>>>>>> 94f656a (task: Update manuscript (#2))
 
 
 Overfull \hbox (113.90701pt too wide) in paragraph at lines 147--148
 []\OT1/cmr/m/n/10.95 All of this leads to the NFL for-mula for passer rat-ing (http://www.nfl.com/help/quarterbackratingformula).
  []
 
+<<<<<<< HEAD
 [1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}
 
 ]
+=======
+
+>>>>>>> 94f656a (task: Update manuscript (#2))
 Underfull \hbox (badness 10000) in paragraph at lines 150--157
 
  []
@@ -493,6 +521,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 166--173
 
  []
 
+<<<<<<< HEAD
 [2]
 Overfull \hbox (6.14146pt too wide) in paragraph at lines 202--203
  \OT1/cmr/bx/n/10.95 2.Methodology.[][] \OT1/cmr/m/n/10.95 The Rush In-de-pen-dent Pass-ing Player Ef-fi-ciency Num-ber (RIP-
@@ -501,17 +530,32 @@ Overfull \hbox (6.14146pt too wide) in paragraph at lines 202--203
 [3{/usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-ts1.enc}] [4] [5]
 
 /home/don/Repositories/RIPPEN/manuscript/RIPPEN.tex:306: LaTeX Error: \begin{document} ended by \end{enumerate}.
+=======
+[2] [3{/usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-ts1.enc}]
+Overfull \hbox (6.14146pt too wide) in paragraph at lines 201--202
+ \OT1/cmr/bx/n/10.95 2.Methodology.[][] \OT1/cmr/m/n/10.95 The Rush In-de-pen-dent Pass-ing Player Ef-fi-ciency Num-ber (RIP-
+ []
+
+[4] [5]
+
+/home/don/Repositories/RIPPEN/manuscript/RIPPEN.tex:297: LaTeX Error: \begin{document} ended by \end{enumerate}.
+>>>>>>> 94f656a (task: Update manuscript (#2))
 
 See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
+<<<<<<< HEAD
 l.306 \end{enumerate}
+=======
+l.297 \end{enumerate}
+>>>>>>> 94f656a (task: Update manuscript (#2))
                      
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
 or  <return>  to continue without it.
 
+<<<<<<< HEAD
 /home/don/Repositories/RIPPEN/manuscript/RIPPEN.tex:306: Extra \endgroup.
 <recently read> \endgroup 
                           
@@ -520,17 +564,55 @@ l.306 \end{enumerate}
 Things are pretty mixed up, but I think the worst is over.
 
 [6] (./RIPPEN.bbl)
+=======
+/home/don/Repositories/RIPPEN/manuscript/RIPPEN.tex:297: Extra \endgroup.
+<recently read> \endgroup 
+                          
+l.297 \end{enumerate}
+                     
+Things are pretty mixed up, but I think the worst is over.
+
+(./RIPPEN.bbl)
+Underfull \hbox (badness 10000) in paragraph at lines 331--332
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 335--336
+
+ []
+
+[6]
+Underfull \hbox (badness 10000) in paragraph at lines 337--338
+
+ []
+
+
+>>>>>>> 94f656a (task: Update manuscript (#2))
 Underfull \hbox (badness 10000) in paragraph at lines 340--341
 
  []
 
 
+<<<<<<< HEAD
 Underfull \hbox (badness 10000) in paragraph at lines 344--345
+=======
+Underfull \hbox (badness 10000) in paragraph at lines 343--344
+>>>>>>> 94f656a (task: Update manuscript (#2))
 
  []
 
 
+<<<<<<< HEAD
 Underfull \hbox (badness 10000) in paragraph at lines 346--347
+=======
+Underfull \hbox (badness 10000) in paragraph at lines 345--346
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 347--348
+>>>>>>> 94f656a (task: Update manuscript (#2))
 
  []
 
@@ -540,61 +622,106 @@ Underfull \hbox (badness 10000) in paragraph at lines 349--350
  []
 
 
+<<<<<<< HEAD
 Underfull \hbox (badness 10000) in paragraph at lines 352--353
+=======
+Underfull \hbox (badness 10000) in paragraph at lines 353--368
+>>>>>>> 94f656a (task: Update manuscript (#2))
 
  []
 
 
+<<<<<<< HEAD
 Underfull \hbox (badness 10000) in paragraph at lines 354--355
+=======
+Underfull \hbox (badness 10000) in paragraph at lines 353--368
+>>>>>>> 94f656a (task: Update manuscript (#2))
 
  []
 
 
+<<<<<<< HEAD
 Underfull \hbox (badness 10000) in paragraph at lines 356--357
+=======
+Underfull \hbox (badness 10000) in paragraph at lines 353--368
+>>>>>>> 94f656a (task: Update manuscript (#2))
 
  []
 
 
+<<<<<<< HEAD
 Underfull \hbox (badness 10000) in paragraph at lines 358--359
+=======
+Underfull \hbox (badness 10000) in paragraph at lines 353--368
+>>>>>>> 94f656a (task: Update manuscript (#2))
 
  []
 
 
+<<<<<<< HEAD
 Underfull \hbox (badness 10000) in paragraph at lines 362--377
+=======
+Underfull \hbox (badness 10000) in paragraph at lines 353--368
+>>>>>>> 94f656a (task: Update manuscript (#2))
 
  []
 
 
+<<<<<<< HEAD
 Underfull \hbox (badness 10000) in paragraph at lines 362--377
+=======
+Underfull \hbox (badness 10000) in paragraph at lines 369--371
+>>>>>>> 94f656a (task: Update manuscript (#2))
 
  []
 
 
+<<<<<<< HEAD
 Underfull \hbox (badness 10000) in paragraph at lines 362--377
+=======
+Underfull \hbox (badness 10000) in paragraph at lines 372--373
+>>>>>>> 94f656a (task: Update manuscript (#2))
 
  []
 
 
+<<<<<<< HEAD
 Underfull \hbox (badness 10000) in paragraph at lines 362--377
+=======
+Underfull \hbox (badness 10000) in paragraph at lines 374--375
+>>>>>>> 94f656a (task: Update manuscript (#2))
 
  []
 
 
+<<<<<<< HEAD
 Underfull \hbox (badness 10000) in paragraph at lines 362--377
+=======
+Underfull \hbox (badness 10000) in paragraph at lines 376--377
+>>>>>>> 94f656a (task: Update manuscript (#2))
 
  []
 
 [7]
+<<<<<<< HEAD
 Underfull \hbox (badness 10000) in paragraph at lines 378--380
+=======
+Underfull \hbox (badness 10000) in paragraph at lines 378--379
+>>>>>>> 94f656a (task: Update manuscript (#2))
 
  []
 
 
+<<<<<<< HEAD
 Underfull \hbox (badness 10000) in paragraph at lines 381--382
+=======
+Underfull \hbox (badness 10000) in paragraph at lines 380--381
+>>>>>>> 94f656a (task: Update manuscript (#2))
 
  []
 
 
+<<<<<<< HEAD
 Underfull \hbox (badness 10000) in paragraph at lines 383--384
 
  []
@@ -616,11 +743,15 @@ Underfull \hbox (badness 10000) in paragraph at lines 389--390
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 391--392
+=======
+Underfull \hbox (badness 10000) in paragraph at lines 382--383
+>>>>>>> 94f656a (task: Update manuscript (#2))
 
  []
 
 
 Package hyperref Warning: Difference (2) between bookmark levels is greater 
+<<<<<<< HEAD
 (hyperref)                than one, level fixed on input line 394.
 
 Runaway definition?
@@ -629,16 +760,33 @@ Runaway definition?
 <inserted text> 
                 }
 l.402 \end{document}
+=======
+(hyperref)                than one, level fixed on input line 385.
+
+Runaway definition?
+->\endgroup \href@ {\ead@prefix \protect \gdef \@refundefined {\protect \ETC.
+/home/don/Repositories/RIPPEN/manuscript/RIPPEN.tex:393: Forbidden control sequence found while scanning definition of \Hy@tempa.
+<inserted text> 
+                }
+l.393 \end{document}
+>>>>>>> 94f656a (task: Update manuscript (#2))
                     
 I suspect you have forgotten a `}', causing me
 to read past where you wanted me to stop.
 I'll try to recover; but if the error is serious,
 you'd better type `E' or `X' now and fix your file.
 
+<<<<<<< HEAD
 /home/don/Repositories/RIPPEN/manuscript/RIPPEN.tex:402: Missing \endgroup inserted.
 <inserted text> 
                 \endgroup 
 l.402 \end{document}
+=======
+/home/don/Repositories/RIPPEN/manuscript/RIPPEN.tex:393: Missing \endgroup inserted.
+<inserted text> 
+                \endgroup 
+l.393 \end{document}
+>>>>>>> 94f656a (task: Update manuscript (#2))
                     
 I've inserted something that you may have forgotten.
 (See the <inserted text> above.)
@@ -646,10 +794,17 @@ With luck, this will get me unwedged. But if you
 really didn't forget anything, try typing `2' now; then
 my insertion and my current dilemma will both disappear.
 
+<<<<<<< HEAD
 /home/don/Repositories/RIPPEN/manuscript/RIPPEN.tex:402: Missing \endgroup inserted.
 <inserted text> 
                 \endgroup 
 l.402 \end{document}
+=======
+/home/don/Repositories/RIPPEN/manuscript/RIPPEN.tex:393: Missing \endgroup inserted.
+<inserted text> 
+                \endgroup 
+l.393 \end{document}
+>>>>>>> 94f656a (task: Update manuscript (#2))
                     
 I've inserted something that you may have forgotten.
 (See the <inserted text> above.)
@@ -657,10 +812,17 @@ With luck, this will get me unwedged. But if you
 really didn't forget anything, try typing `2' now; then
 my insertion and my current dilemma will both disappear.
 
+<<<<<<< HEAD
 /home/don/Repositories/RIPPEN/manuscript/RIPPEN.tex:402: Missing } inserted.
 <inserted text> 
                 }
 l.402 \end{document}
+=======
+/home/don/Repositories/RIPPEN/manuscript/RIPPEN.tex:393: Missing } inserted.
+<inserted text> 
+                }
+l.393 \end{document}
+>>>>>>> 94f656a (task: Update manuscript (#2))
                     
 I've inserted something that you may have forgotten.
 (See the <inserted text> above.)
@@ -668,10 +830,17 @@ With luck, this will get me unwedged. But if you
 really didn't forget anything, try typing `2' now; then
 my insertion and my current dilemma will both disappear.
 
+<<<<<<< HEAD
 /home/don/Repositories/RIPPEN/manuscript/RIPPEN.tex:402: Missing } inserted.
 <inserted text> 
                 }
 l.402 \end{document}
+=======
+/home/don/Repositories/RIPPEN/manuscript/RIPPEN.tex:393: Missing } inserted.
+<inserted text> 
+                }
+l.393 \end{document}
+>>>>>>> 94f656a (task: Update manuscript (#2))
                     
 I've inserted something that you may have forgotten.
 (See the <inserted text> above.)
@@ -679,10 +848,17 @@ With luck, this will get me unwedged. But if you
 really didn't forget anything, try typing `2' now; then
 my insertion and my current dilemma will both disappear.
 
+<<<<<<< HEAD
 /home/don/Repositories/RIPPEN/manuscript/RIPPEN.tex:402: Missing } inserted.
 <inserted text> 
                 }
 l.402 \end{document}
+=======
+/home/don/Repositories/RIPPEN/manuscript/RIPPEN.tex:393: Missing } inserted.
+<inserted text> 
+                }
+l.393 \end{document}
+>>>>>>> 94f656a (task: Update manuscript (#2))
                     
 I've inserted something that you may have forgotten.
 (See the <inserted text> above.)
@@ -692,20 +868,34 @@ my insertion and my current dilemma will both disappear.
 
 Runaway definition?
 ->\endgroup \href@ {\ead@prefix \protect \gdef \@refundefined {\protect \ETC.
+<<<<<<< HEAD
 /home/don/Repositories/RIPPEN/manuscript/RIPPEN.tex:402: Forbidden control sequence found while scanning definition of \Hy@tempa.
 <inserted text> 
                 }
 l.402 \end{document}
+=======
+/home/don/Repositories/RIPPEN/manuscript/RIPPEN.tex:393: Forbidden control sequence found while scanning definition of \Hy@tempa.
+<inserted text> 
+                }
+l.393 \end{document}
+>>>>>>> 94f656a (task: Update manuscript (#2))
                     
 I suspect you have forgotten a `}', causing me
 to read past where you wanted me to stop.
 I'll try to recover; but if the error is serious,
 you'd better type `E' or `X' now and fix your file.
 
+<<<<<<< HEAD
 /home/don/Repositories/RIPPEN/manuscript/RIPPEN.tex:402: Missing \endgroup inserted.
 <inserted text> 
                 \endgroup 
 l.402 \end{document}
+=======
+/home/don/Repositories/RIPPEN/manuscript/RIPPEN.tex:393: Missing \endgroup inserted.
+<inserted text> 
+                \endgroup 
+l.393 \end{document}
+>>>>>>> 94f656a (task: Update manuscript (#2))
                     
 I've inserted something that you may have forgotten.
 (See the <inserted text> above.)
@@ -713,10 +903,17 @@ With luck, this will get me unwedged. But if you
 really didn't forget anything, try typing `2' now; then
 my insertion and my current dilemma will both disappear.
 
+<<<<<<< HEAD
 /home/don/Repositories/RIPPEN/manuscript/RIPPEN.tex:402: Missing \endgroup inserted.
 <inserted text> 
                 \endgroup 
 l.402 \end{document}
+=======
+/home/don/Repositories/RIPPEN/manuscript/RIPPEN.tex:393: Missing \endgroup inserted.
+<inserted text> 
+                \endgroup 
+l.393 \end{document}
+>>>>>>> 94f656a (task: Update manuscript (#2))
                     
 I've inserted something that you may have forgotten.
 (See the <inserted text> above.)
@@ -724,10 +921,17 @@ With luck, this will get me unwedged. But if you
 really didn't forget anything, try typing `2' now; then
 my insertion and my current dilemma will both disappear.
 
+<<<<<<< HEAD
 /home/don/Repositories/RIPPEN/manuscript/RIPPEN.tex:402: Missing } inserted.
 <inserted text> 
                 }
 l.402 \end{document}
+=======
+/home/don/Repositories/RIPPEN/manuscript/RIPPEN.tex:393: Missing } inserted.
+<inserted text> 
+                }
+l.393 \end{document}
+>>>>>>> 94f656a (task: Update manuscript (#2))
                     
 I've inserted something that you may have forgotten.
 (See the <inserted text> above.)
@@ -735,10 +939,17 @@ With luck, this will get me unwedged. But if you
 really didn't forget anything, try typing `2' now; then
 my insertion and my current dilemma will both disappear.
 
+<<<<<<< HEAD
 /home/don/Repositories/RIPPEN/manuscript/RIPPEN.tex:402: Missing } inserted.
 <inserted text> 
                 }
 l.402 \end{document}
+=======
+/home/don/Repositories/RIPPEN/manuscript/RIPPEN.tex:393: Missing } inserted.
+<inserted text> 
+                }
+l.393 \end{document}
+>>>>>>> 94f656a (task: Update manuscript (#2))
                     
 I've inserted something that you may have forgotten.
 (See the <inserted text> above.)
@@ -746,10 +957,17 @@ With luck, this will get me unwedged. But if you
 really didn't forget anything, try typing `2' now; then
 my insertion and my current dilemma will both disappear.
 
+<<<<<<< HEAD
 /home/don/Repositories/RIPPEN/manuscript/RIPPEN.tex:402: Missing } inserted.
 <inserted text> 
                 }
 l.402 \end{document}
+=======
+/home/don/Repositories/RIPPEN/manuscript/RIPPEN.tex:393: Missing } inserted.
+<inserted text> 
+                }
+l.393 \end{document}
+>>>>>>> 94f656a (task: Update manuscript (#2))
                     
 I've inserted something that you may have forgotten.
 (See the <inserted text> above.)
@@ -757,6 +975,7 @@ With luck, this will get me unwedged. But if you
 really didn't forget anything, try typing `2' now; then
 my insertion and my current dilemma will both disappear.
 
+<<<<<<< HEAD
 /home/don/Repositories/RIPPEN/manuscript/RIPPEN.tex:402: Extra \else.
 \@iwhilenum ...m #1\expandafter \@iwhilenum \else 
                                                   \expandafter \@gobble \fi ...
@@ -768,11 +987,25 @@ I'm ignoring this; it doesn't match any \if.
 <to be read again> 
                    \relax 
 l.402 \end{document}
+=======
+/home/don/Repositories/RIPPEN/manuscript/RIPPEN.tex:393: Extra \else.
+\@iwhilenum ...m #1\expandafter \@iwhilenum \else 
+                                                  \expandafter \@gobble \fi ...
+l.393 \end{document}
+                    
+I'm ignoring this; it doesn't match any \if.
+
+/home/don/Repositories/RIPPEN/manuscript/RIPPEN.tex:393: Missing number, treated as zero.
+<to be read again> 
+                   \relax 
+l.393 \end{document}
+>>>>>>> 94f656a (task: Update manuscript (#2))
                     
 A number should have been here; I inserted `0'.
 (If you can't figure out why I needed to see a number,
 look up `weird error' in the index to The TeXbook.)
 
+<<<<<<< HEAD
 /home/don/Repositories/RIPPEN/manuscript/RIPPEN.tex:402: Missing = inserted for \ifnum.
 <to be read again> 
                    \relax 
@@ -784,20 +1017,41 @@ I was expecting to see `<', `=', or `>'. Didn't.
 <to be read again> 
                    \relax 
 l.402 \end{document}
+=======
+/home/don/Repositories/RIPPEN/manuscript/RIPPEN.tex:393: Missing = inserted for \ifnum.
+<to be read again> 
+                   \relax 
+l.393 \end{document}
+                    
+I was expecting to see `<', `=', or `>'. Didn't.
+
+/home/don/Repositories/RIPPEN/manuscript/RIPPEN.tex:393: Missing number, treated as zero.
+<to be read again> 
+                   \relax 
+l.393 \end{document}
+>>>>>>> 94f656a (task: Update manuscript (#2))
                     
 A number should have been here; I inserted `0'.
 (If you can't figure out why I needed to see a number,
 look up `weird error' in the index to The TeXbook.)
 
+<<<<<<< HEAD
 /home/don/Repositories/RIPPEN/manuscript/RIPPEN.tex:402: Missing number, treated as zero.
 <to be read again> 
                    \relax 
 l.402 \end{document}
+=======
+/home/don/Repositories/RIPPEN/manuscript/RIPPEN.tex:393: Missing number, treated as zero.
+<to be read again> 
+                   \relax 
+l.393 \end{document}
+>>>>>>> 94f656a (task: Update manuscript (#2))
                     
 A number should have been here; I inserted `0'.
 (If you can't figure out why I needed to see a number,
 look up `weird error' in the index to The TeXbook.)
 
+<<<<<<< HEAD
 /home/don/Repositories/RIPPEN/manuscript/RIPPEN.tex:402: Missing = inserted for \ifnum.
 <to be read again> 
                    \relax 
@@ -809,24 +1063,51 @@ I was expecting to see `<', `=', or `>'. Didn't.
 <to be read again> 
                    \relax 
 l.402 \end{document}
+=======
+/home/don/Repositories/RIPPEN/manuscript/RIPPEN.tex:393: Missing = inserted for \ifnum.
+<to be read again> 
+                   \relax 
+l.393 \end{document}
+                    
+I was expecting to see `<', `=', or `>'. Didn't.
+
+/home/don/Repositories/RIPPEN/manuscript/RIPPEN.tex:393: Missing number, treated as zero.
+<to be read again> 
+                   \relax 
+l.393 \end{document}
+>>>>>>> 94f656a (task: Update manuscript (#2))
                     
 A number should have been here; I inserted `0'.
 (If you can't figure out why I needed to see a number,
 look up `weird error' in the index to The TeXbook.)
 
+<<<<<<< HEAD
 /home/don/Repositories/RIPPEN/manuscript/RIPPEN.tex:402: Missing number, treated as zero.
 <to be read again> 
                    <
 l.402 \end{document}
+=======
+/home/don/Repositories/RIPPEN/manuscript/RIPPEN.tex:393: Missing number, treated as zero.
+<to be read again> 
+                   <
+l.393 \end{document}
+>>>>>>> 94f656a (task: Update manuscript (#2))
                     
 A number should have been here; I inserted `0'.
 (If you can't figure out why I needed to see a number,
 look up `weird error' in the index to The TeXbook.)
 
+<<<<<<< HEAD
 /home/don/Repositories/RIPPEN/manuscript/RIPPEN.tex:402: Missing number, treated as zero.
 <to be read again> 
                    \relax 
 l.402 \end{document}
+=======
+/home/don/Repositories/RIPPEN/manuscript/RIPPEN.tex:393: Missing number, treated as zero.
+<to be read again> 
+                   \relax 
+l.393 \end{document}
+>>>>>>> 94f656a (task: Update manuscript (#2))
                     
 A number should have been here; I inserted `0'.
 (If you can't figure out why I needed to see a number,
@@ -834,20 +1115,34 @@ look up `weird error' in the index to The TeXbook.)
 
 Runaway definition?
 ->\endgroup \href@ {\ead@prefix \protect \gdef \@refundefined {\protect \ETC.
+<<<<<<< HEAD
 /home/don/Repositories/RIPPEN/manuscript/RIPPEN.tex:402: Forbidden control sequence found while scanning definition of \Hy@tempa.
 <inserted text> 
                 }
 l.402 \end{document}
+=======
+/home/don/Repositories/RIPPEN/manuscript/RIPPEN.tex:393: Forbidden control sequence found while scanning definition of \Hy@tempa.
+<inserted text> 
+                }
+l.393 \end{document}
+>>>>>>> 94f656a (task: Update manuscript (#2))
                     
 I suspect you have forgotten a `}', causing me
 to read past where you wanted me to stop.
 I'll try to recover; but if the error is serious,
 you'd better type `E' or `X' now and fix your file.
 
+<<<<<<< HEAD
 /home/don/Repositories/RIPPEN/manuscript/RIPPEN.tex:402: Missing \endgroup inserted.
 <inserted text> 
                 \endgroup 
 l.402 \end{document}
+=======
+/home/don/Repositories/RIPPEN/manuscript/RIPPEN.tex:393: Missing \endgroup inserted.
+<inserted text> 
+                \endgroup 
+l.393 \end{document}
+>>>>>>> 94f656a (task: Update manuscript (#2))
                     
 I've inserted something that you may have forgotten.
 (See the <inserted text> above.)
@@ -855,10 +1150,17 @@ With luck, this will get me unwedged. But if you
 really didn't forget anything, try typing `2' now; then
 my insertion and my current dilemma will both disappear.
 
+<<<<<<< HEAD
 /home/don/Repositories/RIPPEN/manuscript/RIPPEN.tex:402: Missing \endgroup inserted.
 <inserted text> 
                 \endgroup 
 l.402 \end{document}
+=======
+/home/don/Repositories/RIPPEN/manuscript/RIPPEN.tex:393: Missing \endgroup inserted.
+<inserted text> 
+                \endgroup 
+l.393 \end{document}
+>>>>>>> 94f656a (task: Update manuscript (#2))
                     
 I've inserted something that you may have forgotten.
 (See the <inserted text> above.)
@@ -866,10 +1168,17 @@ With luck, this will get me unwedged. But if you
 really didn't forget anything, try typing `2' now; then
 my insertion and my current dilemma will both disappear.
 
+<<<<<<< HEAD
 /home/don/Repositories/RIPPEN/manuscript/RIPPEN.tex:402: Missing } inserted.
 <inserted text> 
                 }
 l.402 \end{document}
+=======
+/home/don/Repositories/RIPPEN/manuscript/RIPPEN.tex:393: Missing } inserted.
+<inserted text> 
+                }
+l.393 \end{document}
+>>>>>>> 94f656a (task: Update manuscript (#2))
                     
 I've inserted something that you may have forgotten.
 (See the <inserted text> above.)
@@ -877,10 +1186,17 @@ With luck, this will get me unwedged. But if you
 really didn't forget anything, try typing `2' now; then
 my insertion and my current dilemma will both disappear.
 
+<<<<<<< HEAD
 /home/don/Repositories/RIPPEN/manuscript/RIPPEN.tex:402: Missing } inserted.
 <inserted text> 
                 }
 l.402 \end{document}
+=======
+/home/don/Repositories/RIPPEN/manuscript/RIPPEN.tex:393: Missing } inserted.
+<inserted text> 
+                }
+l.393 \end{document}
+>>>>>>> 94f656a (task: Update manuscript (#2))
                     
 I've inserted something that you may have forgotten.
 (See the <inserted text> above.)
@@ -888,10 +1204,17 @@ With luck, this will get me unwedged. But if you
 really didn't forget anything, try typing `2' now; then
 my insertion and my current dilemma will both disappear.
 
+<<<<<<< HEAD
 /home/don/Repositories/RIPPEN/manuscript/RIPPEN.tex:402: Missing } inserted.
 <inserted text> 
                 }
 l.402 \end{document}
+=======
+/home/don/Repositories/RIPPEN/manuscript/RIPPEN.tex:393: Missing } inserted.
+<inserted text> 
+                }
+l.393 \end{document}
+>>>>>>> 94f656a (task: Update manuscript (#2))
                     
 I've inserted something that you may have forgotten.
 (See the <inserted text> above.)
@@ -918,6 +1241,7 @@ Package rerunfilecheck Warning: File `RIPPEN.out' has changed.
 
 Package rerunfilecheck Info: Checksums for `RIPPEN.out':
 (rerunfilecheck)             Before: <no file>
+<<<<<<< HEAD
 (rerunfilecheck)             After:  52F054E9611D364EBF2D36BF2B398C57;4084.
  )
 (\end occurred inside a group at level 1)
@@ -945,5 +1269,34 @@ PDF statistics:
  177 PDF objects out of 1000 (max. 8388607)
  133 compressed objects within 2 object streams
  37 named destinations out of 1000 (max. 500000)
+=======
+(rerunfilecheck)             After:  929D967EE2A89BFB3F25FD1DDA2564BB;3804.
+ )
+(\end occurred inside a group at level 1)
+
+### simple group (level 1) entered at line 393 ({)
+### bottom level
+(\end occurred when \ifx on line 393 was incomplete)
+(\end occurred when \ifx on line 393 was incomplete)
+(\end occurred when \ifx on line 393 was incomplete)
+(\end occurred when \ifnum on line 393 was incomplete)
+(\end occurred when \ifx on line 393 was incomplete)
+(\end occurred when \ifx on line 393 was incomplete)
+(\end occurred when \ifnum on line 393 was incomplete) 
+Here is how much of TeX's memory you used:
+ 12099 strings out of 474222
+ 180467 string characters out of 5748732
+ 1936975 words of memory out of 5000000
+ 34142 multiletter control sequences out of 15000+600000
+ 568909 words of font info for 76 fonts, out of 8000000 for 9000
+ 1141 hyphenation exceptions out of 8191
+ 75i,8n,79p,832b,589s stack positions out of 10000i,1000n,20000p,200000b,200000s
+</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt9.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm1095.pfb>
+Output written on RIPPEN.pdf (8 pages, 234243 bytes).
+PDF statistics:
+ 172 PDF objects out of 1000 (max. 8388607)
+ 128 compressed objects within 2 object streams
+ 35 named destinations out of 1000 (max. 500000)
+>>>>>>> 94f656a (task: Update manuscript (#2))
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 
