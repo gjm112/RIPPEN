@@ -1,4 +1,54 @@
-\documentclass[aoas]{imsart}
+\documentclass[aoas]{imsart}\usepackage[]{graphicx}\usepackage[]{xcolor}
+% maxwidth is the original width if it is less than linewidth
+% otherwise use linewidth (to make sure the graphics do not exceed the margin)
+\makeatletter
+\def\maxwidth{ %
+  \ifdim\Gin@nat@width>\linewidth
+    \linewidth
+  \else
+    \Gin@nat@width
+  \fi
+}
+\makeatother
+
+\definecolor{fgcolor}{rgb}{0.345, 0.345, 0.345}
+\newcommand{\hlnum}[1]{\textcolor[rgb]{0.686,0.059,0.569}{#1}}%
+\newcommand{\hlsng}[1]{\textcolor[rgb]{0.192,0.494,0.8}{#1}}%
+\newcommand{\hlcom}[1]{\textcolor[rgb]{0.678,0.584,0.686}{\textit{#1}}}%
+\newcommand{\hlopt}[1]{\textcolor[rgb]{0,0,0}{#1}}%
+\newcommand{\hldef}[1]{\textcolor[rgb]{0.345,0.345,0.345}{#1}}%
+\newcommand{\hlkwa}[1]{\textcolor[rgb]{0.161,0.373,0.58}{\textbf{#1}}}%
+\newcommand{\hlkwb}[1]{\textcolor[rgb]{0.69,0.353,0.396}{#1}}%
+\newcommand{\hlkwc}[1]{\textcolor[rgb]{0.333,0.667,0.333}{#1}}%
+\newcommand{\hlkwd}[1]{\textcolor[rgb]{0.737,0.353,0.396}{\textbf{#1}}}%
+\let\hlipl\hlkwb
+
+\usepackage{framed}
+\makeatletter
+\newenvironment{kframe}{%
+ \def\at@end@of@kframe{}%
+ \ifinner\ifhmode%
+  \def\at@end@of@kframe{\end{minipage}}%
+  \begin{minipage}{\columnwidth}%
+ \fi\fi%
+ \def\FrameCommand##1{\hskip\@totalleftmargin \hskip-\fboxsep
+ \colorbox{shadecolor}{##1}\hskip-\fboxsep
+     % There is no \\@totalrightmargin, so:
+     \hskip-\linewidth \hskip-\@totalleftmargin \hskip\columnwidth}%
+ \MakeFramed {\advance\hsize-\width
+   \@totalleftmargin\z@ \linewidth\hsize
+   \@setminipage}}%
+ {\par\unskip\endMakeFramed%
+ \at@end@of@kframe}
+\makeatother
+
+\definecolor{shadecolor}{rgb}{.97, .97, .97}
+\definecolor{messagecolor}{rgb}{0, 0, 0}
+\definecolor{warningcolor}{rgb}{1, 0, 1}
+\definecolor{errorcolor}{rgb}{1, 0, 0}
+\newenvironment{knitrout}{}{} % an empty environment to be redefined in TeX
+
+\usepackage{alltt}
 %\usepackage{setspace}
 
 \usepackage{dsfont}
@@ -36,9 +86,7 @@
 \def\bX{\pmb{X}}
 
 \endlocaldefs
-
-
-
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
 \begin{document}
 \SweaveOpts{concordance=TRUE}
 
@@ -167,22 +215,30 @@ Finally, the data is processed to identify "censored" events. Touchdown passes a
 
 The core metric is derived by simulating hypothetical offensive drives. In this framework, a quarterback is placed in a standardized context: starting at their own 20-yard line with a "1st and 10" situation. The drive proceeds solely through passing plays, with outcomes determined by the quarterback's specific posterior predictive distributions.
 
-\subsubsection{Drive Algorithm}
+\subsubsection{Simulation Algorithm}
 \begin{enumerate}
-	\item Initialize: Set state to the 20 yard line, set downs to 1st and 10
-	\item Passing loop: Until an end state is reached, simulate a pass play
+	\item Initialize: Set state to the 20 yard line, set downs to 1st and 10.
+	\item Passing loop:
 	\begin{itemize}
 		\item Check for completion
 		\item On completion, simulate the yards gained
 		\item On incomplete pass, check for interception
 	\end{itemize}
-	\item End states: For each simulated drive $j$, the outcome $D_j$ is determined is recorded in points
+	\item End states:
 	\begin{itemize}
 		\item Touchdown: if field position is >= 100, return $D_j$ = 7
 		\item Field Goal: if 4th down is reached, simulate a field goal attempt and return $D_j$ = 3 if successful, 0 if not.
 		\item Turnover: if interception, return $D_j$ =0
 	\end{itemize}
 \end{enumerate}
+
+For each simulated drive $j$, the outcome $D_j$ is determined is recorded in points:
+
+\begin{itemize}
+	\item Touchdown: return 7. 
+	\item Field Goal: return 3.  
+	\item Turnover: return 0.  
+\end{itemize}
 
 The final RIPPEN score is calculated as the average number of points scored per ten possessions:
 $$\text{RIPPEN} = 10 \times \frac{1}{n_s} \sum_{j=1}^{n_s} D_j$$
@@ -197,12 +253,12 @@ $$
 with the following prior
 $$
 p_{comp} \sim \beta(\alpha_c,\beta_c)
-$$
+$$.
 
 This yields the following posterior distribution for $p_{comp}$: 
 $$
 p_{comp} |n_{comp}, n_{att} \sim Beta(\alpha_c + n_{comp}, \beta_c +n_{att}-n_{comp})
-$$  
+$$.  
 
 \subsubsection{Interceptions}
 Similarly, for a given quarterback over a given period of time, let $n_{int}$ and $n_{inc}$ be the number of intercepted passes and the number of incomplete passes (interceptions are considered incomplete passes), respectively.  We then have the following Bayesian model for interception percentage given an incomplete pass: 
@@ -213,18 +269,18 @@ $$
 with the following prior
 $$
 p_{int} \sim Beta(\alpha_i,\beta_i)
-$$
+$$.
 This yields the following posterior distribution for $p_{int}$: 
 $$
 p_{int} |n_{int},n_{inc} \sim Beta(\alpha_i + n_{int}, \beta_i +n_{inc} - n_i)
-$$  
+$$.  
 It is important to note that $p_{int}$ is estimating the probability of an interception given that the pass was incomplete, not the interception rate across all attempted passes.  
 
 In all simulations, we chose to use non-informative priors and set all hyperparameters of these models equal to 1.  Specifically, 
 
 $$
 \alpha_c = \beta_c = \alpha_i = \beta_i = 1
-$$  
+$$.  
 
 
  (Another possible idea here is to use empircal Bayes where these priors are based on league average completion and interception rates.)
@@ -245,7 +301,7 @@ $$
 
 $$
 \sigma^2 \sim Uniform(0,100)
-$$ 
+$$.  
 
 \end{enumerate}
 
