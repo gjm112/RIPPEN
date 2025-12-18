@@ -8,7 +8,7 @@ generalSim <- function(qbs, years) {
         for (s in years) {
             print(paste("Season:", as.character(s)))
             qbdata <- subset(passPlays, passer_player_name == q & season == s)
-            print(paste("Number of rows in qbdata:", nrow(qbdata)))
+            print(paste("Number of plays in season:", nrow(qbdata)))
             if (nrow(qbdata) > 0) {
                 z <- yardsSim(qbdata)
                 sim <- function(i) {
