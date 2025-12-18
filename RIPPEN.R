@@ -1,34 +1,21 @@
-# Import data and libraries
-library(RIPPEN)
-library(parallel)
-
-# Set working directory
 setwd(this.path::here())
 
+source("./R/gatherData.R")
+source("./R/gatherPassPlays.R")
+source("./R/kickCoef.R")
+source("./R/yardsSim.R")
+source("./R/driveSim.R")
+source("./R/generalSim.R")
+
+# Collect play by play data
 nfl <- gatherData()
-#Collect QB Data
-passPlays <- gatherPassPlays(nfl)
 
-qbList <- as.character(unique(passPlays$passer_player_name))
+# Filter Pass Plays
+pass_plays <- gatherPassPlays(nfl)
 
-#Collect league kicker data
-kickCoef <- kickCoef(nfl)
+# Create Kicker
+kicker <- createKicker(nfl)
 
-# Collect QB Data
-qbbig <- names(sort(table(passPlays$passer_player_name)))[sort(table(passPlays$passer_player_name)) > 3000]
-
-# Run simulations
-qbResults <- mclapply(qbbig, runSim, nsim = 20000, season=2009, mc.cores = 4)
-names(qbResults) <- as.character(qbbig)
-save(qbResults, file = "data/qbResults20000.rda")
-
-# Calculate mean results
-meanResults <- data.frame(qb = names(qbResults), mean=unlist(lapply(qbResults, mean)))
-gameMeanResults <- data.frame(qb = names(meanResults), mean=(meanResults$mean * 11))
-
-meanResults[order(meanResults$mean),]
-save(meanResults, file = "data/meanResults20000.rda")
-
-qbbig <- names(sort(table(passPlays$Passer)))[sort(table(passPlays$Passer)) > 500]
-meanResultsSub <- meanResults[meanResults$qb %in% qbbig,]
-meanResultsSub[order(meanResultsSub$mean),]
+# Get QB list
+# qbs <- as.character(unique(pass_plays$passer_player_name))
+qbbig <- names(sort(table(pass_plays$passer_player_name)))[sort(table(pass_plays$passer_player_name)) > 1000]

@@ -1,5 +1,4 @@
 # Import data and libraries
-devtools::install()
 library(RIPPEN)
 library(parallel)
 
