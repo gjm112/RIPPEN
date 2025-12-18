@@ -138,7 +138,6 @@ Despite their widespread use, existing metrics suffer from significant methodolo
 \item Arbitrary Weighting and Caps: The NFL Passer Rating utilizes weights derived from 1970s defensive standards, which are increasingly irrelevant in the modern offensive era. Furthermore, the imposition of a 2.375 cap on component statistics is arbitrary; a quarterback who completes 77.5% of their passes receives the same component score as one who completes 90%.
 \item Lack of Interpretability: Both the NFL (0–158.3) and NCAA scales are difficult to interpret intuitively. A difference between a rating of 85 and 95 does not translate to a tangible unit of football value (e.g., points or yards).
 \item Lack of Transparency: While Total QBR and DVOA attempt to add context, they are largely "black box" metrics. The exact coefficients, replacement-level baselines, and opponent adjustment formulas for DVOA are proprietary. This lack of transparency makes it impossible for independent researchers to verify, reproduce, or fully audit the results.
-\item Contextual Blindness: Traditional passer ratings treat all yards equally. A 10-yard completion on 3rd-and-15 is treated identically to a 10-yard completion on 3rd-and-3, despite the vastly different utility of those outcomes.
 \item Complexity: Unlike simple arithmetic formulas, DVOA requires complex play-by-play data parsing and subjective baseline determinations, making it inaccessible for general calculation without specialized databases.
 \end{itemize}
 
