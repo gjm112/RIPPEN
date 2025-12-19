@@ -1,4 +1,5 @@
-runSim <- function(qbdata, alpha_kick, beta_kick, nsim = 10000) {
+# Runs the drive simulations for a QB and a given number of simulations
+runSim <- function(qbdata, kicker, nsim = 10000) {
     library(rstan)
 
     # Model 3: Yards given completion
@@ -43,7 +44,7 @@ runSim <- function(qbdata, alpha_kick, beta_kick, nsim = 10000) {
     # #sampling yards
     # exp(rnorm(1,mu[id],sigma[id]))
     out <- mclapply(1:nsim, function(i) {
-        drive_sim(qbdata, mu, sigma, alpha_kick, beta_kick)
+        driveSim(qbdata, mu, sigma)
     }, mc.cores = 4) %>% unlist()
     return(list(scores = out, fit_rstan = fit_rstan))
 }

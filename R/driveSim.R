@@ -1,6 +1,6 @@
 # qbdata is the data from a qb and time period
 # mu  and sigma are a vector of posteriro draws for yard models
-driveSim <- function(qbdata, mu, sigma) {
+driveSim <- function(qbdata, mu, sigma, kicker) {
     driveState <- list()
     driveState$down <- 1
     driveState$togo <- 10
@@ -58,11 +58,7 @@ driveSim <- function(qbdata, mu, sigma) {
     }
     # If down reaches 4 for field goal
     # 17 yards is 10 for endzone and 7 for where the holder holds the ball.
-    id_kick <- sample(1:length(alpha_kick), 1)
-
-    xb <- c(alpha_kick[id_kick], beta_kick[id_kick]) %*% c(1, driveState$togoTD + 17)
-    pfg <- exp(xb) / (1 + exp(xb))
-    fieldGoal <- rbinom(1, 1, pfg)
+    fieldGoal <- kicker$fieldGoalSim(driveState$togoTD + 17)
     if (fieldGoal == 1) {
         return(3)
     }

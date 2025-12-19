@@ -26,7 +26,7 @@ stan_data_kick <- list(
 )
 
 fit_kick <- stan(
-    file = "./R/kickers.stan",
+    file = "./stan/kickers.stan",
     data = stan_data_kick
 )
 fit_kick_1999 <- fit_kick

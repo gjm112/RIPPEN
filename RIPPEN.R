@@ -1,11 +1,11 @@
 setwd(this.path::here())
+library(rstan)
 
 source("./R/gatherData.R")
 source("./R/gatherPassPlays.R")
-source("./R/kickCoef.R")
-source("./R/yardsSim.R")
+source("./R/kickerSim.R")
 source("./R/driveSim.R")
-source("./R/generalSim.R")
+source("./R/runSim.R")
 
 # Collect play by play data
 nfl <- gatherData()
