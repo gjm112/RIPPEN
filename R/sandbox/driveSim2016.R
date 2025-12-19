@@ -1,6 +1,18 @@
-#qbdata is the data from a qb and time period
-#mu  and sigma are a vector of posteriro draws for yard models
-drive_sim <- function(qbdata, mu, sigma, alpha_kick, beta_kick){
+#' @title driveSim
+#'
+#' @description This function simulates a single drive for RIPPEN
+#'
+#' @details Fill in the details
+#'
+#' @param nu_0 prior degrees of freedom
+#' @param kappa_0 prior something
+#'
+#' @return
+#'
+#' @export
+
+
+driveSim <- function(qbdata, kickCoef, kappa_0, nu_0, z){
   driveState <- list()
   driveState$down <- 1
   driveState$togo <- 10
@@ -34,10 +46,7 @@ drive_sim <- function(qbdata, mu, sigma, alpha_kick, beta_kick){
     # Else get results of completed pass
     else {
       #yards <- passSim(qbdata, kappa_0, nu_0)
-      id <- sample(1:length(mu),1)
-      #sampling yards
-      yards <- exp(rnorm(1,mu[id],sigma[id]))
-      
+      yards <- getYardsSim(z)
       #yards <- sample(qbdata$TotalYards[qbdata$PassOutcome=="Complete"],1)
       # Check for first down
       if (driveState$togo < yards){
@@ -54,12 +63,10 @@ drive_sim <- function(qbdata, mu, sigma, alpha_kick, beta_kick){
   }
   #If down reaches 4 for field goal
   #17 yards is 10 for endzone and 7 for where the holder holds the ball.
-  id_kick <- sample(1:length(alpha_kick),1)
-  xb <- c(alpha_kick[id_kick],beta_kick[id_kick])%*%c(1,driveState$togoTD+17)
+  xb <- kickCoef%*%c(1,driveState$togoTD+17)
   pfg <- exp(xb)/(1+exp(xb))
   fieldGoal <- rbinom(1,1,pfg)
   if(fieldGoal == 1){return(3);}
   #Return 0 if play also does not result in a field goal
   return(0);
-
-  }
+}
