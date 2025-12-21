@@ -51,7 +51,7 @@
 
 \author{\fnms{Gregory J.} \snm{Matthews}\corref{}\ead[label=e1]{gmatthews1@luc.edu}}
 \address{\printead{e1}}
-\affiliation{Skidmore College}
+\affiliation{Loyola University Chicago}
 
 \and
 \author{\fnms{Russell} \snm{Cain}\ead[label=e2]{rcain@luc.edu}}
@@ -84,11 +84,11 @@ RIPPEN, Rush Independent Passing Player Efficiency Number, is a new measurement 
 
 %\input{intro}
 
-%Censoring in rjags
-\section{Introduction}
-The NFL's current passer rating formula has officially been in place since the 1973 season.  This version of the rating was developed by Don Smith, Seymour Siwoff, and Don Weiss. (https://www.profootballhof.com/news/nfl-s-passer-rating/).  The basic idea was to look at four passing categories -- completion percentage, passing yards, touchdowns thrown, and interceptions -- and award a quarterback 1 point for an average performance, 2 points for an elite performance, and 0 for a poor performance(http://www.donsteinberg.com/qbrating.htm).  Their rating across these four components could then be averaged.  Using data from the 1970 NFL season, the average completion percentage, average yards per attempt, average touchdown percentage, and average interception percentage were approximately 50\%, 7, 5\%, and 5.5\%.  
 
-Using these numbers, formulas were derived to map dismal average, and exceptional performaces to approximately 0, 1, and 2, respectively.  For instance, for completion percentage the formula is $\frac{\frac{C}{A}-0.3}{0.2}$, which equals 0, 1, and 2 for a completion percentages of 30\%, 50\%, and 70\%, respectively.  Formulas for the other three components are defined similarly.  Each of the four components are bounded below by 0 and capped at 2.375 and then added together to get number between 0 and 9.5.  Then, this sum is divided by 6 and multipled by 100.  The reason for this last adjustment was simply, as Don Steinberg explains it, to make the score ``more meaningful":   
+\section{Introduction}
+In 1973, Don Smith, Seymour Siwoff, and Don Weiss developed the current formula for NFL passer rating. (https://www.profootballhof.com/news/nfl-s-passer-rating/).  Conceptually, the idea was to look at four passing categories -- completion percentage, passing yards, touchdowns thrown, and interceptions -- and award a quarterback 1 point for an average performance, 2 points for an elite performance, and 0 for a poor performance(http://www.donsteinberg.com/qbrating.htm).  Their rating across these four components could then be averaged.  Using data from the 1970 NFL season, the average completion percentage, average yards per attempt, average touchdown percentage, and average interception percentage were approximately 50\%, 7, 5\%, and 5.5\%.  
+
+Using these numbers, formulas were derived to map dismal, average, and exceptional performances to approximately 0, 1, and 2, respectively.  For instance, for completion percentage the formula is $\frac{\frac{C}{A}-0.3}{0.2}$, which equals 0, 1, and 2 for a completion percentages of 30\%, 50\%, and 70\%, respectively.  Formulas for the other three components are defined similarly.  Each of the four components are bounded below by 0 and capped at 2.375 and then added together to get number between 0 and 9.5.  Then, this sum is divided by 6 and multiplied by 100.  The reason for this last adjustment was simply, as Don Steinberg explains it, to make the score ``more meaningful":   
 
 \begin{quote}
 [Don] Smith thought it would be more meaningful if an excellent score came to around 100, just like in school. "I think our attitude was that 100 was an A," he recalls. "And anything above 100, that was an A-plus." So, in a move that made sense at the time and has had everyone else confused for three decades, he multiplied the raw total by 100 and divided by 6, turning a statistically average performance -- 1s across the board -- into 66.7. It also made the maximum rating a ridiculous 158.2.
@@ -120,9 +120,9 @@ $A$ = Number of Attempts\\
 $T$ = Number of Touchdowns\\
 $I$ = Number of Interceptions\\
 
-In college football, thre are no caps on each of the components, which measn that the college football passer rating can vary from -731.6 to 1261.6. 
+In college football, thre are no caps on each of the components, which means that the college football passer rating can vary from -731.6 to 1261.6. 
 
-In this article, a new metric is proposed to replace passer rating.  The main goals of the proposed measure are to use similar simple inputs as passer rating using only open source data and open source code, provide results on a meaningful scale in meaningful units, and to provide variability estimates of the measure.  
+In this article, a new metric is proposed to replace passer rating.  The goal of the proposed measure is to use the exact same inputs as passer rating using only open source data and open source code, provide results on a meaningful scale in meaningful units, and to provide variability estimates of the measure.  
 
 The rest of the article provides a literature review, then a description of the proposed measure, a presentation of results, and then concludes with ideas for future work.  
 
