@@ -1,21 +1,19 @@
 # Runs the drive simulations for a QB and a given number of simulations
 runSim <- function(qbdata, kicker, nsim = 10000) {
-    library(rstan)
-
     # Model 3: Yards given completion
     subcompleted <- qbdata %>%
         filter(complete_pass == 1) %>%
         mutate(passing_yards = ifelse(passing_yards <= 0, 0.5, passing_yards))
+    print(paste0("Number of completed passes: ", sum(subcompleted$complete_pass == 1)))
 
     # Create a list of the data
     if (sum(subcompleted$touchdown == 1) > 0) {
         stan_data <- list(
-            y_obs = subcompleted$passing_yards[subcompleted$touchdown == 0],
+            y_obs = na.omit(subcompleted$passing_yards[subcompleted$touchdown == 0]),
             N_obs = sum(subcompleted$touchdown == 0),
             c = subcompleted$passing_yards[subcompleted$touchdown == 1],
             N_cens = sum(subcompleted$touchdown == 1)
         )
-
         fit_rstan <- stan(
             file = "./stan/yardsmodel.stan",
             data = stan_data,
@@ -39,12 +37,11 @@ runSim <- function(qbdata, kicker, nsim = 10000) {
         mu <- extract(fit_rstan)$mu
         sigma <- extract(fit_rstan)$sigma
     }
-
-    # id <- sample(1:length(mu),1)
-    # #sampling yards
-    # exp(rnorm(1,mu[id],sigma[id]))
+    # id <- sample(1:length(mu), 1)
+    # sampling yards
+    # exp(rnorm(1, mu[id], sigma[id]))
     out <- mclapply(1:nsim, function(i) {
-        driveSim(qbdata, mu, sigma)
+        driveSim(qbdata, mu, sigma, kicker)
     }, mc.cores = 4) %>% unlist()
     return(list(scores = out, fit_rstan = fit_rstan))
 }
