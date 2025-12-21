@@ -52,7 +52,7 @@
 
 \author{\fnms{Gregory J.} \snm{Matthews}\corref{}\ead[label=e1]{gmatthews1@luc.edu}}
 \address{\printead{e1}}
-\affiliation{Skidmore College}
+\affiliation{Loyola University Chicago}
 
 \and
 \author{\fnms{Russell} \snm{Cain}\ead[label=e2]{rcain@luc.edu}}
