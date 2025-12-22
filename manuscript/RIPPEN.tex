@@ -100,11 +100,7 @@
 
 \author{\fnms{Gregory J.} \snm{Matthews}\corref{}\ead[label=e1]{gmatthews1@luc.edu}}
 \address{\printead{e1}}
-<<<<<<< HEAD
 \affiliation{Skidmore College}
-=======
-\affiliation{Loyola University Chicago}
->>>>>>> 94f656a (task: Update manuscript (#2))
 
 \and
 \author{\fnms{Russell} \snm{Cain}\ead[label=e2]{rcain@luc.edu}}
@@ -137,19 +133,11 @@ RIPPEN, Rush Independent Passing Player Efficiency Number, is a new measurement 
 
 %\input{intro}
 
-<<<<<<< HEAD
 %Censoring in rjags
 \section{Introduction}
 Quantifying the performance of a quarterback is one of the most persistent challenges in sports analytics. While numerous metrics exist, most rely on arbitrary weighting systems or proprietary formulas that lack transparency. In this section, we review the most prominent passer rating systems - NFL Passer Rating, NCAA Passing Efficiency, Total QBR, DVOA, and DYAR - discuss their limitations, and then introduce RIPPEN, a new measure of passer performance.
 
 \subsection{NFL Passer Rating}
-=======
-
-\section{Introduction}
-In 1973, Don Smith, Seymour Siwoff, and Don Weiss developed the current formula for NFL passer rating. (https://www.profootballhof.com/news/nfl-s-passer-rating/).  Conceptually, the idea was to look at four passing categories -- completion percentage, passing yards, touchdowns thrown, and interceptions -- and award a quarterback 1 point for an average performance, 2 points for an elite performance, and 0 for a poor performance(http://www.donsteinberg.com/qbrating.htm).  Their rating across these four components could then be averaged.  Using data from the 1970 NFL season, the average completion percentage, average yards per attempt, average touchdown percentage, and average interception percentage were approximately 50\%, 7, 5\%, and 5.5\%.  
-
-Using these numbers, formulas were derived to map dismal, average, and exceptional performances to approximately 0, 1, and 2, respectively.  For instance, for completion percentage the formula is $\frac{\frac{C}{A}-0.3}{0.2}$, which equals 0, 1, and 2 for a completion percentages of 30\%, 50\%, and 70\%, respectively.  Formulas for the other three components are defined similarly.  Each of the four components are bounded below by 0 and capped at 2.375 and then added together to get number between 0 and 9.5.  Then, this sum is divided by 6 and multiplied by 100.  The reason for this last adjustment was simply, as Don Steinberg explains it, to make the score ``more meaningful":   
->>>>>>> 94f656a (task: Update manuscript (#2))
 
 The National Football League (NFL) passer rating formula has been the official standard since the 1973 season. Developed by a committee headed by Don Smith and Seymour Siwoff, the metric was designed to compare passers against a fixed performance standard based on data from the 1960-1970 era.
 
@@ -183,16 +171,10 @@ $A$ = Number of Attempts\\
 $T$ = Number of Touchdowns\\
 $I$ = Number of Interceptions\\
 
-<<<<<<< HEAD
 Because there are no artificial upper limits on the inputs, the theoretical range of the NCAA rating is significantly wider than the NFL’s, ranging from -731.6 to 1,261.6.
 
 \subsection{Total QBR}
 In 2011, ESPN introduced the Total Quarterback Rating (Total QBR) to address the limitations of traditional box-score metrics. Unlike the NFL and NCAA ratings, Total QBR attempts to incorporate contextual elements by utilizing Expected Points Added (EPA). This approach evaluates the difference in expected points before and after a play, rewarding quarterbacks for plays that increase the team's probability of scoring. Total QBR also accounts for rushing contributions, sacks, fumbles, and penalties, and includes adjustments for opponent strength and "garbage time" scenarios.
-=======
-In college football, thre are no caps on each of the components, which means that the college football passer rating can vary from -731.6 to 1261.6. 
-
-In this article, a new metric is proposed to replace passer rating.  The goal of the proposed measure is to use the exact same inputs as passer rating using only open source data and open source code, provide results on a meaningful scale in meaningful units, and to provide variability estimates of the measure.  
->>>>>>> 94f656a (task: Update manuscript (#2))
 
 \subsection{DVOA and DYAR}
 Football Outsiders introduced two prominent advanced metrics: Defense-adjusted Value Over Average (DVOA) and Defense-adjusted Yards Above Replacement (DYAR). DVOA measures a quarterback's per-play efficiency by comparing each down and distance situation to a league baseline, subsequently adjusting for the strength of the opposing defense. While DVOA acts as a rate statistic expressed as a percentage above or below the league average, DYAR converts this efficiency into a cumulative volume metric, quantifying the total yards a quarterback contributes over a replacement-level alternative.
@@ -233,27 +215,16 @@ Finally, the data is processed to identify "censored" events. Touchdown passes a
 
 The core metric is derived by simulating hypothetical offensive drives. In this framework, a quarterback is placed in a standardized context: starting at their own 20-yard line with a "1st and 10" situation. The drive proceeds solely through passing plays, with outcomes determined by the quarterback's specific posterior predictive distributions.
 
-<<<<<<< HEAD
 \subsubsection{Simulation Algorithm}
 \begin{enumerate}
 	\item Initialize: Set state to the 20 yard line, set downs to 1st and 10.
 	\item Passing loop:
-=======
-\subsubsection{Drive Algorithm}
-\begin{enumerate}
-	\item Initialize: Set state to the 20 yard line, set downs to 1st and 10
-	\item Passing loop: Until an end state is reached, simulate a pass play
->>>>>>> 94f656a (task: Update manuscript (#2))
 	\begin{itemize}
 		\item Check for completion
 		\item On completion, simulate the yards gained
 		\item On incomplete pass, check for interception
 	\end{itemize}
-<<<<<<< HEAD
 	\item End states:
-=======
-	\item End states: For each simulated drive $j$, the outcome $D_j$ is determined is recorded in points
->>>>>>> 94f656a (task: Update manuscript (#2))
 	\begin{itemize}
 		\item Touchdown: if field position is >= 100, return $D_j$ = 7
 		\item Field Goal: if 4th down is reached, simulate a field goal attempt and return $D_j$ = 3 if successful, 0 if not.
@@ -261,7 +232,6 @@ The core metric is derived by simulating hypothetical offensive drives. In this 
 	\end{itemize}
 \end{enumerate}
 
-<<<<<<< HEAD
 For each simulated drive $j$, the outcome $D_j$ is determined is recorded in points:
 
 \begin{itemize}
@@ -270,8 +240,6 @@ For each simulated drive $j$, the outcome $D_j$ is determined is recorded in poi
 	\item Turnover: return 0.  
 \end{itemize}
 
-=======
->>>>>>> 94f656a (task: Update manuscript (#2))
 The final RIPPEN score is calculated as the average number of points scored per ten possessions:
 $$\text{RIPPEN} = 10 \times \frac{1}{n_s} \sum_{j=1}^{n_s} D_j$$
 
@@ -285,20 +253,12 @@ $$
 with the following prior
 $$
 p_{comp} \sim \beta(\alpha_c,\beta_c)
-<<<<<<< HEAD
-$$.
-=======
 $$
->>>>>>> 94f656a (task: Update manuscript (#2))
 
 This yields the following posterior distribution for $p_{comp}$: 
 $$
 p_{comp} |n_{comp}, n_{att} \sim Beta(\alpha_c + n_{comp}, \beta_c +n_{att}-n_{comp})
-<<<<<<< HEAD
-$$.  
-=======
-$$  
->>>>>>> 94f656a (task: Update manuscript (#2))
+$$
 
 \subsubsection{Interceptions}
 Similarly, for a given quarterback over a given period of time, let $n_{int}$ and $n_{inc}$ be the number of intercepted passes and the number of incomplete passes (interceptions are considered incomplete passes), respectively.  We then have the following Bayesian model for interception percentage given an incomplete pass: 
@@ -309,30 +269,18 @@ $$
 with the following prior
 $$
 p_{int} \sim Beta(\alpha_i,\beta_i)
-<<<<<<< HEAD
-$$.
-This yields the following posterior distribution for $p_{int}$: 
-$$
-p_{int} |n_{int},n_{inc} \sim Beta(\alpha_i + n_{int}, \beta_i +n_{inc} - n_i)
-$$.  
-=======
 $$
 This yields the following posterior distribution for $p_{int}$: 
 $$
 p_{int} |n_{int},n_{inc} \sim Beta(\alpha_i + n_{int}, \beta_i +n_{inc} - n_i)
 $$  
->>>>>>> 94f656a (task: Update manuscript (#2))
 It is important to note that $p_{int}$ is estimating the probability of an interception given that the pass was incomplete, not the interception rate across all attempted passes.  
 
 In all simulations, we chose to use non-informative priors and set all hyperparameters of these models equal to 1.  Specifically, 
 
 $$
 \alpha_c = \beta_c = \alpha_i = \beta_i = 1
-<<<<<<< HEAD
-$$.  
-=======
 $$  
->>>>>>> 94f656a (task: Update manuscript (#2))
 
 
  (Another possible idea here is to use empircal Bayes where these priors are based on league average completion and interception rates.)
@@ -353,11 +301,7 @@ $$
 
 $$
 \sigma^2 \sim Uniform(0,100)
-<<<<<<< HEAD
-$$.  
-=======
 $$ 
->>>>>>> 94f656a (task: Update manuscript (#2))
 
 \end{enumerate}
 
