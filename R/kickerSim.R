@@ -2,12 +2,12 @@ createKicker <- function(data) {
     # Get kicker data
     kicker_data <- subset(data,
         play_type == "field_goal" & season == 2016,
-        select = c("field_goal_result", "field_goal_distance")
+        select = c("field_goal_result", "kick_distance")
     )
 
     stan_data_kick <- list(
         N = nrow(kicker_data),
-        x = kicker_data$field_goal_distance,
+        x = kicker_data$kick_distance,
         y = (kicker_data$field_goal_result == "made") + 0
     )
 

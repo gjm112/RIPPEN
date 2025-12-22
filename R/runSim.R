@@ -9,7 +9,7 @@ runSim <- function(qbdata, kicker, nsim = 10000) {
     # Create a list of the data
     if (sum(subcompleted$touchdown == 1) > 0) {
         stan_data <- list(
-            y_obs = na.omit(subcompleted$passing_yards[subcompleted$touchdown == 0]),
+            y_obs = subcompleted$passing_yards[subcompleted$touchdown == 0],
             N_obs = sum(subcompleted$touchdown == 0),
             c = subcompleted$passing_yards[subcompleted$touchdown == 1],
             N_cens = sum(subcompleted$touchdown == 1)
