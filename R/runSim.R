@@ -4,7 +4,6 @@ runSim <- function(qbdata, kicker, nsim = 10000) {
     subcompleted <- qbdata %>%
         filter(complete_pass == 1) %>%
         mutate(passing_yards = ifelse(passing_yards <= 0, 0.5, passing_yards))
-    print(paste0("Number of completed passes: ", sum(subcompleted$complete_pass == 1)))
 
     # Create a list of the data
     if (sum(subcompleted$touchdown == 1) > 0) {
@@ -42,6 +41,6 @@ runSim <- function(qbdata, kicker, nsim = 10000) {
     # exp(rnorm(1, mu[id], sigma[id]))
     out <- mclapply(1:nsim, function(i) {
         driveSim(qbdata, mu, sigma, kicker)
-    }, mc.cores = 4) %>% unlist()
+    }, mc.cores = 24) %>% unlist()
     return(list(scores = out, fit_rstan = fit_rstan))
 }
