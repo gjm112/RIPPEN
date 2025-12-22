@@ -4,3 +4,16 @@
 .Ruserdata
 *.csv
 .httr-oauth
+
+manuscript/RIPPEN.pdf
+manuscript/RIPPEN.log
+manuscript/RIPPEN.aux
+manuscript/RIPPEN.bbl
+manuscript/RIPPEN.blg
+manuscript/RIPPEN.fdb_latexmk
+manuscript/RIPPEN.fls
+manuscript/RIPPEN.synctex.gz
+manuscript/RIPPEN.toc
+manuscript/RIPPEN.lof
+manuscript/RIPPEN.lot
+manuscript/RIPPEN.lol
