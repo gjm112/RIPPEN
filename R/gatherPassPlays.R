@@ -7,7 +7,9 @@ gatherPassPlays <- function(nfl) {
             complete_pass,
             passing_yards,
             touchdown,
-            interception
+            interception,
+            game_id,
+            season
         ) %>%
         mutate(passing_yards = ifelse(is.na(passing_yards), 0, passing_yards))
 

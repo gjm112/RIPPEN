@@ -6,7 +6,8 @@ gatherData <- function() {
     data_file_path <- "./data/total99-24_pbp_data.csv"
     first_time <- !file.exists(data_file_path)
     nfl <- data.frame()
-    if (first_time == TRUE) {
+    force_rerun <- FALSE
+    if (first_time == TRUE || force_rerun == TRUE) {
         # Gather data from scratch
         print("Data file not found. Gathering data from scratch...")
         print("Gathering data from 1999-2024...")
@@ -15,8 +16,7 @@ gatherData <- function() {
             print(sprintf("Processing %i:", year))
             temp_data <- load_pbp(year)
             # data$touchback <- NULL # Older datasets are similar except for touchback (which we don't need!)
-            temp_data <- subset(temp_data, play_type == "pass" | play_type == "field_goal", select = c("passer_player_name", "air_yards", "yards_after_catch", "complete_pass", "incomplete_pass", "interception", "touchdown", "fumble", "game_date", "home_team", "away_team", "yardline_100", "field_goal_result", "play_type", "passing_yards", "kick_distance"))
-            temp_data$season <- year
+            temp_data <- subset(temp_data, play_type == "pass" | play_type == "field_goal", select = c("passer_player_name", "air_yards", "yards_after_catch", "complete_pass", "incomplete_pass", "interception", "touchdown", "fumble", "game_date", "home_team", "away_team", "yardline_100", "field_goal_result", "play_type", "passing_yards", "kick_distance", "game_id", "season"))
             nfl <- rbind(nfl, temp_data)
         }
         write.csv(nfl, data_file_path, append = FALSE, row.names = FALSE)
