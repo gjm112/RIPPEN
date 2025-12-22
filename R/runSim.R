@@ -1,40 +1,46 @@
-#' @title runSim
-#'
-#' @description This function simulates a number of drives for a given passer
-#'
-#' @details Fill in the details
-#'
-#' @param nu_0 prior degrees of freedom
-#' @param kappa_0 prior something
-#' @param date date of game YYYY-MM-DD
-#' @param season season 20XX (2009-2016)
-#'
-#' @return
-#'
-#' @export
+# Runs the drive simulations for a QB and a given number of simulations
+runSim <- function(qbdata, kicker, nsim = 10000) {
+    # Model 3: Yards given completion
+    subcompleted <- qbdata %>%
+        filter(complete_pass == 1) %>%
+        mutate(passing_yards = ifelse(passing_yards <= 0, 0.5, passing_yards))
 
-runSim <-
-function(passer, kappa_0=1, nu_0=3, nsim = 100, date=NULL, season=NULL){
-  # NOTE: We should setup an error check in case Date/Season does not exist
-  print(passer)
-    if(!is.null(date)){
-      print(date)
-    # modify Passplays to contain only results from date
-      gamePasses <- subset(passPlays, Date==date)
-      qbdata <- subset(gamePasses, Passer==passer)
-      
-    } 
-    else if(!is.null(season)){
-      print(season)
-    # modify Passplays to contain only results from season
-      seasonPasses <- subset(passPlays, Season==season)
-      qbdata <- subset(seasonPasses, Passer==passer)
+    # Create a list of the data
+    if (sum(subcompleted$touchdown == 1) > 0) {
+        stan_data <- list(
+            y_obs = subcompleted$passing_yards[subcompleted$touchdown == 0],
+            N_obs = sum(subcompleted$touchdown == 0),
+            c = subcompleted$passing_yards[subcompleted$touchdown == 1],
+            N_cens = sum(subcompleted$touchdown == 1)
+        )
+        fit_rstan <- stan(
+            file = "./stan/yardsmodel.stan",
+            data = stan_data,
+            cores = 4
+        )
 
+        mu <- extract(fit_rstan)$mu
+        sigma <- extract(fit_rstan)$sigma
+    } else {
+        stan_data <- list(
+            y_obs = subcompleted$passing_yards,
+            N_obs = nrow(subcompleted)
+        )
+
+        fit_rstan <- stan(
+            file = "./stan/yardsmodelnotd.stan",
+            data = stan_data,
+            cores = 4
+        )
+
+        mu <- extract(fit_rstan)$mu
+        sigma <- extract(fit_rstan)$sigma
     }
-    else{
-      qbdata <- subset(passPlays, Passer==passer)
-      
-    }
-  results <- replicate(nsim,driveSim(qbdata,kickCoef, kappa_0, nu_0))
-  return(results)
+    # id <- sample(1:length(mu), 1)
+    # sampling yards
+    # exp(rnorm(1, mu[id], sigma[id]))
+    out <- mclapply(1:nsim, function(i) {
+        driveSim(qbdata, mu, sigma, kicker)
+    }, mc.cores = 24) %>% unlist()
+    return(list(scores = out, fit_rstan = fit_rstan))
 }
