@@ -38,7 +38,7 @@ driveSim <- function(qbdata, mu, sigma, kicker) {
             # yards <- passSim(qbdata, kappa_0, nu_0)
             id <- sample(1:length(mu), 1)
             # sampling yards
-            yards <- exp(rnorm(1, mu[id], sigma[id]))
+            yards <- exp(rnorm(1, mu[id], sigma[id])) - 1
 
             # yards <- sample(qbdata$TotalYards[qbdata$PassOutcome=="Complete"],1)
             # Check for first down
