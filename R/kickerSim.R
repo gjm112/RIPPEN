@@ -13,7 +13,8 @@ createKicker <- function(data) {
 
     fit_kick <- stan(
         file = "./stan/kickers.stan",
-        data = stan_data_kick
+        data = stan_data_kick,
+        cores = parallel::detectCores()
     )
 
     alpha_kick <- extract(fit_kick)$alpha
