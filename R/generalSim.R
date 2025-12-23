@@ -1,37 +1,15 @@
-generalSim <- function(qb_list, pass_plays, num_sims, cores = 3) {
-    results <- mclapply(
-        qb_list,
-        function(qb) {
-            print(qb)
-            qbdata <- pass_plays[pass_plays$passer_player_name == qb, ]
-            if (nrow(qbdata) == 0) {
-                warning(paste("No data for QB:", qb))
-                return(NULL)
-            }
-            tryCatch(
-                {
-                    result <- runSim(qbdata, kicker, num_sims)
-                    return(list(qb = qb, result = result))
-                },
-                error = function(e) {
-                    warning(paste("Error processing QB", qb, ":", e$message))
-                    return(list(qb = qb, result = NULL, error = e$message))
-                }
-            )
-        },
-        mc.cores = cores
-    )
-
-    results_list <- list()
-
-    for (item in results) {
-        if (!is.null(item) && is.list(item) && "qb" %in% names(item) && "result" %in% names(item)) {
-            if (!is.null(item$result)) {
-                results_list[[item$qb]] <- item$result
-            }
-        } else {
-            warning(paste("Unexpected item structure:", class(item), "- skipping"))
-        }
+generalSim <- function(qb_list, pass_plays, num_sims) {
+    print("Starting simulations")
+    results <- list()
+    total_qbs <- length(qb_list)
+    current_qb <- 1
+    for (qb in qb_list) {
+        print(paste("Running simulations for", qb, "(", current_qb, "of", total_qbs, ")"))
+        qbdata <- pass_plays[pass_plays$passer_player_name == qb, ]
+        results[[qb]] <- runSim(qbdata, kicker, num_sims)
+        print(paste("Finished running simulations for", qb))
+        current_qb <- current_qb + 1
     }
-    return(results_list)
+    print("Finished running simulations")
+    return(results)
 }

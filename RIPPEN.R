@@ -22,19 +22,15 @@ kicker <- createKicker(nfl)
 print("Created kicker")
 
 # Run simulations
-print("Starting simulations")
 num_sims <- 1000000 # Number of drives to simulate
 
-# print("Gathering career results")
-# # Get QB list
-qbbig <- names(sort(
+# Get QB list
+qb_list <- names(sort(
     table(pass_plays$passer_player_name)
 ))[sort(table(pass_plays$passer_player_name)) >= 10]
 
-print("Got QB list")
-career_results <- generalSim(qbbig, pass_plays, num_sims)
-
-print(career_results[["T.Brady"]])
+print("Getting career results")
+career_results <- generalSim(qb_list, pass_plays, num_sims)
 
 save(career_results, file = "./data/career_results.rda")
 print("Saved career results")

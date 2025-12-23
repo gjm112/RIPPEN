@@ -1,5 +1,5 @@
 # Runs the drive simulations for a QB and a given number of simulations
-runSim <- function(qbdata, kicker, num_sims) {
+runSim <- function(qbdata, kicker, num_sims, num_cores = 24) {
     # Model 3: Yards given completion
     subcompleted <- qbdata %>%
         filter(complete_pass == 1) %>%
@@ -21,7 +21,7 @@ runSim <- function(qbdata, kicker, num_sims) {
         fit_rstan <- stan(
             file = "./stan/yardsmodel.stan",
             data = stan_data,
-            cores = parallel::detectCores()
+            cores = num_cores
         )
 
         mu <- extract(fit_rstan)$mu
@@ -39,7 +39,7 @@ runSim <- function(qbdata, kicker, num_sims) {
         fit_rstan <- stan(
             file = "./stan/yardsmodelnotd.stan",
             data = stan_data,
-            cores = parallel::detectCores()
+            cores = num_cores
         )
 
         mu <- extract(fit_rstan)$mu
@@ -50,6 +50,6 @@ runSim <- function(qbdata, kicker, num_sims) {
     # exp(rnorm(1, mu[id], sigma[id]))
     out <- mclapply(1:num_sims, function(i) {
         driveSim(qbdata, mu, sigma, kicker)
-    }, mc.cores = 8) %>% unlist()
+    }, mc.cores = num_cores) %>% unlist()
     return(list(scores = out, fit_rstan = fit_rstan))
 }
