@@ -25,27 +25,27 @@ print("Created kicker")
 num_sims <- 1000000 # Number of drives to simulate
 
 # Get QB list
-qb_list <- names(sort(
-    table(pass_plays$passer_player_name)
-))[sort(table(pass_plays$passer_player_name)) >= 10]
+# qb_list <- names(sort(
+#     table(pass_plays$passer_player_name)
+# ))[sort(table(pass_plays$passer_player_name)) >= 10]
 
-print("Getting career results")
-career_results <- generalSim(qb_list, pass_plays, num_sims)
+# print("Getting career results")
+# career_results <- generalSim(qb_list, pass_plays, num_sims)
 
-save(career_results, file = "./data/career_results.rda")
-print("Saved career results")
+# save(career_results, file = "./data/career_results.rda")
+# print("Saved career results")
 
-# print("Gathering season results")
-# seasons <- unique(pass_plays$season)
-# for (s in seasons) {
-#     print(s)
-#     season_pass_plays <- subset(pass_plays, season == s)
-#     season_qbs <- as.character(unique(season_pass_plays$passer_player_name))
-#     season_qbs <- sort(season_qbs)
-#     season_sims <- generalSim(season_qbs, season_pass_plays, num_sims, 3)
-#     save(season_sims, file = paste0("./data/season_sims_", s, ".rda"))
-#     print(paste0("Finished running simulations for season ", s))
-# }
+print("Gathering season results")
+seasons <- unique(pass_plays$season)
+for (s in seasons) {
+    print(s)
+    season_pass_plays <- subset(pass_plays, season == s)
+    season_qbs <- as.character(unique(season_pass_plays$passer_player_name))
+    season_qbs <- sort(season_qbs)
+    season_sims <- generalSim(season_qbs, season_pass_plays, num_sims)
+    save(season_sims, file = paste0("./data/season_sims_", s, ".rda"))
+    print(paste0("Finished running simulations for season ", s))
+}
 
 # print("Gathering game results")
 # games <- unique(pass_plays$game_id)
