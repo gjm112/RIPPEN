@@ -1,7 +1,7 @@
 createKicker <- function(data) {
     # Get kicker data
     kicker_data <- subset(data,
-        play_type == "field_goal" & season == 2016,
+        play_type == "field_goal" & season == 2024,
         select = c("field_goal_result", "kick_distance")
     )
 
