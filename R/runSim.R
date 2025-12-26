@@ -1,5 +1,6 @@
 # Runs the drive simulations for a QB and a given number of simulations
 runSim <- function(qbdata, kicker, num_sims, num_cores = 24) {
+  
     # Model 3: Yards given completion
     subcompleted <- qbdata %>%
         filter(complete_pass == 1) %>%
@@ -42,14 +43,37 @@ runSim <- function(qbdata, kicker, num_sims, num_cores = 24) {
             cores = num_cores
         )
 
-        mu <- extract(fit_rstan)$mu
-        sigma <- extract(fit_rstan)$sigma
+        muvec <- extract(fit_rstan)$mu
+        sigmavec <- extract(fit_rstan)$sigma
     }
+    
+    
+    nCompleted <- sum(qbdata$complete_pass == 1)
+    nPasses <- length(qbdata$complete_pass)
+    alphaP <- 1
+    betaP <- 1
+    # Returns 1 if complete and 0 if incomplete
+    
+    
+    nIncomp <- nPasses - nCompleted
+    nInt <- sum(qbdata$interception)
+    alphaI <- 1
+    betaI <- 1
+    
+    
+    # id <- sample(1:length(mu), 1)
+    # mu <- muvec[id]
+    # sigma <- sigmavec[id]
     # id <- sample(1:length(mu), 1)
     # sampling yards
     # exp(rnorm(1, mu[id], sigma[id]))
     out <- mclapply(1:num_sims, function(i) {
-        driveSim(qbdata, mu, sigma, kicker)
+      pComp <- rbeta(1, alphaP + nCompleted, betaP + nPasses - nCompleted)
+      pInt <- rbeta(1, alphaI + nInt, betaI + nIncomp - nInt)
+      id <- sample(1:length(mu), 1)
+      mu <- muvec[id]
+      sigma <- sigmavec[id]
+      mean(replicate(10000,driveSim(qbdata, mu, sigma,pComp, pInt, kicker)))
     }, mc.cores = num_cores) %>% unlist()
     return(list(scores = out, fit_rstan = fit_rstan))
 }
