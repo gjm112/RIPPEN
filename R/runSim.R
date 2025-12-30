@@ -24,8 +24,8 @@ runSim <- function(qbdata, kicker, num_sims, num_cores = 18) {
             cores = 1
         )
 
-        mu <- extract(fit_rstan)$mu
-        sigma <- extract(fit_rstan)$sigma
+        muvec <- extract(fit_rstan)$mu
+        sigmavec <- extract(fit_rstan)$sigma
     } else {
         y_obs_values <- subcompleted$passing_yards
         N_obs <- nrow(subcompleted)
@@ -69,7 +69,7 @@ runSim <- function(qbdata, kicker, num_sims, num_cores = 18) {
     out <- mclapply(1:num_sims, function(i) {
         pComp <- rbeta(1, alphaP + nCompleted, betaP + nPasses - nCompleted)
         pInt <- rbeta(1, alphaI + nInt, betaI + nIncomp - nInt)
-        id <- sample(1:length(mu), 1)
+        id <- sample(1:length(muvec), 1)
         mu <- muvec[id]
         sigma <- sigmavec[id]
         mean(replicate(10000, driveSim(qbdata, mu, sigma, pComp, pInt, kicker)))
